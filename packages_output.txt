@@ -1,0 +1,360 @@
+
+___________________
+slot: 1, detected_x: 44, detected_y: 81, real_x: -10, real_y: 0
+slot: 2, detected_x: 131, detected_y: 82, real_x: -5, real_y: 0
+slot: 3, detected_x: 232, detected_y: 79, real_x: 0, real_y: 0
+slot: 4, detected_x: 333, detected_y: 76, real_x: 5, real_y: 0
+slot: 5, detected_x: 430, detected_y: 80, real_x: 10, real_y: 0
+___________________
+
+___________________
+slot: 1, detected_x: 44, detected_y: 91, real_x: -10, real_y: 0.5
+slot: 2, detected_x: 132, detected_y: 91, real_x: -5, real_y: 0.5
+slot: 3, detected_x: 231, detected_y: 88, real_x: 0, real_y: 0.5
+slot: 4, detected_x: 331, detected_y: 84, real_x: 5, real_y: 0.5
+slot: 5, detected_x: 427, detected_y: 89, real_x: 10, real_y: 0.5
+___________________
+
+___________________
+slot: 1, detected_x: 45, detected_y: 103, real_x: -10, real_y: 1.0
+slot: 2, detected_x: 134, detected_y: 103, real_x: -5, real_y: 1.0
+slot: 3, detected_x: 232, detected_y: 101, real_x: 0, real_y: 1.0
+slot: 4, detected_x: 329, detected_y: 98, real_x: 5, real_y: 1.0
+slot: 5, detected_x: 426, detected_y: 102, real_x: 10, real_y: 1.0
+___________________
+
+___________________
+slot: 1, detected_x: 48, detected_y: 115, real_x: -10, real_y: 1.5
+slot: 2, detected_x: 137, detected_y: 115, real_x: -5, real_y: 1.5
+slot: 3, detected_x: 232, detected_y: 115, real_x: 0, real_y: 1.5
+slot: 4, detected_x: 328, detected_y: 112, real_x: 5, real_y: 1.5
+slot: 5, detected_x: 424, detected_y: 116, real_x: 10, real_y: 1.5
+___________________
+
+___________________
+slot: 1, detected_x: 50, detected_y: 129, real_x: -10, real_y: 2.0
+slot: 2, detected_x: 139, detected_y: 128, real_x: -5, real_y: 2.0
+slot: 3, detected_x: 232, detected_y: 126, real_x: 0, real_y: 2.0
+slot: 4, detected_x: 327, detected_y: 123, real_x: 5, real_y: 2.0
+slot: 5, detected_x: 423, detected_y: 128, real_x: 10, real_y: 2.0
+___________________
+
+___________________
+slot: 1, detected_x: 51, detected_y: 141, real_x: -10, real_y: 2.5
+slot: 2, detected_x: 139, detected_y: 140, real_x: -5, real_y: 2.5
+slot: 3, detected_x: 232, detected_y: 139, real_x: 0, real_y: 2.5
+slot: 4, detected_x: 326, detected_y: 135, real_x: 5, real_y: 2.5
+slot: 5, detected_x: 421, detected_y: 141, real_x: 10, real_y: 2.5
+___________________
+
+___________________
+slot: 1, detected_x: 54, detected_y: 151, real_x: -10, real_y: 3.0
+slot: 2, detected_x: 141, detected_y: 151, real_x: -5, real_y: 3.0
+slot: 3, detected_x: 234, detected_y: 151, real_x: 0, real_y: 3.0
+slot: 4, detected_x: 325, detected_y: 148, real_x: 5, real_y: 3.0
+slot: 5, detected_x: 419, detected_y: 154, real_x: 10, real_y: 3.0
+___________________
+
+___________________
+slot: 1, detected_x: 55, detected_y: 163, real_x: -10, real_y: 3.5
+slot: 2, detected_x: 142, detected_y: 163, real_x: -5, real_y: 3.5
+slot: 3, detected_x: 233, detected_y: 163, real_x: 0, real_y: 3.5
+slot: 4, detected_x: 325, detected_y: 160, real_x: 5, real_y: 3.5
+slot: 5, detected_x: 417, detected_y: 165, real_x: 10, real_y: 3.5
+___________________
+
+___________________
+slot: 1, detected_x: 57, detected_y: 176, real_x: -10, real_y: 4.0
+slot: 2, detected_x: 144, detected_y: 176, real_x: -5, real_y: 4.0
+slot: 3, detected_x: 234, detected_y: 175, real_x: 0, real_y: 4.0
+slot: 4, detected_x: 325, detected_y: 173, real_x: 5, real_y: 4.0
+slot: 5, detected_x: 416, detected_y: 178, real_x: 10, real_y: 4.0
+___________________
+
+___________________
+slot: 1, detected_x: 59, detected_y: 187, real_x: -10, real_y: 4.5
+slot: 2, detected_x: 146, detected_y: 186, real_x: -5, real_y: 4.5
+slot: 3, detected_x: 234, detected_y: 187, real_x: 0, real_y: 4.5
+slot: 4, detected_x: 323, detected_y: 184, real_x: 5, real_y: 4.5
+slot: 5, detected_x: 414, detected_y: 189, real_x: 10, real_y: 4.5
+___________________
+
+___________________
+slot: 1, detected_x: 61, detected_y: 194, real_x: -10, real_y: 5.0
+slot: 2, detected_x: 147, detected_y: 193, real_x: -5, real_y: 5.0
+slot: 3, detected_x: 234, detected_y: 193, real_x: 0, real_y: 5.0
+slot: 4, detected_x: 323, detected_y: 191, real_x: 5, real_y: 5.0
+slot: 5, detected_x: 412, detected_y: 195, real_x: 10, real_y: 5.0
+___________________
+
+___________________
+slot: 1, detected_x: 64, detected_y: 209, real_x: -10, real_y: 5.5
+slot: 2, detected_x: 148, detected_y: 209, real_x: -5, real_y: 5.5
+slot: 3, detected_x: 234, detected_y: 208, real_x: 0, real_y: 5.5
+slot: 4, detected_x: 322, detected_y: 207, real_x: 5, real_y: 5.5
+slot: 5, detected_x: 410, detected_y: 211, real_x: 10, real_y: 5.5
+___________________
+
+___________________
+slot: 1, detected_x: 65, detected_y: 219, real_x: -10, real_y: 6.0
+slot: 2, detected_x: 149, detected_y: 218, real_x: -5, real_y: 6.0
+slot: 3, detected_x: 234, detected_y: 219, real_x: 0, real_y: 6.0
+slot: 4, detected_x: 322, detected_y: 217, real_x: 5, real_y: 6.0
+slot: 5, detected_x: 409, detected_y: 222, real_x: 10, real_y: 6.0
+___________________
+
+___________________
+slot: 1, detected_x: 68, detected_y: 229, real_x: -10, real_y: 6.5
+slot: 2, detected_x: 150, detected_y: 228, real_x: -5, real_y: 6.5
+slot: 3, detected_x: 234, detected_y: 229, real_x: 0, real_y: 6.5
+slot: 4, detected_x: 321, detected_y: 227, real_x: 5, real_y: 6.5
+slot: 5, detected_x: 408, detected_y: 231, real_x: 10, real_y: 6.5
+___________________
+
+___________________
+slot: 1, detected_x: 69, detected_y: 239, real_x: -10, real_y: 7.0
+slot: 2, detected_x: 151, detected_y: 239, real_x: -5, real_y: 7.0
+slot: 3, detected_x: 235, detected_y: 238, real_x: 0, real_y: 7.0
+slot: 4, detected_x: 321, detected_y: 238, real_x: 5, real_y: 7.0
+slot: 5, detected_x: 407, detected_y: 242, real_x: 10, real_y: 7.0
+___________________
+
+___________________
+slot: 1, detected_x: 71, detected_y: 249, real_x: -10, real_y: 7.5
+slot: 2, detected_x: 152, detected_y: 248, real_x: -5, real_y: 7.5
+slot: 3, detected_x: 235, detected_y: 248, real_x: 0, real_y: 7.5
+slot: 4, detected_x: 320, detected_y: 247, real_x: 5, real_y: 7.5
+slot: 5, detected_x: 405, detected_y: 252, real_x: 10, real_y: 7.5
+___________________
+
+___________________
+slot: 1, detected_x: 73, detected_y: 259, real_x: -10, real_y: 8.0
+slot: 2, detected_x: 153, detected_y: 259, real_x: -5, real_y: 8.0
+slot: 3, detected_x: 235, detected_y: 259, real_x: 0, real_y: 8.0
+slot: 4, detected_x: 320, detected_y: 256, real_x: 5, real_y: 8.0
+slot: 5, detected_x: 403, detected_y: 262, real_x: 10, real_y: 8.0
+___________________
+
+___________________
+slot: 1, detected_x: 75, detected_y: 268, real_x: -10, real_y: 8.5
+slot: 2, detected_x: 154, detected_y: 268, real_x: -5, real_y: 8.5
+slot: 3, detected_x: 235, detected_y: 268, real_x: 0, real_y: 8.5
+slot: 4, detected_x: 319, detected_y: 267, real_x: 5, real_y: 8.5
+slot: 5, detected_x: 402, detected_y: 272, real_x: 10, real_y: 8.5
+___________________
+
+___________________
+slot: 1, detected_x: 76, detected_y: 277, real_x: -10, real_y: 9.0
+slot: 2, detected_x: 155, detected_y: 276, real_x: -5, real_y: 9.0
+slot: 3, detected_x: 236, detected_y: 276, real_x: 0, real_y: 9.0
+slot: 4, detected_x: 318, detected_y: 275, real_x: 5, real_y: 9.0
+slot: 5, detected_x: 401, detected_y: 281, real_x: 10, real_y: 9.0
+___________________
+
+___________________
+slot: 1, detected_x: 78, detected_y: 287, real_x: -10, real_y: 9.5
+slot: 2, detected_x: 156, detected_y: 285, real_x: -5, real_y: 9.5
+slot: 3, detected_x: 236, detected_y: 285, real_x: 0, real_y: 9.5
+slot: 4, detected_x: 318, detected_y: 286, real_x: 5, real_y: 9.5
+slot: 5, detected_x: 400, detected_y: 290, real_x: 10, real_y: 9.5
+___________________
+
+___________________
+slot: 1, detected_x: 80, detected_y: 294, real_x: -10, real_y: 10.0
+slot: 2, detected_x: 157, detected_y: 294, real_x: -5, real_y: 10.0
+slot: 3, detected_x: 236, detected_y: 294, real_x: 0, real_y: 10.0
+slot: 4, detected_x: 317, detected_y: 293, real_x: 5, real_y: 10.0
+slot: 5, detected_x: 399, detected_y: 297, real_x: 10, real_y: 10.0
+___________________
+
+___________________
+slot: 1, detected_x: 81, detected_y: 305, real_x: -10, real_y: 10.5
+slot: 2, detected_x: 157, detected_y: 302, real_x: -5, real_y: 10.5
+slot: 3, detected_x: 237, detected_y: 304, real_x: 0, real_y: 10.5
+slot: 4, detected_x: 317, detected_y: 304, real_x: 5, real_y: 10.5
+slot: 5, detected_x: 398, detected_y: 308, real_x: 10, real_y: 10.5
+___________________
+
+___________________
+slot: 1, detected_x: 83, detected_y: 313, real_x: -10, real_y: 11.0
+slot: 2, detected_x: 159, detected_y: 311, real_x: -5, real_y: 11.0
+slot: 3, detected_x: 237, detected_y: 311, real_x: 0, real_y: 11.0
+slot: 4, detected_x: 317, detected_y: 312, real_x: 5, real_y: 11.0
+slot: 5, detected_x: 397, detected_y: 318, real_x: 10, real_y: 11.0
+___________________
+
+___________________
+slot: 1, detected_x: 84, detected_y: 320, real_x: -10, real_y: 11.5
+slot: 2, detected_x: 160, detected_y: 320, real_x: -5, real_y: 11.5
+slot: 3, detected_x: 237, detected_y: 320, real_x: 0, real_y: 11.5
+slot: 4, detected_x: 316, detected_y: 320, real_x: 5, real_y: 11.5
+slot: 5, detected_x: 396, detected_y: 325, real_x: 10, real_y: 11.5
+___________________
+
+___________________
+slot: 1, detected_x: 85, detected_y: 331, real_x: -10, real_y: 12.0
+slot: 2, detected_x: 162, detected_y: 329, real_x: -5, real_y: 12.0
+slot: 3, detected_x: 238, detected_y: 330, real_x: 0, real_y: 12.0
+slot: 4, detected_x: 316, detected_y: 331, real_x: 5, real_y: 12.0
+slot: 5, detected_x: 394, detected_y: 336, real_x: 10, real_y: 12.0
+___________________
+
+___________________
+slot: 1, detected_x: 86, detected_y: 338, real_x: -10, real_y: 12.5
+slot: 2, detected_x: 162, detected_y: 338, real_x: -5, real_y: 12.5
+slot: 3, detected_x: 238, detected_y: 337, real_x: 0, real_y: 12.5
+slot: 4, detected_x: 315, detected_y: 338, real_x: 5, real_y: 12.5
+slot: 5, detected_x: 392, detected_y: 342, real_x: 10, real_y: 12.5
+___________________
+
+___________________
+slot: 1, detected_x: 88, detected_y: 347, real_x: -10, real_y: 13.0
+slot: 2, detected_x: 163, detected_y: 346, real_x: -5, real_y: 13.0
+slot: 3, detected_x: 238, detected_y: 345, real_x: 0, real_y: 13.0
+slot: 4, detected_x: 315, detected_y: 347, real_x: 5, real_y: 13.0
+slot: 5, detected_x: 391, detected_y: 353, real_x: 10, real_y: 13.0
+___________________
+
+___________________
+slot: 1, detected_x: 90, detected_y: 354, real_x: -10, real_y: 13.5
+slot: 2, detected_x: 163, detected_y: 354, real_x: -5, real_y: 13.5
+slot: 3, detected_x: 238, detected_y: 353, real_x: 0, real_y: 13.5
+slot: 4, detected_x: 314, detected_y: 354, real_x: 5, real_y: 13.5
+slot: 5, detected_x: 390, detected_y: 359, real_x: 10, real_y: 13.5
+___________________
+
+___________________
+slot: 1, detected_x: 92, detected_y: 363, real_x: -10, real_y: 14.0
+slot: 2, detected_x: 164, detected_y: 362, real_x: -5, real_y: 14.0
+slot: 3, detected_x: 238, detected_y: 361, real_x: 0, real_y: 14.0
+slot: 4, detected_x: 314, detected_y: 363, real_x: 5, real_y: 14.0
+slot: 5, detected_x: 389, detected_y: 368, real_x: 10, real_y: 14.0
+___________________
+
+___________________
+slot: 1, detected_x: 93, detected_y: 369, real_x: -10, real_y: 14.5
+slot: 2, detected_x: 165, detected_y: 368, real_x: -5, real_y: 14.5
+slot: 3, detected_x: 238, detected_y: 369, real_x: 0, real_y: 14.5
+slot: 4, detected_x: 313, detected_y: 370, real_x: 5, real_y: 14.5
+slot: 5, detected_x: 388, detected_y: 375, real_x: 10, real_y: 14.5
+___________________
+
+___________________
+slot: 1, detected_x: 95, detected_y: 376, real_x: -10, real_y: 15.0
+slot: 2, detected_x: 165, detected_y: 374, real_x: -5, real_y: 15.0
+slot: 3, detected_x: 239, detected_y: 375, real_x: 0, real_y: 15.0
+slot: 4, detected_x: 313, detected_y: 378, real_x: 5, real_y: 15.0
+slot: 5, detected_x: 387, detected_y: 383, real_x: 10, real_y: 15.0
+___________________
+
+___________________
+slot: 1, detected_x: 96, detected_y: 385, real_x: -10, real_y: 15.5
+slot: 2, detected_x: 166, detected_y: 383, real_x: -5, real_y: 15.5
+slot: 3, detected_x: 239, detected_y: 384, real_x: 0, real_y: 15.5
+slot: 4, detected_x: 313, detected_y: 386, real_x: 5, real_y: 15.5
+slot: 5, detected_x: 386, detected_y: 390, real_x: 10, real_y: 15.5
+___________________
+
+___________________
+slot: 1, detected_x: 98, detected_y: 392, real_x: -10, real_y: 16.0
+slot: 2, detected_x: 167, detected_y: 390, real_x: -5, real_y: 16.0
+slot: 3, detected_x: 239, detected_y: 391, real_x: 0, real_y: 16.0
+slot: 4, detected_x: 312, detected_y: 393, real_x: 5, real_y: 16.0
+slot: 5, detected_x: 385, detected_y: 399, real_x: 10, real_y: 16.0
+___________________
+
+___________________
+slot: 1, detected_x: 99, detected_y: 400, real_x: -10, real_y: 16.5
+slot: 2, detected_x: 167, detected_y: 398, real_x: -5, real_y: 16.5
+slot: 3, detected_x: 239, detected_y: 399, real_x: 0, real_y: 16.5
+slot: 4, detected_x: 311, detected_y: 399, real_x: 5, real_y: 16.5
+slot: 5, detected_x: 383, detected_y: 403, real_x: 10, real_y: 16.5
+___________________
+
+___________________
+slot: 1, detected_x: 99, detected_y: 407, real_x: -10, real_y: 17.0
+slot: 2, detected_x: 168, detected_y: 405, real_x: -5, real_y: 17.0
+slot: 3, detected_x: 240, detected_y: 406, real_x: 0, real_y: 17.0
+slot: 4, detected_x: 311, detected_y: 406, real_x: 5, real_y: 17.0
+slot: 5, detected_x: 383, detected_y: 412, real_x: 10, real_y: 17.0
+___________________
+
+___________________
+slot: 1, detected_x: 100, detected_y: 415, real_x: -10, real_y: 17.5
+slot: 2, detected_x: 169, detected_y: 413, real_x: -5, real_y: 17.5
+slot: 3, detected_x: 239, detected_y: 412, real_x: 0, real_y: 17.5
+slot: 4, detected_x: 311, detected_y: 414, real_x: 5, real_y: 17.5
+slot: 5, detected_x: 382, detected_y: 417, real_x: 10, real_y: 17.5
+___________________
+
+___________________
+slot: 1, detected_x: 102, detected_y: 420, real_x: -10, real_y: 18.0
+slot: 2, detected_x: 169, detected_y: 420, real_x: -5, real_y: 18.0
+slot: 3, detected_x: 240, detected_y: 419, real_x: 0, real_y: 18.0
+slot: 4, detected_x: 310, detected_y: 420, real_x: 5, real_y: 18.0
+slot: 5, detected_x: 381, detected_y: 425, real_x: 10, real_y: 18.0
+___________________
+
+___________________
+slot: 1, detected_x: 103, detected_y: 428, real_x: -10, real_y: 18.5
+slot: 2, detected_x: 170, detected_y: 427, real_x: -5, real_y: 18.5
+slot: 3, detected_x: 240, detected_y: 426, real_x: 0, real_y: 18.5
+slot: 4, detected_x: 310, detected_y: 427, real_x: 5, real_y: 18.5
+slot: 5, detected_x: 380, detected_y: 432, real_x: 10, real_y: 18.5
+___________________
+
+___________________
+slot: 1, detected_x: 104, detected_y: 433, real_x: -10, real_y: 19.0
+slot: 2, detected_x: 171, detected_y: 433, real_x: -5, real_y: 19.0
+slot: 3, detected_x: 240, detected_y: 433, real_x: 0, real_y: 19.0
+slot: 4, detected_x: 310, detected_y: 434, real_x: 5, real_y: 19.0
+slot: 5, detected_x: 379, detected_y: 439, real_x: 10, real_y: 19.0
+___________________
+
+___________________
+slot: 1, detected_x: 107, detected_y: 447, real_x: -10, real_y: 19.5
+slot: 2, detected_x: 172, detected_y: 445, real_x: -5, real_y: 19.5
+slot: 3, detected_x: 240, detected_y: 446, real_x: 0, real_y: 19.5
+slot: 4, detected_x: 309, detected_y: 447, real_x: 5, real_y: 19.5
+slot: 5, detected_x: 378, detected_y: 450, real_x: 10, real_y: 19.5
+___________________
+
+___________________
+slot: 1, detected_x: 106, detected_y: 448, real_x: -10, real_y: 20.0
+slot: 2, detected_x: 172, detected_y: 447, real_x: -5, real_y: 20.0
+slot: 3, detected_x: 240, detected_y: 448, real_x: 0, real_y: 20.0
+slot: 4, detected_x: 309, detected_y: 448, real_x: 5, real_y: 20.0
+slot: 5, detected_x: 377, detected_y: 453, real_x: 10, real_y: 20.0
+___________________
+
+___________________
+slot: 1, detected_x: 107, detected_y: 454, real_x: -10, real_y: 20.5
+slot: 2, detected_x: 173, detected_y: 454, real_x: -5, real_y: 20.5
+slot: 3, detected_x: 240, detected_y: 455, real_x: 0, real_y: 20.5
+slot: 4, detected_x: 308, detected_y: 456, real_x: 5, real_y: 20.5
+slot: 5, detected_x: 376, detected_y: 462, real_x: 10, real_y: 20.5
+___________________
+
+___________________
+slot: 1, detected_x: 109, detected_y: 462, real_x: -10, real_y: 21.0
+slot: 2, detected_x: 173, detected_y: 462, real_x: -5, real_y: 21.0
+slot: 3, detected_x: 240, detected_y: 462, real_x: 0, real_y: 21.0
+slot: 4, detected_x: 308, detected_y: 463, real_x: 5, real_y: 21.0
+slot: 5, detected_x: 376, detected_y: 466, real_x: 10, real_y: 21.0
+___________________
+
+___________________
+slot: 1, detected_x: 110, detected_y: 467, real_x: -10, real_y: 21.5
+slot: 2, detected_x: 174, detected_y: 467, real_x: -5, real_y: 21.5
+slot: 3, detected_x: 240, detected_y: 467, real_x: 0, real_y: 21.5
+slot: 4, detected_x: 309, detected_y: 468, real_x: 5, real_y: 21.5
+slot: 5, detected_x: 375, detected_y: 471, real_x: 10, real_y: 21.5
+___________________
+
+___________________
+slot: 1, detected_x: 110, detected_y: 474, real_x: -10, real_y: 22.0
+slot: 2, detected_x: 175, detected_y: 473, real_x: -5, real_y: 22.0
+slot: 3, detected_x: 240, detected_y: 473, real_x: 0, real_y: 22.0
+slot: 4, detected_x: 307, detected_y: 474, real_x: 5, real_y: 22.0
+slot: 5, detected_x: 374, detected_y: 475, real_x: 10, real_y: 22.0
+___________________

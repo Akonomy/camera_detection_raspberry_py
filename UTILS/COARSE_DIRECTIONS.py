@@ -265,8 +265,10 @@ def getAllCommands(x_cm: float, y_cm: float) -> List[Tuple[int, int, int, bool]]
         forward_cmds = find_forward_commands(y_cm)
         commands.extend(forward_cmds)
         y_cm = 0
-    
-    return commands
+
+    modified_commands = [(1, *cmd) for cmd in commands]
+
+    return modified_commands
 
 def getFirstCommand(x_cm: float, y_cm: float) -> Tuple[int, int, int, bool]:
     """
@@ -276,7 +278,7 @@ def getFirstCommand(x_cm: float, y_cm: float) -> Tuple[int, int, int, bool]:
     all_cmds = getAllCommands(x_cm, y_cm)
     if len(all_cmds) > 0:
         return all_cmds[0]
-    return (0, 0, 0, False)  # nimic
+    return (1, 0, 0, 0, False)  # nimic
 
 # ------------------------------------------------
 # Exemplu de test

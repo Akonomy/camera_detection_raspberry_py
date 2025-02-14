@@ -274,7 +274,7 @@ def run_interface():
         # Actualizează informațiile despre comandă
         info_text = ""
         if latest_cmds is not None:
-            info_text += f"Distanță: {latest_cmds[0]} cm\n"
+            info_text += f"Distanță: {latest_cmds} cm\n"
         if latest_comanda is not None:
             info_text += f"Comanda: {latest_comanda}\n"
         else:

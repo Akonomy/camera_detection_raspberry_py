@@ -48,7 +48,7 @@ def main():
     speed_frame.pack(side=tk.LEFT, padx=10)
     speed_var = tk.IntVar(value=130)  # valoare implicită 130
     # Valori posibile pentru viteză extinse: 70, 80, 90, 100, 110, 120, 130, 140, 150
-    for s in [70, 80, 90, 100, 110, 120, 130, 140, 150]:
+    for s in [70, 80, 90, 100, 110, 120, 130, 140, 150,180]:
         rb = tk.Radiobutton(speed_frame, text=str(s), variable=speed_var, value=s)
         rb.pack(anchor=tk.W)
 

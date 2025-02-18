@@ -524,15 +524,14 @@ def run_interface():
     # -----------------------------
     def adjust_command():
         global session_counter, command_phase, skip_next_session
-        # Adăugăm comanda de ajustare în coadă cu prioritate maximă,
-        # dar nu o executăm imediat; ea va fi preluată de secțiunea automată.
         add_command_to_queue((1, 13, 1, 140), ADJUST_PRIORITY)
-        print("Adjust Command adăugat în coadă (manual): (1, 13, 1, 140)")
-        logging.info("MANUAL COMMAND (Adjust) adăugat în coadă: (1, 13, 1, 140)")
+        execute_command_from_queue()
+        print("Adjust Command executat (manual): (1, 13, 1, 140)")
+        logging.info("MANUAL EXECUTED COMMAND (Adjust): (1, 13, 1, 140)")
         session_counter = 0
         skip_next_session = True  # Flag: sesiunea următoare va fi ignorată complet
         session_manager.sessions = []
-        command_phase = "adjust"
+        command_phase = None
 
     adjust_button = tk.Button(root, text="Adjust Command", command=adjust_command, width=20)
     adjust_button.pack(pady=5)

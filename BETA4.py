@@ -8,7 +8,7 @@ from picamera2 import Picamera2
 import logging
 
 # Configurare logare: logurile vor fi scrise în fișierul "session_log.txt"
-logging.basicConfig(filename="session_log.txt", level=logging.INFO, 
+logging.basicConfig(filename="session_log.txt", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
 
 # Variabile globale pentru contorizarea sesiunilor de detecție între comenzi
@@ -28,43 +28,56 @@ distance_change_timestamp = None
 MERGE_DISTANCE_THRESHOLD = 50  # Distanța minimă între centre pentru a considera două pachete ca fiind același obiect
 
 # ---------------------------
+# Definirea tipurilor de comandă și a priorităților
+# ---------------------------
+NORMAL_PRIORITY = 1
+ADJUST_PRIORITY = 2
+EXECUTION_PRIORITY = 3  # folosit când flagul de adjust este setat (executie imediată)
+
+# ---------------------------
 # Definirea cozii de comenzi
 # ---------------------------
 MAX_QUEUE_SIZE = 2
-NORMAL_PRIORITY = 1
-ADJUST_PRIORITY = 2
 command_queue = []  # Fiecare element: {"cmd": (param1, param2, param3, param4), "priority": int}
 
 def add_command_to_queue(cmd, priority):
-    """Adaugă sau actualizează o comandă în coadă, respectând capacitatea și prioritatea."""
+    """Adaugă sau actualizează o comandă în coadă, respectând regulile:
+       - Nu pot exista 2 comenzi cu aceeași prioritate.
+       - Dacă coada e plină:
+           • O comandă NORMAL (prioritate 1) poate înlocui o comandă cu prioritate EXECUTION (3),
+             dar nu poate înlocui o comandă cu prioritate ADJUST (2).
+           • Comenzile de tip ADJUST sau EXECUTION se adaugă doar dacă coada nu conține deja o comandă cu aceeași prioritate.
+    """
     global command_queue
-    replaced = False
-    # Dacă există deja o comandă cu aceeași prioritate, o actualizează
+    # Verifică dacă există deja o comandă cu aceeași prioritate – dacă da, o actualizează.
     for i, existing in enumerate(command_queue):
         if existing["priority"] == priority:
             command_queue[i] = {"cmd": cmd, "priority": priority}
-            replaced = True
-            break
-    if not replaced:
-        if len(command_queue) < MAX_QUEUE_SIZE:
-            command_queue.append({"cmd": cmd, "priority": priority})
-        else:
-            # Găsește comanda cu cea mai mică prioritate
-            lowest_priority = min(command_queue, key=lambda x: x["priority"])
-            if priority > lowest_priority["priority"]:
-                for i, existing in enumerate(command_queue):
-                    if existing["priority"] == lowest_priority["priority"]:
-                        command_queue[i] = {"cmd": cmd, "priority": priority}
-                        break
-            else:
-                # Dacă noua comandă are prioritate mai mică, o ignoră
-                pass
+            return
+
+    # Dacă coada nu e plină, adaugă comanda.
+    if len(command_queue) < MAX_QUEUE_SIZE:
+        command_queue.append({"cmd": cmd, "priority": priority})
+        return
+
+    # Dacă coada e plină și se adaugă o comandă NORMAL (prioritate 1):
+    if priority == NORMAL_PRIORITY:
+        # Caută o comandă cu prioritate EXECUTION (3) – NORMAL poate înlocui EXECUTION.
+        for i, existing in enumerate(command_queue):
+            if existing["priority"] == EXECUTION_PRIORITY:
+                command_queue[i] = {"cmd": cmd, "priority": priority}
+                return
+        # Nu există candidat potrivit – nu se înlocuiește.
+        return
+
+    # Pentru comenzi de tip ADJUST (2) sau EXECUTION (3), nu se înlocuiește dacă coada e plină.
+    return
 
 def execute_command_from_queue():
     """Execută comanda din coadă cu cea mai mare prioritate și o elimină din coadă."""
     global command_queue, skip_next_session, session_manager, command_phase
     if command_queue:
-        # Selectează comanda cu cea mai mare prioritate (prioritatea mai mare înseamnă execuție preferată)
+        # Selectează comanda cu cea mai mare prioritate (prioritatea mai mare = mai urgentă)
         command_to_execute = max(command_queue, key=lambda x: x["priority"])
         cmd = command_to_execute["cmd"]
         process_command(*cmd)
@@ -73,7 +86,7 @@ def execute_command_from_queue():
         command_queue = [c for c in command_queue if c != command_to_execute]
         skip_next_session = True
         session_manager.sessions = []
-        # Setează command_phase în funcție de comandă
+        # Setează command_phase în funcție de comandă executată
         if cmd == (1, 13, 1, 140):
             command_phase = "adjust"
         else:
@@ -143,12 +156,7 @@ class SessionManager:
     def add_session(self, session_data, tracked_pkg):
         """
         Adaugă o sesiune pe baza datelor curente: session_data și tracked_package.
-        Se caută în session_data pachetul care corespunde tracked_pkg, comparând culoarea și,
-        în mod normal, litera. Dacă pachetul urmărit nu are litera, se caută un pachet fără literă
-        cu aceeași culoare, iar dacă diferența dintre poziția pachetului urmărit și poziția găsită
-        este <= 50, se consideră că a fost găsit.
-        Dacă nu se găsește, se șterg toate sesiunile (istoric eronat) și se returnează False.
-        Altfel, se adaugă sesiunea cu un id incremental.
+        Dacă pachetul urmărit nu se găsește în datele sesiunii, se șterg sesiunile.
         """
         tracked_letters = tracked_pkg.get("letters", [])
         tracked_letter = tracked_letters[0] if tracked_letters else None
@@ -374,7 +382,7 @@ def process_tracked_package(tracked_pkg):
     print(cmds)
     print(comanda)
     logging.info("Suggested command: latest_cmds: {} ; latest_comanda: {}".format(cmds, comanda))
-    # process_command(...)  # Execuție la confirmare, nu aici
+    # Execuția se face la confirmare, nu aici.
 
 # --------------------------------------------------
 # BUCLEA PRINCIPALĂ DE PROCESARE A CAMEREI (într-un thread separat)
@@ -497,7 +505,7 @@ def run_interface():
     def confirm_command():
         global session_counter, command_phase, skip_next_session
         if latest_comanda is not None:
-            # Dacă comanda nu este "1 0 0 0", se adaugă în coadă cu prioritate normală
+            # Dacă comanda nu este (1, 0, 0, 0), se adaugă în coadă ca NORMAL (prioritate 1)
             if tuple(latest_comanda[:4]) != (1, 0, 0, 0):
                 add_command_to_queue(tuple(latest_comanda[:4]), NORMAL_PRIORITY)
             else:
@@ -506,12 +514,12 @@ def run_interface():
             print("Confirm Command executat (manual) cu comanda din coadă.")
             logging.info("MANUAL EXECUTED COMMAND (Confirm): {}".format(latest_comanda[:4]))
             session_counter = 0
-            skip_next_session = True  # Flag: sesiunea următoare va fi ignorată complet
+            skip_next_session = True  # Sesiunea următoare va fi ignorată
             session_manager.sessions = []
             if latest_comanda[-1] == True:
                 command_phase = "adjust"
             else:
-                command_phase = None
+                command_phase = "normal"
         else:
             print("Nu există comandă disponibilă.")
             logging.info("Attempt to confirm command but no command available.")
@@ -524,13 +532,16 @@ def run_interface():
     # -----------------------------
     def adjust_command():
         global session_counter, command_phase, skip_next_session
-        # Adăugăm comanda de ajustare în coadă cu prioritate maximă,
-        # dar nu o executăm imediat; ea va fi preluată de secțiunea automată.
+        # La apăsare, se setează flagul de adjust și se adaugă în coadă două comenzi:
+        # - O comandă de execuție (prioritate 3)
+        # - O comandă de adjust (prioritate 2)
+        add_command_to_queue(tuple(latest_comanda[:4]), EXECUTION_PRIORITY)
         add_command_to_queue((1, 13, 1, 140), ADJUST_PRIORITY)
-        print("Adjust Command adăugat în coadă (manual): (1, 13, 1, 140)")
-        logging.info("MANUAL COMMAND (Adjust) adăugat în coadă: (1, 13, 1, 140)")
+        print("Adjust Command adăugat în coadă (manual): (1, 13, 1, 140) și execuție: {}".format(latest_comanda[:4]))
+        logging.info("MANUAL COMMAND (Adjust) adăugat în coadă: Exec: {} (prioritate {}), Adjust: (1, 13, 1, 140) (prioritate {})".format(
+            latest_comanda[:4], EXECUTION_PRIORITY, ADJUST_PRIORITY))
         session_counter = 0
-        skip_next_session = True  # Flag: sesiunea următoare va fi ignorată complet
+        skip_next_session = True  # Sesiunea următoare va fi ignorată
         session_manager.sessions = []
         command_phase = "adjust"
 
@@ -625,11 +636,15 @@ def run_interface():
             led_canvas.itemconfig(session_led, fill="green")
             led_label.config(text="Sesiuni stabile")
             if tracked_package is not None:
-                # Dacă există o comandă validă (diferită de (1,0,0,0)) și nu este necesară ajustarea,
-                # se adaugă în coadă comanda normală (cu prioritate NORMAL_PRIORITY)
-                if latest_comanda is not None and tuple(latest_comanda[:4]) != (1, 0, 0, 0) and command_phase != "adjust":
-                    add_command_to_queue(tuple(latest_comanda[:4]), NORMAL_PRIORITY)
-                # Se execută comanda din coadă (cea cu cea mai mare prioritate)
+                if command_phase == "adjust":
+                    # Dacă flagul de adjust e setat, adaugă în coadă:
+                    # - Comanda de execuție cu prioritate EXECUTION_PRIORITY (3)
+                    # - Comanda de adjust cu prioritate ADJUST_PRIORITY (2)
+                    add_command_to_queue(tuple(latest_comanda[:4]), EXECUTION_PRIORITY)
+                    add_command_to_queue((1, 13, 1, 140), ADJUST_PRIORITY)
+                else:
+                    if latest_comanda is not None and tuple(latest_comanda[:4]) != (1, 0, 0, 0):
+                        add_command_to_queue(tuple(latest_comanda[:4]), NORMAL_PRIORITY)
                 if command_queue:
                     execute_command_from_queue()
         else:

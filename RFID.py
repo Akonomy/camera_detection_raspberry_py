@@ -4,6 +4,9 @@ from TAG_RFID import mfrc_reader, TAG_PN532 as pn532_reader
 def main():
     max_attempts = 3
     attempt = 0
+    test_data = bytearray(b'\x01\x03\xa0\x0c4\x03&\xd1\x01"U\x04depozitautomat.shop/store/1234567\xfe\x00\x00')
+
+
 
     while attempt < max_attempts:
         print(f"Attempt {attempt+1} of {max_attempts}:")
@@ -19,6 +22,17 @@ def main():
         uid_pn, data_pn = pn532_reader.read_pn532_data()
         if uid_pn is not None:
             print(f"PN532 - UID: {uid_pn} ")
+            print(data_pn)
+            
+            
+            
+            #success = pn532_reader.write_raw_data_to_tag(test_data)
+            success=0;
+            if success:
+                 print("Raw data written successfully.")
+            else:
+                 print("Failed to write raw data to tag.")
+
             # Use the extraction function to filter out and show the relevant ID.
             extracted_id = pn532_reader.extract_id_from_raw(data_pn)
             if extracted_id:

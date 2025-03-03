@@ -56,6 +56,22 @@ class RobotAPIClient:
         except requests.RequestException as e:
             logging.error(f'Error in fetch_tasks: {e}')
             return None
+            
+            
+            
+    def fetch_first_task(self):
+        """Returnează lista de task-uri obținută de la server."""
+        url = f'{self.base_url}/task/first/'
+        try:
+            response = requests.get(url, headers=self.headers)
+            response.raise_for_status()
+            data = response.json()
+            tasks = data
+            logging.info(f'Fetched {len(tasks)} tasks')
+            return tasks
+        except requests.RequestException as e:
+            logging.error(f'Error in fetch_tasks: {e}')
+            return None
 
     def update_task_status(self, task_id, status, reason=''):
         """
@@ -195,6 +211,18 @@ def get_jwt_token_module():
 
 def fetch_tasks_module(headers):
     url = f'{BASE_URL}/tasks/'
+    try:
+        response = requests.get(url, headers=headers)
+        response.raise_for_status()
+        logging.info('Fetched tasks (module)')
+        return response.json()
+    except requests.RequestException as e:
+        logging.error(f'Error in fetch_tasks_module: {e}')
+        return None
+        
+        
+def fetch_first_tasks_module(headers):
+    url = f'{BASE_URL}/task/first'
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()

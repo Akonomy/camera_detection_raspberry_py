@@ -2,7 +2,7 @@ import time
 from TAG_RFID import mfrc_reader, TAG_PN532 as pn532_reader
 
 def main():
-    max_attempts = 3
+    max_attempts = 10
     attempt = 0
     test_data = bytearray(b'\x01\x03\xa0\x0c4\x03&\xd1\x01"U\x04depozitautomat.shop/store/1234567\xfe\x00\x00')
 
@@ -19,10 +19,20 @@ def main():
             print("MFRC522 - No card detected or data read failed.")
 
         # Try reading with the PN532-based reader
-        uid_pn, data_pn = pn532_reader.read_pn532_data()
-        if uid_pn is not None:
-            print(f"PN532 - UID: {uid_pn} ")
-            print(data_pn)
+        
+        uid, raw_data = pn532_reader.read_pn532_table()
+        if uid is None:
+            print("No tag detected.")
+        else:
+            print(f"UID: {uid}")
+            print("Raw data table:")
+            pn532_reader.process_raw_data_table(raw_data, start_block=0)
+        
+            type_of_tag=pn532_reader.get_tag_type(raw_data)
+            
+            print(f"TYPE: { type_of_tag } \n")
+            
+            print(f"RAW DATA:\n {raw_data} \nEND OF RAW DATA  ")     
             
             
             
@@ -31,21 +41,14 @@ def main():
             if success:
                  print("Raw data written successfully.")
             else:
-                 print("Failed to write raw data to tag.")
+                 print("DATA CAPTURED \n")
 
-            # Use the extraction function to filter out and show the relevant ID.
-            extracted_id = pn532_reader.extract_id_from_raw(data_pn)
-            if extracted_id:
-                print(f"PN532 - Extracted ID: {extracted_id}")
-            else:
-                print("PN532 - No valid ID found in the data.")
-        else:
-            print("PN532 - No card detected or data read failed.")
+
 
         attempt += 1
         if attempt < max_attempts:
-            print("Pausing for 5 seconds before next attempt...\n")
-            time.sleep(5)
+            print("...\n")
+            time.sleep(3)
     
     print("Reached maximum number of attempts. Exiting.")
 

@@ -1,0 +1,960 @@
+{
+    "zones": [
+        {
+            "type": "zone",
+            "zone_id": 1,
+            "name": "DEPOZIT1[1]",
+            "x": 458,
+            "y": 137,
+            "width": 80,
+            "height": 60,
+            "endpoints": {
+                "N": 1460413174016,
+                "S": 1460413174256,
+                "W": 1460413174496,
+                "E": 1460413174736
+            },
+            "memory": {
+                "N": null,
+                "S": 5,
+                "E": null,
+                "W": null
+            }
+        },
+        {
+            "type": "zone",
+            "zone_id": 2,
+            "name": "DEPOZIT2[2]",
+            "x": 670,
+            "y": 132,
+            "width": 80,
+            "height": 60,
+            "endpoints": {
+                "N": 1460413175600,
+                "S": 1460413175840,
+                "W": 1460413176080,
+                "E": 1460413176320
+            },
+            "memory": {
+                "N": null,
+                "S": 6,
+                "E": null,
+                "W": null
+            }
+        },
+        {
+            "type": "zone",
+            "zone_id": 3,
+            "name": "DEPOZIT3[3]",
+            "x": 462,
+            "y": 380,
+            "width": 80,
+            "height": 60,
+            "endpoints": {
+                "N": 1460413177184,
+                "S": 1460413177424,
+                "W": 1460413177664,
+                "E": 1460413194352
+            },
+            "memory": {
+                "N": 5,
+                "S": null,
+                "E": null,
+                "W": null
+            }
+        },
+        {
+            "type": "zone",
+            "zone_id": 4,
+            "name": "DEPOZIT4[4]",
+            "x": 673,
+            "y": 374,
+            "width": 80,
+            "height": 60,
+            "endpoints": {
+                "N": 1460413195264,
+                "S": 1460413195504,
+                "W": 1460413195744,
+                "E": 1460413195984
+            },
+            "memory": {
+                "N": 6,
+                "S": null,
+                "E": null,
+                "W": null
+            }
+        },
+        {
+            "type": "zone",
+            "zone_id": 5,
+            "name": "RECEPTIE1[5]",
+            "x": 102,
+            "y": 7,
+            "width": 80,
+            "height": 60,
+            "endpoints": {
+                "N": 1460413196896,
+                "S": 1460413197136,
+                "W": 1460413197376,
+                "E": 1460413197616
+            },
+            "memory": {
+                "N": null,
+                "S": 10,
+                "E": null,
+                "W": null
+            }
+        },
+        {
+            "type": "zone",
+            "zone_id": 6,
+            "name": "RECEPTIE2[6]",
+            "x": 103,
+            "y": 233,
+            "width": 80,
+            "height": 60,
+            "endpoints": {
+                "N": 1460413210880,
+                "S": 1460413211120,
+                "W": 1460413211360,
+                "E": 1460413211600
+            },
+            "memory": {
+                "N": 10,
+                "S": null,
+                "E": null,
+                "W": null
+            }
+        },
+        {
+            "type": "zone",
+            "zone_id": 7,
+            "name": "LIVRARE2[7]",
+            "x": 104,
+            "y": 531,
+            "width": 80,
+            "height": 60,
+            "endpoints": {
+                "N": 1460413212512,
+                "S": 1460413212752,
+                "W": 1460413212992,
+                "E": 1460413213232
+            },
+            "memory": {
+                "N": 9,
+                "S": null,
+                "E": null,
+                "W": null
+            }
+        },
+        {
+            "type": "zone",
+            "zone_id": 8,
+            "name": "LIVRARE1[8]",
+            "x": 103,
+            "y": 304,
+            "width": 80,
+            "height": 60,
+            "endpoints": {
+                "N": 1460413214144,
+                "S": 1460413214384,
+                "W": 1460413214624,
+                "E": 1460413227216
+            },
+            "memory": {
+                "N": null,
+                "S": 9,
+                "E": null,
+                "W": null
+            }
+        }
+    ],
+    "intersectii": [
+        {
+            "type": "intersectie",
+            "id": 1,
+            "x": 337,
+            "y": 508,
+            "endpoints": {
+                "N": 1460413228128,
+                "S": 1460413228368,
+                "E": 1460413228608,
+                "W": 1460413228848
+            },
+            "memory": {
+                "N": 2,
+                "S": null,
+                "E": 7,
+                "W": 9
+            }
+        },
+        {
+            "type": "intersectie",
+            "id": 2,
+            "x": 347,
+            "y": 279,
+            "endpoints": {
+                "N": 1460413229712,
+                "S": 1460413229952,
+                "E": 1460413230192,
+                "W": 1460413230432
+            },
+            "memory": {
+                "N": 3,
+                "S": 1,
+                "E": 5,
+                "W": null
+            }
+        },
+        {
+            "type": "intersectie",
+            "id": 3,
+            "x": 351,
+            "y": 83,
+            "endpoints": {
+                "N": 1460413239552,
+                "S": 1460413239792,
+                "E": 1460413240032,
+                "W": 1460413240272
+            },
+            "memory": {
+                "N": null,
+                "S": 2,
+                "E": 4,
+                "W": 10
+            }
+        },
+        {
+            "type": "intersectie",
+            "id": 4,
+            "x": 608,
+            "y": 83,
+            "endpoints": {
+                "N": 1460413241136,
+                "S": 1460413241376,
+                "E": 1460413241616,
+                "W": 1460413241856
+            },
+            "memory": {
+                "N": null,
+                "S": 8,
+                "E": null,
+                "W": 3
+            }
+        },
+        {
+            "type": "intersectie",
+            "id": 5,
+            "x": 498,
+            "y": 288,
+            "endpoints": {
+                "N": 1460413242720,
+                "S": 1460413242960,
+                "E": 1460413243200,
+                "W": 1460413263984
+            },
+            "memory": {
+                "N": "DEPOZIT1[1]",
+                "S": "DEPOZIT3[3]",
+                "E": 8,
+                "W": 2
+            }
+        },
+        {
+            "type": "intersectie",
+            "id": 6,
+            "x": 712,
+            "y": 286,
+            "endpoints": {
+                "N": 1460413264848,
+                "S": 1460413265088,
+                "E": 1460413265328,
+                "W": 1460413265568
+            },
+            "memory": {
+                "N": "DEPOZIT2[2]",
+                "S": "DEPOZIT4[4]",
+                "E": null,
+                "W": 8
+            }
+        },
+        {
+            "type": "intersectie",
+            "id": 7,
+            "x": 611,
+            "y": 503,
+            "endpoints": {
+                "N": 1460413266432,
+                "S": 1460413266672,
+                "E": 1460413266912,
+                "W": 1460413267152
+            },
+            "memory": {
+                "N": 8,
+                "S": null,
+                "E": null,
+                "W": 1
+            }
+        },
+        {
+            "type": "intersectie",
+            "id": 8,
+            "x": 606,
+            "y": 287,
+            "endpoints": {
+                "N": 1460417613936,
+                "S": 1460417614176,
+                "E": 1460417614416,
+                "W": 1460417614656
+            },
+            "memory": {
+                "N": 4,
+                "S": 7,
+                "E": 6,
+                "W": 5
+            }
+        },
+        {
+            "type": "intersectie",
+            "id": 9,
+            "x": 146,
+            "y": 449,
+            "endpoints": {
+                "N": 1460417615712,
+                "S": 1460417615952,
+                "E": 1460417616192,
+                "W": 1460417616432
+            },
+            "memory": {
+                "N": "LIVRARE1[8]",
+                "S": "LIVRARE2[7]",
+                "E": 1,
+                "W": null
+            }
+        },
+        {
+            "type": "intersectie",
+            "id": 10,
+            "x": 142,
+            "y": 152,
+            "endpoints": {
+                "N": 1460417617296,
+                "S": 1460417617536,
+                "E": 1460417617776,
+                "W": 1460417626272
+            },
+            "memory": {
+                "N": "RECEPTIE1[5]",
+                "S": "RECEPTIE2[6]",
+                "E": 3,
+                "W": null
+            }
+        }
+    ],
+    "lines": [
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 10,
+                "direction": "S"
+            },
+            "ep2": {
+                "parent_type": "zone",
+                "parent_id": 6,
+                "direction": "N"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 10,
+                "direction": "N"
+            },
+            "ep2": {
+                "parent_type": "zone",
+                "parent_id": 5,
+                "direction": "S"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 9,
+                "direction": "N"
+            },
+            "ep2": {
+                "parent_type": "zone",
+                "parent_id": 8,
+                "direction": "S"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 9,
+                "direction": "S"
+            },
+            "ep2": {
+                "parent_type": "zone",
+                "parent_id": 7,
+                "direction": "N"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 9,
+                "direction": "E"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 1,
+                "direction": "W"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 7,
+                "direction": "W"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 1,
+                "direction": "E"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 7,
+                "direction": "N"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 8,
+                "direction": "S"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 8,
+                "direction": "N"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 4,
+                "direction": "S"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 4,
+                "direction": "W"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 3,
+                "direction": "E"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 3,
+                "direction": "W"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 10,
+                "direction": "E"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 2,
+                "direction": "N"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 3,
+                "direction": "S"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 2,
+                "direction": "S"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 1,
+                "direction": "N"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 5,
+                "direction": "E"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 8,
+                "direction": "W"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 8,
+                "direction": "E"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 6,
+                "direction": "W"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 6,
+                "direction": "N"
+            },
+            "ep2": {
+                "parent_type": "zone",
+                "parent_id": 2,
+                "direction": "S"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 6,
+                "direction": "S"
+            },
+            "ep2": {
+                "parent_type": "zone",
+                "parent_id": 4,
+                "direction": "N"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "zone",
+                "parent_id": 3,
+                "direction": "N"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 5,
+                "direction": "S"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 5,
+                "direction": "N"
+            },
+            "ep2": {
+                "parent_type": "zone",
+                "parent_id": 1,
+                "direction": "S"
+            }
+        },
+        {
+            "ep1": {
+                "parent_type": "intersectie",
+                "parent_id": 2,
+                "direction": "E"
+            },
+            "ep2": {
+                "parent_type": "intersectie",
+                "parent_id": 5,
+                "direction": "W"
+            }
+        }
+    ],
+    "tags": [
+        {
+            "custom_id": "C[10][1]",
+            "assigned_to": "Intersectia 10",
+            "entry_direction": "S",
+            "exits": {
+                "\u00eenainte": "N",
+                "dreapta": "E",
+                "st\u00e2nga": "W",
+                "\u00eenapoi": "S"
+            }
+        },
+        {
+            "custom_id": "Z[6]",
+            "assigned_to": "RECEPTIE2[6]",
+            "entry_direction": "N",
+            "exits": {
+                "\u00eenainte": "S",
+                "dreapta": "W",
+                "st\u00e2nga": "E",
+                "\u00eenapoi": "N"
+            }
+        },
+        {
+            "custom_id": "C[10][3]",
+            "assigned_to": "Intersectia 10",
+            "entry_direction": "N",
+            "exits": {
+                "\u00eenainte": "S",
+                "dreapta": "W",
+                "st\u00e2nga": "E",
+                "\u00eenapoi": "N"
+            }
+        },
+        {
+            "custom_id": "Z[5]",
+            "assigned_to": "RECEPTIE1[5]",
+            "entry_direction": "S",
+            "exits": {
+                "\u00eenainte": "N",
+                "dreapta": "E",
+                "st\u00e2nga": "W",
+                "\u00eenapoi": "S"
+            }
+        },
+        {
+            "custom_id": "C[10][2]",
+            "assigned_to": "Intersectia 10",
+            "entry_direction": "E",
+            "exits": {
+                "\u00eenainte": "W",
+                "dreapta": "N",
+                "st\u00e2nga": "S",
+                "\u00eenapoi": "E"
+            }
+        },
+        {
+            "custom_id": "C[3][4]",
+            "assigned_to": "Intersectia 3",
+            "entry_direction": "W",
+            "exits": {
+                "\u00eenainte": "E",
+                "dreapta": "S",
+                "st\u00e2nga": "N",
+                "\u00eenapoi": "W"
+            }
+        },
+        {
+            "custom_id": "C[3][2]",
+            "assigned_to": "Intersectia 3",
+            "entry_direction": "E",
+            "exits": {
+                "\u00eenainte": "W",
+                "dreapta": "N",
+                "st\u00e2nga": "S",
+                "\u00eenapoi": "E"
+            }
+        },
+        {
+            "custom_id": "C[3][1]",
+            "assigned_to": "Intersectia 3",
+            "entry_direction": "S",
+            "exits": {
+                "\u00eenainte": "N",
+                "dreapta": "E",
+                "st\u00e2nga": "W",
+                "\u00eenapoi": "S"
+            }
+        },
+        {
+            "custom_id": "C[4][4]",
+            "assigned_to": "Intersectia 4",
+            "entry_direction": "W",
+            "exits": {
+                "\u00eenainte": "E",
+                "dreapta": "S",
+                "st\u00e2nga": "N",
+                "\u00eenapoi": "W"
+            }
+        },
+        {
+            "custom_id": "C[4][1]",
+            "assigned_to": "Intersectia 4",
+            "entry_direction": "S",
+            "exits": {
+                "\u00eenainte": "N",
+                "dreapta": "E",
+                "st\u00e2nga": "W",
+                "\u00eenapoi": "S"
+            }
+        },
+        {
+            "custom_id": "C[5][3]",
+            "assigned_to": "Intersectia 5",
+            "entry_direction": "N",
+            "exits": {
+                "\u00eenainte": "S",
+                "dreapta": "W",
+                "st\u00e2nga": "E",
+                "\u00eenapoi": "N"
+            }
+        },
+        {
+            "custom_id": "C[5][1]",
+            "assigned_to": "Intersectia 5",
+            "entry_direction": "S",
+            "exits": {
+                "\u00eenainte": "N",
+                "dreapta": "E",
+                "st\u00e2nga": "W",
+                "\u00eenapoi": "S"
+            }
+        },
+        {
+            "custom_id": "C[5][2]",
+            "assigned_to": "Intersectia 5",
+            "entry_direction": "E",
+            "exits": {
+                "\u00eenainte": "W",
+                "dreapta": "N",
+                "st\u00e2nga": "S",
+                "\u00eenapoi": "E"
+            }
+        },
+        {
+            "custom_id": "C[8][4]",
+            "assigned_to": "Intersectia 8",
+            "entry_direction": "W",
+            "exits": {
+                "\u00eenainte": "E",
+                "dreapta": "S",
+                "st\u00e2nga": "N",
+                "\u00eenapoi": "W"
+            }
+        },
+        {
+            "custom_id": "C[8][2]",
+            "assigned_to": "Intersectia 8",
+            "entry_direction": "E",
+            "exits": {
+                "\u00eenainte": "W",
+                "dreapta": "N",
+                "st\u00e2nga": "S",
+                "\u00eenapoi": "E"
+            }
+        },
+        {
+            "custom_id": "C[6][4]",
+            "assigned_to": "Intersectia 6",
+            "entry_direction": "W",
+            "exits": {
+                "\u00eenainte": "E",
+                "dreapta": "S",
+                "st\u00e2nga": "N",
+                "\u00eenapoi": "W"
+            }
+        },
+        {
+            "custom_id": "C[6][3]",
+            "assigned_to": "Intersectia 6",
+            "entry_direction": "N",
+            "exits": {
+                "\u00eenainte": "S",
+                "dreapta": "W",
+                "st\u00e2nga": "E",
+                "\u00eenapoi": "N"
+            }
+        },
+        {
+            "custom_id": "Z[2]",
+            "assigned_to": "DEPOZIT2[2]",
+            "entry_direction": "S",
+            "exits": {
+                "\u00eenainte": "N",
+                "dreapta": "E",
+                "st\u00e2nga": "W",
+                "\u00eenapoi": "S"
+            }
+        },
+        {
+            "custom_id": "C[6][1]",
+            "assigned_to": "Intersectia 6",
+            "entry_direction": "S",
+            "exits": {
+                "\u00eenainte": "N",
+                "dreapta": "E",
+                "st\u00e2nga": "W",
+                "\u00eenapoi": "S"
+            }
+        },
+        {
+            "custom_id": "Z[4]",
+            "assigned_to": "DEPOZIT4[4]",
+            "entry_direction": "N",
+            "exits": {
+                "\u00eenainte": "S",
+                "dreapta": "W",
+                "st\u00e2nga": "E",
+                "\u00eenapoi": "N"
+            }
+        },
+        {
+            "custom_id": "C[8][1]",
+            "assigned_to": "Intersectia 8",
+            "entry_direction": "S",
+            "exits": {
+                "\u00eenainte": "N",
+                "dreapta": "E",
+                "st\u00e2nga": "W",
+                "\u00eenapoi": "S"
+            }
+        },
+        {
+            "custom_id": "C[7][3]",
+            "assigned_to": "Intersectia 7",
+            "entry_direction": "N",
+            "exits": {
+                "\u00eenainte": "S",
+                "dreapta": "W",
+                "st\u00e2nga": "E",
+                "\u00eenapoi": "N"
+            }
+        },
+        {
+            "custom_id": "C[7][4]",
+            "assigned_to": "Intersectia 7",
+            "entry_direction": "W",
+            "exits": {
+                "\u00eenainte": "E",
+                "dreapta": "S",
+                "st\u00e2nga": "N",
+                "\u00eenapoi": "W"
+            }
+        },
+        {
+            "custom_id": "C[1][3]",
+            "assigned_to": "Intersectia 1",
+            "entry_direction": "N",
+            "exits": {
+                "\u00eenainte": "S",
+                "dreapta": "W",
+                "st\u00e2nga": "E",
+                "\u00eenapoi": "N"
+            }
+        },
+        {
+            "custom_id": "C[1][4]",
+            "assigned_to": "Intersectia 1",
+            "entry_direction": "W",
+            "exits": {
+                "\u00eenainte": "E",
+                "dreapta": "S",
+                "st\u00e2nga": "N",
+                "\u00eenapoi": "W"
+            }
+        },
+        {
+            "custom_id": "C[1][2]",
+            "assigned_to": "Intersectia 1",
+            "entry_direction": "E",
+            "exits": {
+                "\u00eenainte": "W",
+                "dreapta": "N",
+                "st\u00e2nga": "S",
+                "\u00eenapoi": "E"
+            }
+        },
+        {
+            "custom_id": "C[9][2]",
+            "assigned_to": "Intersectia 9",
+            "entry_direction": "E",
+            "exits": {
+                "\u00eenainte": "W",
+                "dreapta": "N",
+                "st\u00e2nga": "S",
+                "\u00eenapoi": "E"
+            }
+        },
+        {
+            "custom_id": "C[9][3]",
+            "assigned_to": "Intersectia 9",
+            "entry_direction": "N",
+            "exits": {
+                "\u00eenainte": "S",
+                "dreapta": "W",
+                "st\u00e2nga": "E",
+                "\u00eenapoi": "N"
+            }
+        },
+        {
+            "custom_id": "Z[8]",
+            "assigned_to": "LIVRARE1[8]",
+            "entry_direction": "S",
+            "exits": {
+                "\u00eenainte": "N",
+                "dreapta": "E",
+                "st\u00e2nga": "W",
+                "\u00eenapoi": "S"
+            }
+        },
+        {
+            "custom_id": "C[9][1]",
+            "assigned_to": "Intersectia 9",
+            "entry_direction": "S",
+            "exits": {
+                "\u00eenainte": "N",
+                "dreapta": "E",
+                "st\u00e2nga": "W",
+                "\u00eenapoi": "S"
+            }
+        },
+        {
+            "custom_id": "Z[7]",
+            "assigned_to": "LIVRARE2[7]",
+            "entry_direction": "N",
+            "exits": {
+                "\u00eenainte": "S",
+                "dreapta": "W",
+                "st\u00e2nga": "E",
+                "\u00eenapoi": "N"
+            }
+        },
+        {
+            "custom_id": "Z[3]",
+            "assigned_to": "DEPOZIT3[3]",
+            "entry_direction": "N",
+            "exits": {
+                "\u00eenainte": "S",
+                "dreapta": "W",
+                "st\u00e2nga": "E",
+                "\u00eenapoi": "N"
+            }
+        },
+        {
+            "custom_id": "C[5][4]",
+            "assigned_to": "Intersectia 5",
+            "entry_direction": "W",
+            "exits": {
+                "\u00eenainte": "E",
+                "dreapta": "S",
+                "st\u00e2nga": "N",
+                "\u00eenapoi": "W"
+            }
+        },
+        {
+            "custom_id": "C[2][2]",
+            "assigned_to": "Intersectia 2",
+            "entry_direction": "E",
+            "exits": {
+                "\u00eenainte": "W",
+                "dreapta": "N",
+                "st\u00e2nga": "S",
+                "\u00eenapoi": "E"
+            }
+        }
+    ]
+}

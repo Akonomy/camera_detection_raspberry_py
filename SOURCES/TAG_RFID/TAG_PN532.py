@@ -20,8 +20,9 @@ def read_pn532_data():
     if uid is None:
         return (None, None)
     uid_str = "".join(f"{i:02X}" for i in uid)
-    start_block = 4
-    max_blocks = 36
+    # Start reading from block 0 to get the complete memory dump
+    start_block = 0
+    max_blocks = 20
     raw_data = bytearray()
     for block_number in range(start_block, start_block + max_blocks):
         try:
@@ -94,10 +95,8 @@ def write_raw_data_to_tag(raw_data):
         return False
 
     # Write the raw data starting at block 4.
-    # The helper _write_blocks will split the data into 4-byte chunks and write them.
     return _write_blocks(pn532, 4, raw_data)
     
-
 def clear_tag():
     """
     Clear the tag's user memory by writing zeros from block 4 up to block 39.
@@ -134,64 +133,83 @@ def write_url_to_tag(id_str):
     data_bytes = url.encode('utf-8')
     return _write_blocks(pn532, 4, data_bytes)
 
-def perform_write_and_verify(id_str):
+def read_pn532_table():
     """
-    Clears the tag, writes a URL with the given ID to the tag,
-    and then attempts to verify the write by reading the tag twice.
-    
-    It extracts the ID from the read data and compares it (after stripping extra spaces)
-    with the provided ID.
+    Read the NFC tag and return the UID and raw data.
+    This function is similar to read_pn532_data but is intended to be used 
+    in conjunction with process_raw_data_table() to display a table view.
     
     Returns:
-        True if one of the read attempts yields the same ID as id_str, False otherwise.
-    Also prints the written ID and the read IDs for manual verification.
+        (uid_str, raw_data) tuple.
     """
-   
+    uid_str, raw_data = read_pn532_data()
+    return uid_str, raw_data
 
-    print(f"Writing URL 'depozitautomat.shop/store/{id_str}' to tag...")
-    #if not write_url_to_tag(id_str):
-    #    print("Failed to write URL to tag.")
-    #    return False
-    #else:
-    #    print("Write operation successful.")
+def process_raw_data_table(raw_data, start_block=0):
+    """
+    Process raw_data and print a table with the following columns:
+    - Block number (starting from 0)
+    - Address in decimal and hex (block number + start_block)
+    - 4 bytes in hex
+    - ASCII representation (non-printable characters are replaced with '.')
     
-    # Allow time for the write to settle
-    time.sleep(1)
+    Args:
+        raw_data: bytearray containing the data read from the tag.
+        start_block: The starting block number corresponding to the first block in raw_data.
+    """
+    if not raw_data:
+        print("No raw data to display.")
+        return
+
+    num_blocks = len(raw_data) // 4
+    print("{:<6} {:<12} {:<20} {}".format("Block", "Address", "Hex bytes", "ASCII"))
+    print("-" * 60)
+    for block in range(num_blocks):
+        block_bytes = raw_data[block*4:(block+1)*4]
+        address_dec = start_block + block
+        address_hex = f"{address_dec:02X}"
+        hex_bytes = " ".join(f"{b:02X}" for b in block_bytes)
+        ascii_repr = "".join(chr(b) if 32 <= b < 127 else '.' for b in block_bytes)
+        print("{:<6} {:<12} {:<20} {}".format(block, f"{address_dec}/{address_hex}", hex_bytes, ascii_repr))
+        
+        
+        
+        
+
+def get_tag_type(raw_data):
+    """
+    Determină tipul tagului pe baza datelor brute.
+    Se presupune că:
+      - Pentru NTAG213, blocul 4 (octeții 16-19) este CC-ul: b'\x01\x03\xa0\x0c'
+      - Pentru NTAG215, blocul 4 începe cu 0x03 și conține NDEF direct
+    Returnează:
+      "NTAG213", "NTAG215" sau "Unknown" dacă nu se poate determina.
+    """
+    # Verificăm dacă raw_data are cel puțin 20 de octeți
+    if raw_data is None or len(raw_data) < 20:
+        return "Unknown"
     
-    # Read the tag in two separate attempts.
-    read_ids = []
-    for i in range(2):
-        print(f"Read attempt {i+1}:")
-        uid, raw = read_pn532_data()
-        if uid is None:
-            print("  No tag detected or read failed.")
-            read_ids.append(None)
-        else:
-            print(raw);
-            extracted = extract_id_from_raw(raw)
-            print(f"  Extracted ID: '{extracted}'")
-            read_ids.append(extracted)
-        time.sleep(1)
+    # Extragem blocul 4 (de la index 16 la 19)
+    block4 = raw_data[16:20]
     
-    print(f"Written ID: '{id_str}'")
-    for idx, rid in enumerate(read_ids, 1):
-        print(f"Read ID attempt {idx}: '{rid}'")
-    
-    # Compare (after stripping) to determine if any read ID matches the written ID.
-    match_found = any(rid is not None and rid.strip() == id_str for rid in read_ids)
-    if match_found:
-        print("Verification successful: A read ID matches the written ID.")
+    # Dacă blocul 4 este exact CC-ul NTAG213:
+    if block4 == bytearray(b'\x01\x03\xa0\x0c'):
+        return "NTAG213"
+    # Dacă începe cu 0x03, presupunem că este NTAG215 (pentru tag scris, de exemplu "03 25 D1 01")
+    elif block4[0] == 0x03:
+        return "NTAG215"
     else:
-        print("Verification failed: No read ID matches the written ID.")
-    
-    return match_found
-
-# Example usage for testing write and verify
+        return "Unknown"
+        
+        
+        
+                
+# Exemplu de utilizare:
 if __name__ == '__main__':
-    # Replace with your desired ID
-    desired_id = "1EBF9F"
-    success = perform_write_and_verify(desired_id)
-    if success:
-        print("Tag write and verification succeeded.")
+    uid, raw_data = read_pn532_table()
+    if uid is None:
+        print("No tag detected.")
     else:
-        print("Tag write and verification failed.")
+        print(f"UID: {uid}")
+        print("Raw data table:")
+        process_raw_data_table(raw_data, start_block=0)

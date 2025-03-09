@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import serial
 import time
+import struct
 
 # Configurare port serial – actualizează portul și viteza după necesitate
 SERIAL_PORT = '/dev/ttyS0'  # Exemplu: '/dev/ttyUSB0' sau '/dev/serial0'
@@ -15,31 +16,69 @@ except Exception as e:
     print("Eroare la deschiderea portului serial:", e)
     raise
 
-def send(*args):
+def send(cmd_type, val1, val2, vector):
     """
-    Trimite un mesaj formatat între '<' și '>' prin portul serial.
-    Se acceptă între 1 și 4 parametri.
+    Trimite un mesaj binar format din octeți prin portul serial.
     
-    Exemple:
-      send(1, 2, 3, 4)  => trimite "< 1 2 3 4 >"
-      send(3, 2)        => trimite "< 3 2 >"
+    Formatul mesajului:
+        [start_marker, cmd_type, val2, val1, vector[0], vector[1], vector[2], vector[3], end_marker]
+    
+    Unde:
+      - start_marker este de ex. 0x02,
+      - end_marker este de ex. 0x03,
+      - vectorul trebuie să aibă fie 1 element (care se replică pe cele 4 poziții), fie 4 elemente.
     """
-    if not args:
-        raise ValueError("Trebuie să specificați cel puțin un parametru!")
-    if len(args) > 4:
-        raise ValueError("Maxim 4 parametri sunt permisi!")
+    # Validăm că vectorul este o listă și îl convertim la int
+    if not isinstance(vector, list):
+        raise ValueError("Vectorul trebuie să fie o listă!")
+    try:
+        cmd_type = int(cmd_type)
+        val1 = int(val1)
+        val2 = int(val2)
+        vector = [int(v) for v in vector]
+    except ValueError:
+        raise ValueError("Toți parametrii trebuie să fie numere întregi!")
     
-    message = "< " + " ".join(str(arg) for arg in args) + " >\n"
-    ser.write(message.encode('utf-8'))
+    # Verificăm dacă vectorul are 1 sau 4 elemente
+    if len(vector) not in (1, 4):
+        raise ValueError("Vectorul trebuie să aibă fie 1 fie 4 elemente!")
+    
+    # Dacă avem un singur element, replicăm pe toate cele 4 poziții
+    if len(vector) == 1:
+        vector = vector * 4
+    
+    # Asigură-te că valorile sunt în intervalul 0-255
+    for v in [cmd_type, val1, val2] + vector:
+        if not (0 <= v <= 255):
+            raise ValueError("Valorile trebuie să fie între 0 și 255!")
+    
+    # Definim markerii de început și sfârșit
+    START_MARKER = 0x02
+    END_MARKER = 0x03
+    
+    # Construim mesajul binar: 1 octet pentru markerul de început, 1 octet pentru fiecare valoare,
+    # 4 octeți pentru vector și 1 octet pentru markerul de sfârșit, total 9 octeți.
+    message = struct.pack('9B',
+                          START_MARKER,
+                          cmd_type,
+                          val2,     # Urmând ordinea din vechiul protocol: cmd_type, val2, val1
+                          val1,
+                          vector[0],
+                          vector[1],
+                          vector[2],
+                          vector[3],
+                          END_MARKER)
+    
+    ser.write(message)
     ser.flush()
-    print(f"[SENDING] {message.strip()}")
+    print("[SENDING] Message bytes:", list(message))
 
 def receive():
     """
     Așteaptă primirea datelor de la portul serial.
     
     - Așteaptă maximum 3 secunde.
-    - Dacă se primesc cel puțin 16 octeți (2 seturi a câte 8 biți), returnează imediat primele 16.
+    - Dacă se primesc cel puțin 16 octeți, returnează primele 16.
     - Altfel, returnează datele disponibile.
     
     Returnează o listă de numere întregi.
@@ -63,84 +102,35 @@ def receive():
     
     return list(data_buffer)
 
-def process_command(cmd_type, data1=0, data2=0, data3=0):
+def process_command(cmd_type, val1, val2, vector):
     """
-    Procesează o comandă pe baza parametrilor primiți și efectuează validările necesare.
+    Procesează o comandă pe baza parametrilor primiți.
     
-    Formatul parametrilor:
-      - cmd_type: tipul de comandă (1, 2, 3, 4 sau 5)
-      - data1, data2, data3: valorile asociate comenzii.
+    Această funcție primește:
+      - cmd_type: tipul comenzii
+      - val1: primul parametru (value1)
+      - val2: al doilea parametru (value2)
+      - vector: vectorul de date (listă; poate avea 1 sau 4 elemente)
       
-    Validări:
-      Tip 1 (control_car):
-         * data1 (direcție) trebuie să fie ≤ 20.
-         * data2 (tick) trebuie să fie ≤ 250.
-         * data3 (speed) trebuie să fie ≤ 250.
-         
-      Tip 2 (control_servo):
-         * data1 (servo_id) trebuie să fie între 180 și 190.
-         * data2 (angle) trebuie să fie ≤ 180.
-         * data3 trebuie să fie 0.
-         
-      Tip 3 (request_data):
-         * data1 (sensor_type) trebuie să fie 1 sau 2.
-         * data2 și data3 sunt ignorate (se recomandă 0).
-         
-      Tip 4 (save_next_cross_direction):
-         * data1 (direcția) trebuie să fie între 0 și 4.
-         * data2 și data3 sunt ignorate (se recomandă 0).
-         
-      Tip 5 (debug_mode):
-         * data1, data2 și data3 trebuie să fie ≤ 250.
-    
-    După validări, comanda este transmisă prin funcția `send`.
-    Dacă tipul comenzii este 3, se așteaptă un răspuns și se returnează rezultatul.
-    Pentru celelalte tipuri, se returnează None.
+    Mesajul transmis va fi:
+        < cmd_type val1 val2 [ vector ] >
+        
+    Exemplu:
+      - Dacă vectorul este [255], se va trimite: "< 1 10 20 [ 255 ] >"
+      - Dacă vectorul este [100, 150, 200, 250], se va trimite: "< 1 10 20 [ 100 150 200 250 ] >"
+      
+    Dacă cmd_type este 3, se așteaptă un răspuns de la portul serial.
     """
-    # Conversie la int (în cazul în care sunt primite sub formă de string)
     try:
         cmd_type = int(cmd_type)
-        data1 = int(data1)
-        data2 = int(data2)
-        data3 = int(data3)
+        val1 = int(val1)
+        val2 = int(val2)
+        vector = [int(v) for v in vector]
     except ValueError:
         raise ValueError("Toți parametrii trebuie să fie numere întregi!")
     
-    # Validări în funcție de tipul comenzii
-    if cmd_type == 1:
-        if data1 > 20:
-            raise ValueError("Pentru tipul 1, direcția (data1) trebuie să fie ≤ 20.")
-        if data2 > 250:
-            raise ValueError("Pentru tipul 1, tick (data2) trebuie să fie ≤ 250.")
-        if data3 > 250:
-            raise ValueError("Pentru tipul 1, speed (data3) trebuie să fie ≤ 250.")
-    elif cmd_type == 2:
-        if data1 < 180 or data1 > 190:
-            raise ValueError("Pentru tipul 2, servo_id (data1) trebuie să fie între 180 și 190.")
-        if data2 > 180:
-            raise ValueError("Pentru tipul 2, angle (data2) trebuie să fie ≤ 180.")
-        if data3 != 0:
-            raise ValueError("Pentru tipul 2, se acceptă doar doi parametri; data3 trebuie să fie 0.")
-    elif cmd_type == 3:
-        if data1 not in (1, 2):
-            raise ValueError("Pentru tipul 3, sensor_type (data1) trebuie să fie 1 sau 2.")
-        if data2 != 0 or data3 != 0:
-            print("Avertisment: Pentru tipul 3 se utilizează doar data1; data2 și data3 vor fi ignorate.")
-    elif cmd_type == 4:
-        if data1 > 4:
-            raise ValueError("Pentru tipul 4, direcția (data1) trebuie să fie între 0 și 4.")
-        if data2 != 0 or data3 != 0:
-            print("Avertisment: Pentru tipul 4 se utilizează doar data1; data2 și data3 vor fi ignorate.")
-    elif cmd_type == 5:
-        if data1 > 250 or data2 > 250 or data3 > 250:
-            raise ValueError("Pentru tipul 5, valorile trebuie să fie ≤ 250.")
-    else:
-        raise ValueError("Tipul de comandă nu este valid!")
+    send(cmd_type, val1, val2, vector)
     
-    # Transmiterea comenzii formatate
-    send(cmd_type, data1, data2, data3)
-    
-    # Dacă se solicită date (tipul 3), așteptăm și returnăm răspunsul
     if cmd_type == 3:
         return receive()
     else:
@@ -150,7 +140,7 @@ def process_command(cmd_type, data1=0, data2=0, data3=0):
 if __name__ == '__main__':
     try:
         while True:
-            user_input = input("Introdu comanda în formatul 'type data1 data2 data3' (sau 'exit' pentru ieșire): ").strip()
+            user_input = input("Introdu comanda în formatul 'type val1 val2 v1 [v2 v3 v4]' (sau 'exit' pentru ieșire): ").strip()
             if user_input.lower() == "exit":
                 break
             if not user_input:
@@ -158,16 +148,20 @@ if __name__ == '__main__':
             
             tokens = user_input.split()
             try:
-                # Convertim token-urile în int; dacă sunt mai puține de 4, completăm cu 0
-                values = [int(tok) for tok in tokens]
+                # Primul token: cmd_type, al doilea: val1, al treilea: val2, restul: vector
+                cmd_type = int(tokens[0])
+                val1 = int(tokens[1])
+                val2 = int(tokens[2])
+                vector = [int(tok) for tok in tokens[3:]]
+                if len(vector) < 1:
+                    print("Trebuie să specificați cel puțin un element pentru vector!")
+                    continue
             except ValueError:
                 print("Toți parametrii trebuie să fie numere întregi!")
                 continue
-            while len(values) < 4:
-                values.append(0)
             
             try:
-                result = process_command(*values[:4])
+                result = process_command(cmd_type, val1, val2, vector)
                 if result is not None:
                     print("Răspunsul primit:", result)
             except ValueError as ve:

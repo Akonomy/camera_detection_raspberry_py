@@ -16,62 +16,39 @@ except Exception as e:
     print("Eroare la deschiderea portului serial:", e)
     raise
 
-def send(cmd_type, val1, val2, vector):
-    """
-    Trimite un mesaj binar format din octeți prin portul serial.
+
+def send(cmd_type, val2, val1, vector):
+    # Deschide portul serial (verifică ce port este activ pe sistemul tău)
+
+
+        
+    packet = bytearray()
+    packet.append(0xAA)  # Marker de început
+    packet.append(cmd_type & 0xFF)
+    packet.append(val1 & 0xFF)
+    packet.append(val2 & 0xFF)
+    packet.append(len(vector) & 0xFF)  # Lungimea vectorului
     
-    Formatul mesajului:
-        [start_marker, cmd_type, val2, val1, vector[0], vector[1], vector[2], vector[3], end_marker]
+    for item in vector:
+        packet.append(item & 0xFF)
     
-    Unde:
-      - start_marker este de ex. 0x02,
-      - end_marker este de ex. 0x03,
-      - vectorul trebuie să aibă fie 1 element (care se replică pe cele 4 poziții), fie 4 elemente.
-    """
-    # Validăm că vectorul este o listă și îl convertim la int
-    if not isinstance(vector, list):
-        raise ValueError("Vectorul trebuie să fie o listă!")
-    try:
-        cmd_type = int(cmd_type)
-        val1 = int(val1)
-        val2 = int(val2)
-        vector = [int(v) for v in vector]
-    except ValueError:
-        raise ValueError("Toți parametrii trebuie să fie numere întregi!")
+    packet.append(0xBB)  # Marker de sfârșit
+
+    ser.write(packet)
+    print("Pachet trimis:", list(packet))
+
+
     
-    # Verificăm dacă vectorul are 1 sau 4 elemente
-    if len(vector) not in (1, 4):
-        raise ValueError("Vectorul trebuie să aibă fie 1 fie 4 elemente!")
     
-    # Dacă avem un singur element, replicăm pe toate cele 4 poziții
-    if len(vector) == 1:
-        vector = vector * 4
-    
-    # Asigură-te că valorile sunt în intervalul 0-255
-    for v in [cmd_type, val1, val2] + vector:
-        if not (0 <= v <= 255):
-            raise ValueError("Valorile trebuie să fie între 0 și 255!")
-    
-    # Definim markerii de început și sfârșit
-    START_MARKER = 0x02
-    END_MARKER = 0x03
-    
-    # Construim mesajul binar: 1 octet pentru markerul de început, 1 octet pentru fiecare valoare,
-    # 4 octeți pentru vector și 1 octet pentru markerul de sfârșit, total 9 octeți.
-    message = struct.pack('9B',
-                          START_MARKER,
-                          cmd_type,
-                          val2,     # Urmând ordinea din vechiul protocol: cmd_type, val2, val1
-                          val1,
-                          vector[0],
-                          vector[1],
-                          vector[2],
-                          vector[3],
-                          END_MARKER)
-    
-    ser.write(message)
+        
+        
     ser.flush()
-    print("[SENDING] Message bytes:", list(message))
+  
+
+
+    print("[END] Debug fixed message bytes:")
+    
+ 
 
 def receive():
     """

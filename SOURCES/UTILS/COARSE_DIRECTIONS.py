@@ -1,300 +1,208 @@
 #!/usr/bin/env python3
 """
-Module: movement_command_generator
+Noua implementare a generatorului de comenzi
+folosind exclusiv noile date.
 
-Acest modul primește o poziție țintă (x, y) în cm și generează comenzi
-pentru robot (directie, ticks, speed) pe baza tabelelor de deplasare
-laterală și înainte/înapoi, cu regulile:
- - x < 0 => dreapta (10)
- - x > 0 => stânga  (9)
- - y > 0 => înainte (1)
- - y < 0 => înapoi  (2)
- - la deplasare laterală și înainte se evită overshoot,
- - la deplasare înapoi e permis overshoot.
+Funcțiile principale:
+  - getAllCommands(x_cm, y_cm) -> listă de comenzi
+       Fiecare comandă este un tuple: (1, tick, direction, speed_vector)
+  - getFirstCommand(x_cm, y_cm) -> returnează doar prima comandă din listă
 
-Două funcții principale:
- - getAllCommands(x, y) -> listă cu (directie, ticks, speed, [adjust?])
- - getFirstCommand(x, y) -> doar prima comandă din listă
+Reguli:
+  - x < 0  => mișcare laterală spre dreapta (direction 10)
+  - x > 0  => mișcare laterală spre stânga  (direction 9)
+  - y > 0  => mișcare înainte (direction 1)
+  - y < 0  => mișcare înapoi  (direction 2)
+  
+Pentru mișcarea înainte/înapoi se alege o comandă cu distanţa maximă ce nu depăşeşte
+valoarea țintă (nu se permite overshoot). Pentru mișcările laterale, se selectează candidatul
+cea mai apropiat de valoarea dorită (chiar dacă se depăşeşte).
 """
 
-from typing import List, Tuple
+# --- Noile date pentru mișcarea înainte (și, implicit, pentru backward) ---
+# Fiecare tuple este de forma: (tick, speed, distance)
+forward_commands = [
+    (1, 100 , 1 ),
+    (1, 105, 1.5),
+    (3, 100, 4.0),
+    (5, 100, 9.5),
+    (6, 100, 12.0),
+    (7, 100, 14.5),
+    (1, 130, 3.0),
+    (2, 130, 4.0),
+    (3, 130, 7.0),
+    (4, 130, 10.7),
+    (5, 130, 13.0),
+    (6, 130, 16.0),
+    (7, 130, 19.5),
+    (8, 130, 22.0),
+    (1, 140, 3.0),
+    (2, 140, 4.0),
+    (3, 140, 7.0),
+    (4, 140, 11.0),
+    (5, 140, 14.5),
+    (1, 160, 4.0),
+    (2, 160, 6.0),
+    (3, 160, 9.0),
+    (4, 160, 12.5),
+    (5, 160, 16.0),
+    (6, 160, 19.5),
+    (3, 180, 10.0),
+    (4, 180, 14.0),
+    (5, 180, 18.0),
+    (1, 135, 2.5),
+    (1, 130, 2.0),
+    (2, 160, 5.0),
+    (3, 150, 8.0)
+]
 
-# ------------------------------------------------
-# 1) Datele pentru deplasare laterală la dreapta
-#    (cod directie = 10, speed = 70)
-#    ticks : (distanta_cm, necesita_adjust)
-# ------------------------------------------------
-LATERAL_RIGHT_TABLE = {
-    1:  (2.0,   False),
-    2:  (3.5,   False),
-    3:  (6.5,   False),
-    4:  (8.5,   True),   # adjust
-    5:  (12.0,  True),   # adjust
-    6:  (15.0,  True),   # adjust
-    7:  (18.0,  True),   # adjust
-    8:  (20.0,  True),   # adjust
-    9:  (24.0,  True),   # adjust
-    10: (27.0,  True)    # adjust
-}
-LATERAL_RIGHT_SPEED = 70
+# --- Noile date pentru mișcarea laterală spre dreapta ---
+# Fiecare tuple este: (tick, speed_vector, distance)
+side_right_commands = [
+    (10, [167, 169, 185, 194], 18.0),
+    (9,  [167, 169, 185, 194], 15.5),
+    (8,  [167, 169, 185, 194], 14.5),
+    (7,  [167, 169, 185, 194], 14.5),
+    (7,  [167, 169, 185, 194], 12.0),
+    (6,  [167, 169, 185, 194], 10.0),
+    (5,  [167, 169, 185, 194], 8.0),
+    (4,  [167, 169, 185, 194], 6.5),
+    (3,  [167, 169, 185, 194], 4.0),
+    (2,  [167, 169, 185, 194], 3.0),
+    (1,  [167, 169, 185, 194], 2.0)
+]
 
-# ------------------------------------------------
-# 2) Datele pentru deplasare laterală la stânga
-#    (cod directie = 9, speed = 70)
-#    ticks : (distanta_cm, necesita_adjust)
-# ------------------------------------------------
-LATERAL_LEFT_TABLE = {
-    1:  (2.0,   False),
-    2:  (4.0,   False),
-    3:  (6.5,   False),
-    4:  (9.5,   False),
-    5:  (12.5,  False),
-    6:  (15.0,  False),
-    7:  (18.0,  False),
-    8:  (21.0,  False),
-    9:  (25.0,  False),
-    10: (27.0,  False)
-}
-LATERAL_LEFT_SPEED = 70
+# --- Noile date pentru mișcarea laterală spre stânga ---
+# Am combinat două grupuri de date într-o singură listă
+# Fiecare tuple este: (tick, speed_vector, distance)
+side_left_commands = [
+    (1,  [168, 158, 166, 161], 1.5),
+    (2,  [168, 158, 166, 161], 2.5),
+    (1,  [191, 180, 187, 176], 2.0),
+    (2,  [191, 180, 187, 176], 3.0),
+    (3,  [191, 180, 187, 176], 5.0),
+    (4,  [191, 180, 187, 176], 8.5),
+    (5,  [191, 180, 187, 176], 10.0),
+    (6,  [191, 180, 187, 176], 13.0),
+    (7,  [191, 180, 187, 176], 15.5),
+    (8,  [191, 180, 187, 176], 18.0),
+    (9,  [191, 180, 187, 176], 19.5),
+    (10, [191, 180, 187, 176], 23.5)
+]
 
-# ------------------------------------------------
-# 3) Datele pentru deplasare înainte/înapoi
-#    (cod directie = 1 pt înainte, 2 pt înapoi)
-#    Avem un tablou: (ticks, speed) -> distanta
-# ------------------------------------------------
-FORWARD_BACKWARD_TABLE = {
-    110: {1: 3.7,  2: 6.1,  3: 10.0, 4: 13.5,  5: 17.0},
-    120: {1: 3.6,  2: 6.0,  3: 9.6,  4: 12.5,  5: 16.0},
-    130: {1: 3.0,  2: 5.1,  3: 8.0,  4: 12.0,  5: 15.0},
-    140: {1: 2.9,  2: 4.6,  3: 7.5,  4: 11.0,  5: 14.0},
-    150: {1: 2.5,  2: 4.0,  3: 7.4,  4: 9.5,   5: 13.0},
-    160: {1: 2.0,  2: 999,  3: 999,  4: 999,   5: 999},
-    170: {1: 1.5,  2: 999,  3: 999,  4: 999,   5: 999},
-    175: {1: 1.0,  2: 999,  3: 999,  4: 999,   5: 999},
-}
+# --- Funcții helper pentru selectarea celui mai bun candidat ---
 
-
-# ------------------------------------------------
-# Funcții ajutătoare pentru căutarea de combinații
-# ------------------------------------------------
-
-def find_lateral_commands(distance_cm: float, is_left: bool) -> List[Tuple[int, int, int, bool]]:
+def find_best_forward_command(target_distance: float):
     """
-    Găsește o secvență de comenzi (directie, ticks, speed, adjust_flag)
-    pentru a parcurge `distance_cm` lateral, FĂRĂ overshoot.
-    
-    - is_left = True  => folosește LATERAL_LEFT_TABLE (cod directie = 9)
-    - is_left = False => folosește LATERAL_RIGHT_TABLE (cod directie = 10)
-    - speed = 70 (constant)
-    
-    Returnează o listă de comenzi (directie, ticks, speed, adjust).
+    Selectează comanda din forward_commands cu distanţa maximă care nu depăşeşte target_distance.
+    Returnează un tuple: (tick, speed, distance) sau None dacă nu există candidat.
     """
-    if distance_cm <= 0:
-        return []
-    
-    table = LATERAL_LEFT_TABLE if is_left else LATERAL_RIGHT_TABLE
-    directie = 9 if is_left else 10
-    speed = LATERAL_LEFT_SPEED if is_left else LATERAL_RIGHT_SPEED
-    
-    commands = []
-    remaining = distance_cm
-    
-    # Strategie simplă: la fiecare pas, căutăm cea mai mare distanță <= remaining
-    # (adică nu depășim niciodată).
-    # Repetăm până epuizăm (sau aproape) distanța.
-    while remaining > 0:
-        best_tick = None
-        best_dist = 0.0
-        best_adjust = False
-        
-        for t, (dist, adj) in table.items():
-            if dist <= remaining and dist > best_dist:
-                best_dist = dist
-                best_tick = t
-                best_adjust = adj
-        
-        if best_tick is None:
-            # Nu există niciun tick care să fie <= remaining => ieșim (nu putem avansa)
-            break
-        
-        commands.append((directie, best_tick, speed, best_adjust))
-        remaining -= best_dist
-        
-        # Dacă rămâne foarte puțin (sub 0.5 cm de ex.), putem opri
-        if remaining < 0.5:
-            break
-    
-    return commands
+    valid = [cmd for cmd in forward_commands if cmd[2] <= target_distance]
+    if not valid:
+        return None
+    # Alege comanda cu distanţa maximă (cea mai aproape de target, fără overshoot)
+    best = max(valid, key=lambda x: x[2])
+    return best
 
-def find_forward_commands(distance_cm: float) -> List[Tuple[int, int, int, bool]]:
+def find_best_side_command(target_distance: float, side: str):
     """
-    Găsește o secvență de comenzi (1 = înainte, ticks, speed, adjust=False mereu)
-    pentru a parcurge `distance_cm` FĂRĂ overshoot.
-    
-    Returnează o listă de comenzi (directie=1, ticks, speed, adjust=False).
+    Pentru mișcarea laterală, selectează candidatul din lista corespunzătoare
+    cu distanţa cea mai apropiată de target_distance (overshoot permis).
+    Parametrul side poate fi "right" sau "left".
+    Returnează un tuple: (tick, speed_vector, distance) sau None.
     """
-    if distance_cm <= 0:
-        return []
-    
-    commands = []
-    remaining = distance_cm
-    
-    # Vom încerca o abordare simplă:
-    #  1) căutăm un (ticks, speed) care să fie EXACT <= remaining și cât mai aproape de remaining.
-    #  2) îl scădem și repetăm.
-    while remaining > 0:
-        best_speed = None
-        best_ticks = None
-        best_dist = 0.0
-        
-        for speed, ticks_map in FORWARD_BACKWARD_TABLE.items():
-            for t, dist in ticks_map.items():
-                if dist <= remaining and dist > best_dist:
-                    best_dist = dist
-                    best_speed = speed
-                    best_ticks = t
-        
-        if best_ticks is None:
-            # Nu putem găsi nimic <= remaining => ne oprim
-            break
-        
-        commands.append((1, best_ticks, best_speed, False))
-        remaining -= best_dist
-        
-        if remaining < 0.5:
-            break
-    
-    return commands
+    if side == "right":
+        candidates = side_right_commands
+    elif side == "left":
+        candidates = side_left_commands
+    else:
+        return None
+    # Alege candidatul cu diferenţa minimă faţă de target_distance (absolute)
+    best = min(candidates, key=lambda x: abs(x[2] - target_distance))
+    return best
 
-def find_backward_commands(distance_cm: float) -> List[Tuple[int, int, int, bool]]:
+def find_best_backward_command(target_distance: float):
     """
-    Găsește o secvență de comenzi (2 = înapoi, ticks, speed, adjust=False)
-    pentru a parcurge `distance_cm` CU overshoot PERMIS.
-    Idea: dacă putem să facem un singur pas care să depășească distanța,
-          e ok. Altfel, îl împărțim.
+    Pentru backward se foloseşte aceeaşi logică ca pentru forward,
+    dar comanda va fi modificată să aibă direcţia 2.
+    Returnează un tuple: (tick, speed, distance) sau None.
     """
-    if distance_cm <= 0:
-        return []
-    
-    commands = []
-    remaining = distance_cm
-    
-    # Metodă: încercăm să găsim un singur (ticks, speed) care e >= distance_cm (overshoot).
-    # Dacă nu găsim, facem sub-pasul cel mai mare < distance_cm, apoi repetăm.
-    while remaining > 0:
-        best_speed = None
-        best_ticks = None
-        # caut un dist <-> minim care e >= remaining
-        # dacă nu găsesc, fac "cel mai mare sub remaining"
-        exact_or_overshoot_found = False
-        min_dist_above = 9999
-        
-        for speed, ticks_map in FORWARD_BACKWARD_TABLE.items():
-            for t, dist in ticks_map.items():
-                # Distanța dist >= remaining => overshoot ok
-                if dist >= remaining and dist < min_dist_above:
-                    min_dist_above = dist
-                    best_speed = speed
-                    best_ticks = t
-                    exact_or_overshoot_found = True
-        
-        if exact_or_overshoot_found:
-            # Avem un combo care overshoot-ează (sau e fix egal)
-            commands.append((2, best_ticks, best_speed, False))
-            break  # ne oprim, că e overshoot dorit
-        else:
-            # Nu există nimic >= remaining => luăm cel mai mare sub remaining
-            best_dist = 0.0
-            for speed, ticks_map in FORWARD_BACKWARD_TABLE.items():
-                for t, dist in ticks_map.items():
-                    if dist > best_dist and dist < remaining:
-                        best_dist = dist
-                        best_speed = speed
-                        best_ticks = t
-            if best_ticks is None:
-                # nimic nu putem face
-                break
-            commands.append((2, best_ticks, best_speed, False))
-            remaining -= best_dist
-            
-            if remaining < 0.5:
-                break
-    
-    return commands
+    return find_best_forward_command(target_distance)
 
-# ------------------------------------------------
-# Funcțiile principale cerute
-# ------------------------------------------------
+# --- Funcțiile principale ---
 
-def getAllCommands(x_cm: float, y_cm: float) -> List[Tuple[int, int, int, bool]]:
+def getAllCommands(x_cm: float, y_cm: float):
     """
-    Returnează o listă de comenzi (directie, ticks, speed, adjust_flag)
-    pentru a ajunge de la (0, 0) la (x_cm, y_cm).
+    Primeşte coordonatele țintă (x, y) în cm și returnează o listă de comenzi,
+    fiecare sub forma (1, tick, direction, speed_vector) potrivită pentru funcția process_command.
     
-    Reguli simple de prioritate:
-     - Dacă y_cm < 0, deplasare înapoi prima.
-     - Apoi deplasare laterală (x_cm).
-     - Apoi deplasare înainte (dacă y_cm > 0 rămas).
-    
-    (Ajustarea fină a logicii se poate face după preferințe.)
+    Prioritate:
+      1. Dacă y < 0: se adaugă comanda backward (folosind forward_commands, cu direction = 2)
+      2. Dacă |x| > 0.5: se adaugă comanda laterală:
+           x < 0  => side right (direction = 10)
+           x > 0  => side left  (direction = 9)
+      3. Dacă y > 0: se adaugă comanda forward (direction = 1)
     """
     commands = []
     
-    # 1) Dacă y e negativ, ne deplasăm întâi înapoi
+    # 1) Mișcare înapoi (y negativ)
     if y_cm < 0:
-        dist_back = abs(y_cm)
-        back_cmds = find_backward_commands(dist_back)
-        commands.extend(back_cmds)
-        # setăm y_cm la 0 după deplasarea înapoi (am considerat că am rezolvat-l)
+        candidate = find_best_backward_command(abs(y_cm))
+        if candidate is not None:
+            tick, speed, _ = candidate
+            # Pentru backward, se foloseşte acelaşi speed, dar direction devine 2;
+            # speed_vector se transmite ca listă (mod uniform)
+            commands.append((1, tick, 2, [speed]))
         y_cm = 0
-    
-    # 2) Deplasare laterală (dacă x e negativ => dreapta, x pozitiv => stânga)
+
+    # 2) Mișcare laterală
     if abs(x_cm) > 0.5:
         if x_cm < 0:
-            # dreapta
-            dist_right = abs(x_cm)
-            right_cmds = find_lateral_commands(dist_right, is_left=False)
-            commands.extend(right_cmds)
+            candidate = find_best_side_command(abs(x_cm), "right")
+            if candidate is not None:
+                tick, speed_vector, _ = candidate
+                commands.append((1, tick, 10, speed_vector))
         else:
-            # stânga
-            dist_left = abs(x_cm)
-            left_cmds = find_lateral_commands(dist_left, is_left=True)
-            commands.extend(left_cmds)
-        # considerăm că x a fost rezolvat
+            candidate = find_best_side_command(abs(x_cm), "left")
+            if candidate is not None:
+                tick, speed_vector, _ = candidate
+                commands.append((1, tick, 9, speed_vector))
         x_cm = 0
-    
-    # 3) Dacă mai rămâne y pozitiv, ne deplasăm înainte
+
+    # 3) Mișcare înainte (y pozitiv)
     if y_cm > 0.5:
-        forward_cmds = find_forward_commands(y_cm)
-        commands.extend(forward_cmds)
+        candidate = find_best_forward_command(y_cm)
+        if candidate is not None:
+            tick, speed, _ = candidate
+            commands.append((1, tick, 1, [speed]))
         y_cm = 0
 
-    modified_commands = [(1, *cmd) for cmd in commands]
+    return commands
 
-    return modified_commands
-
-def getFirstCommand(x_cm: float, y_cm: float) -> Tuple[int, int, int, bool]:
+def getFirstCommand(x_cm: float, y_cm: float):
     """
-    Returnează DOAR prima comandă din secvența generată de getAllCommands.
-    Dacă nu există nicio comandă, întoarce (0, 0, 0, False).
+    Returnează doar prima comandă din secvenţa generată de getAllCommands.
+    Dacă nu există nicio comandă, returnează (0, 0, 0, []).
     """
-    all_cmds = getAllCommands(x_cm, y_cm)
-    if len(all_cmds) > 0:
-        return all_cmds[0]
-    return (1, 0, 0, 0, False)  # nimic
+    cmds = getAllCommands(x_cm, y_cm)
+    if cmds:
+        return cmds[0]
+    return (0, 0, 0, [])
 
-# ------------------------------------------------
-# Exemplu de test
-# ------------------------------------------------
+# --- Exemplu de testare ---
 if __name__ == "__main__":
-    # Exemplu 1: (x, y) = (-10, 0) => dreapta 10 cm
-    cmds = getAllCommands(-10.0, 0.0)
-    print("Exemplu: (-10.0, 0.0) =>", cmds)
+    # Exemplu 1: (x, y) = (-10, 0) => mișcare laterală spre dreapta pentru 10 cm
+    cmds1 = getAllCommands(-10.0, 0.0)
+    print("Comenzi pentru (-10, 0):", cmds1)
     
-    # Exemplu 2: (x, y) = (10, 21) => stânga 10 cm, apoi înainte 21 cm
+    # Exemplu 2: (x, y) = (10, 21) => mișcare laterală spre stânga pentru 10 cm, apoi înainte pentru 21 cm
     cmds2 = getAllCommands(10.0, 21.0)
-    print("Exemplu: (10.0, 21.0) =>", cmds2)
+    print("Comenzi pentru (10, 21):", cmds2)
     
-    # Prima comandă
-    first2 = getFirstCommand(10.0, 21.0)
-    print("Prima comandă (10.0, 21.0) =>", first2)
+    # Exemplu 3: (x, y) = (0, -15) => mișcare înapoi pentru 15 cm
+    cmds3 = getAllCommands(0, -15.0)
+    print("Comenzi pentru (0, -15):", cmds3)
+    
+    # Prima comandă pentru (10, 21)
+    first_cmd = getFirstCommand(10.0, 21.0)
+    print("Prima comandă pentru (10, 21):", first_cmd)

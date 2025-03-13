@@ -131,7 +131,6 @@ DISTANCE_JUMP_THRESHOLD = 150  # Salt maxim permis în distanță
 # --------------------------------------------------
 # START COMUNICATIE
 # --------------------------------------------------
-process_command(3, 2, 0, 0)
 
 # --------------------------------------------------
 # CONFIGURAREA CAMEREI ȘI A ZONEI

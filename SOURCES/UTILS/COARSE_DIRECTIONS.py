@@ -20,8 +20,52 @@ cea mai apropiat de valoarea dorită (chiar dacă se depăşeşte).
 """
 
 # --- Noile date pentru mișcarea înainte (și, implicit, pentru backward) ---
-# Fiecare tuple este de forma: (tick, speed, distance)
+# Fiecare tuple este de forma: (tick, speed, distance) 
+
+#-----------<  TESTATE LA 8 VOLTI  >--------------------
+
+
 forward_commands = [
+    (1, 100, 2.0),
+    (2, 100, 2.5),
+    (3, 100, 6.0),
+    (3, 100, 5.5),
+    (4, 100, 8.5),
+    (6, 100, 14.5),
+    (7, 100, 17.0),
+    (8, 100, 20.0),
+    (8, 100, 20.0),
+    (1, 120, 3.0),
+    (2, 120, 4.5),
+    (3, 120, 8.0),
+    (3, 120, 8.0),
+    (4, 120, 10.5),
+    (5, 120, 14.0),
+    (6, 120, 17.0),
+    (7, 120, 20.5),
+    (1, 160, 4.5),
+    (2, 160, 6.5),
+    (3, 160, 10.5),
+    (4, 160, 14.5),
+    (5, 160, 18.0),
+    (6, 160, 22.0),
+    (1, 180, 5.0),
+    (2, 180, 7.0),
+    (3, 180, 11.5),
+    (4, 180, 16.0),
+    (5, 180, 20.0),
+    (1, 190, 5.5),
+    (2, 190, 7.5),
+    (3, 190, 12.0),
+    (4, 190, 16.5),
+    (1, 95, 2.0),
+    (1, 88, 1.5),
+    (1, 80, 1.0)
+]
+
+
+
+old_forward_commands = [
     (1, 100 , 1 ),
     (1, 105, 1.5),
     (3, 100, 4.0),
@@ -55,6 +99,9 @@ forward_commands = [
     (2, 160, 5.0),
     (3, 150, 8.0)
 ]
+
+
+
 
 # --- Noile date pentru mișcarea laterală spre dreapta ---
 # Fiecare tuple este: (tick, speed_vector, distance)

@@ -12377,3 +12377,260 @@
 2025-03-14 20:09:58,036 - Camera started
 2025-03-14 20:10:35,823 - Camera stopped
 2025-03-14 20:10:36,030 - Camera closed successfully.
+2025-03-15 07:03:30,769 - Initialization successful.
+2025-03-15 07:03:30,770 - Camera now open.
+2025-03-15 07:03:30,776 - Camera configuration has been adjusted!
+2025-03-15 07:03:30,778 - Configuration successful!
+2025-03-15 07:03:30,878 - Camera started
+2025-03-15 07:04:04,577 - Camera stopped
+2025-03-15 07:04:04,593 - Camera closed successfully.
+2025-03-15 07:05:04,706 - Initialization successful.
+2025-03-15 07:05:04,707 - Camera now open.
+2025-03-15 07:05:04,712 - Camera configuration has been adjusted!
+2025-03-15 07:05:04,717 - Configuration successful!
+2025-03-15 07:05:04,828 - Camera started
+2025-03-15 07:05:30,811 - Camera stopped
+2025-03-15 07:05:31,033 - Camera closed successfully.
+2025-03-15 07:09:34,667 - Initialization successful.
+2025-03-15 07:09:34,667 - Camera now open.
+2025-03-15 07:09:34,672 - Camera configuration has been adjusted!
+2025-03-15 07:09:34,674 - Configuration successful!
+2025-03-15 07:09:34,781 - Camera started
+2025-03-15 07:10:48,188 - Camera stopped
+2025-03-15 07:10:48,394 - Camera closed successfully.
+2025-03-15 07:19:58,295 - Initialization successful.
+2025-03-15 07:19:58,295 - Camera now open.
+2025-03-15 07:19:58,300 - Camera configuration has been adjusted!
+2025-03-15 07:19:58,308 - Configuration successful!
+2025-03-15 07:19:58,405 - Camera started
+2025-03-15 07:21:24,627 - Camera stopped
+2025-03-15 07:21:24,637 - Camera closed successfully.
+2025-03-17 07:40:51,996 - Initialization successful.
+2025-03-17 07:40:51,999 - Camera now open.
+2025-03-17 07:40:52,004 - Camera configuration has been adjusted!
+2025-03-17 07:40:52,006 - Configuration successful!
+2025-03-17 07:40:52,101 - Camera started
+2025-03-17 07:41:15,832 - Eroare la actualizarea hărții: unsupported operand type(s) for *: 'float' and 'NoneType'
+2025-03-17 07:41:19,451 - Eroare la actualizarea hărții: unsupported operand type(s) for *: 'float' and 'NoneType'
+2025-03-17 07:41:23,115 - Eroare la actualizarea hărții: unsupported operand type(s) for *: 'float' and 'NoneType'
+2025-03-17 07:41:26,663 - Eroare la actualizarea hărții: unsupported operand type(s) for *: 'float' and 'NoneType'
+2025-03-17 07:41:30,358 - Eroare la actualizarea hărții: unsupported operand type(s) for *: 'float' and 'NoneType'
+2025-03-17 07:41:33,948 - Eroare la actualizarea hărții: unsupported operand type(s) for *: 'float' and 'NoneType'
+2025-03-17 07:41:37,619 - Eroare la actualizarea hărții: unsupported operand type(s) for *: 'float' and 'NoneType'
+2025-03-17 07:41:40,266 - Camera stopped
+2025-03-17 07:41:40,484 - Camera closed successfully.
+2025-03-17 07:44:33,949 - Initialization successful.
+2025-03-17 07:44:33,950 - Camera now open.
+2025-03-17 07:44:33,957 - Camera configuration has been adjusted!
+2025-03-17 07:44:33,961 - Configuration successful!
+2025-03-17 07:44:34,057 - Camera started
+2025-03-17 07:44:34,193 - Camera stopped
+2025-03-17 07:44:34,397 - Camera closed successfully.
+2025-03-17 07:51:21,593 - Initialization successful.
+2025-03-17 07:51:21,593 - Camera now open.
+2025-03-17 07:51:21,598 - Camera configuration has been adjusted!
+2025-03-17 07:51:21,605 - Configuration successful!
+2025-03-17 07:51:21,702 - Camera started
+2025-03-17 07:51:41,116 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:51:44,730 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:51:48,301 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:51:51,863 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:02,783 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:06,287 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:17,231 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:20,880 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:24,520 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:28,122 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:31,751 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:35,285 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:38,834 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:49,671 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:53,209 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:52:56,790 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:00,500 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:04,133 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:07,745 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:11,392 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:14,921 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:18,521 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:22,144 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:25,810 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:29,488 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:33,057 - Eroare la actualizarea hărții: unknown color name "Sample"
+2025-03-17 07:53:36,725 - Eroare la actualizarea hărții: invalid command name ".!toplevel.!canvas"
+2025-03-17 07:53:38,414 - Camera stopped
+2025-03-17 07:53:38,625 - Camera closed successfully.
+2025-03-17 08:46:00,316 - Initialization successful.
+2025-03-17 08:46:00,316 - Camera now open.
+2025-03-17 08:46:00,321 - Camera configuration has been adjusted!
+2025-03-17 08:46:00,324 - Configuration successful!
+2025-03-17 08:46:00,419 - Camera started
+2025-03-17 08:46:05,083 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:08,640 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:12,304 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:15,929 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:19,610 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:23,198 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:26,881 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:30,415 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:34,045 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:36,029 - Camera stopped
+2025-03-17 08:46:36,238 - Camera closed successfully.
+2025-03-17 08:46:41,217 - Initialization successful.
+2025-03-17 08:46:41,217 - Camera now open.
+2025-03-17 08:46:41,222 - Camera configuration has been adjusted!
+2025-03-17 08:46:41,224 - Configuration successful!
+2025-03-17 08:46:41,325 - Camera started
+2025-03-17 08:46:46,051 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:49,635 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:53,214 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:46:56,886 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:47:00,433 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:47:04,167 - Eroare la actualizarea hărții: name 'getRealCoordinates' is not defined
+2025-03-17 08:47:05,401 - Camera stopped
+2025-03-17 08:47:05,607 - Camera closed successfully.
+2025-03-17 08:52:47,185 - Initialization successful.
+2025-03-17 08:52:47,185 - Camera now open.
+2025-03-17 08:52:47,196 - Camera configuration has been adjusted!
+2025-03-17 08:52:47,199 - Configuration successful!
+2025-03-17 08:52:47,302 - Camera started
+2025-03-17 08:53:40,895 - Camera stopped
+2025-03-17 08:53:41,100 - Camera closed successfully.
+2025-03-17 09:03:48,858 - Initialization successful.
+2025-03-17 09:03:48,860 - Camera now open.
+2025-03-17 09:03:48,865 - Camera configuration has been adjusted!
+2025-03-17 09:03:48,869 - Configuration successful!
+2025-03-17 09:03:48,965 - Camera started
+2025-03-17 09:03:53,045 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:03:57,195 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:04:00,736 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:04:04,280 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:04:07,822 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:04:11,456 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:04:14,976 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:04:18,578 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:04:22,126 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:04:25,689 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:04:29,113 - Camera stopped
+2025-03-17 09:04:29,318 - Camera closed successfully.
+2025-03-17 09:05:59,607 - Initialization successful.
+2025-03-17 09:05:59,607 - Camera now open.
+2025-03-17 09:05:59,613 - Camera configuration has been adjusted!
+2025-03-17 09:05:59,615 - Configuration successful!
+2025-03-17 09:05:59,711 - Camera started
+2025-03-17 09:06:18,642 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:06:22,120 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:06:25,734 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:06:29,262 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:06:32,889 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:06:33,192 - Camera stopped
+2025-03-17 09:06:33,403 - Camera closed successfully.
+2025-03-17 09:11:39,034 - Initialization successful.
+2025-03-17 09:11:39,035 - Camera now open.
+2025-03-17 09:11:39,040 - Camera configuration has been adjusted!
+2025-03-17 09:11:39,045 - Configuration successful!
+2025-03-17 09:11:39,136 - Camera started
+2025-03-17 09:11:39,277 - Camera stopped
+2025-03-17 09:11:39,481 - Camera closed successfully.
+2025-03-17 09:11:48,564 - Initialization successful.
+2025-03-17 09:11:48,564 - Camera now open.
+2025-03-17 09:11:48,569 - Camera configuration has been adjusted!
+2025-03-17 09:11:48,571 - Configuration successful!
+2025-03-17 09:11:48,664 - Camera started
+2025-03-17 09:11:48,803 - Camera stopped
+2025-03-17 09:11:49,007 - Camera closed successfully.
+2025-03-17 09:12:55,020 - Initialization successful.
+2025-03-17 09:12:55,021 - Camera now open.
+2025-03-17 09:12:55,026 - Camera configuration has been adjusted!
+2025-03-17 09:12:55,033 - Configuration successful!
+2025-03-17 09:12:55,126 - Camera started
+2025-03-17 09:12:55,543 - Camera stopped
+2025-03-17 09:12:55,744 - Camera closed successfully.
+2025-03-17 09:14:11,390 - Initialization successful.
+2025-03-17 09:14:11,391 - Camera now open.
+2025-03-17 09:14:11,395 - Camera configuration has been adjusted!
+2025-03-17 09:14:11,397 - Configuration successful!
+2025-03-17 09:14:11,493 - Camera started
+2025-03-17 09:14:15,687 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:20,001 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:23,694 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:27,319 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:30,863 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:34,452 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:37,979 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:41,623 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:45,165 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:48,705 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:52,271 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:55,777 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:14:59,423 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:15:02,996 - Eroare la actualizarea hărții: 'letter'
+2025-03-17 09:15:03,559 - Camera stopped
+2025-03-17 09:15:03,767 - Camera closed successfully.
+2025-03-17 09:16:57,753 - Initialization successful.
+2025-03-17 09:16:57,753 - Camera now open.
+2025-03-17 09:16:57,758 - Camera configuration has been adjusted!
+2025-03-17 09:16:57,764 - Configuration successful!
+2025-03-17 09:16:57,864 - Camera started
+2025-03-17 09:17:42,845 - Camera stopped
+2025-03-17 09:17:43,058 - Camera closed successfully.
+2025-03-17 09:22:28,027 - Initialization successful.
+2025-03-17 09:22:28,027 - Camera now open.
+2025-03-17 09:22:28,032 - Camera configuration has been adjusted!
+2025-03-17 09:22:28,035 - Configuration successful!
+2025-03-17 09:22:28,127 - Camera started
+2025-03-17 09:24:44,860 - Camera stopped
+2025-03-17 09:24:45,065 - Camera closed successfully.
+2025-03-17 09:25:02,287 - Initialization successful.
+2025-03-17 09:25:02,288 - Camera now open.
+2025-03-17 09:25:02,293 - Camera configuration has been adjusted!
+2025-03-17 09:25:02,297 - Configuration successful!
+2025-03-17 09:25:02,395 - Camera started
+2025-03-17 09:25:43,066 - Camera stopped
+2025-03-17 09:27:09,352 - Initialization successful.
+2025-03-17 09:27:09,352 - Camera now open.
+2025-03-17 09:27:09,358 - Camera configuration has been adjusted!
+2025-03-17 09:27:09,361 - Configuration successful!
+2025-03-17 09:27:09,454 - Camera started
+2025-03-17 09:27:13,549 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:17,721 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:21,325 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:24,845 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:28,383 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:31,869 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:35,498 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:38,953 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:42,395 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:45,886 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:49,522 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:53,182 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:27:57,066 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:00,910 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:04,640 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:08,411 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:12,019 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:15,468 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:19,010 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:22,639 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:26,236 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:29,801 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:33,503 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:37,031 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:40,572 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:44,204 - Eroare la actualizarea hărții: 'box_color'
+2025-03-17 09:28:45,592 - Camera stopped
+2025-03-17 09:28:45,804 - Camera closed successfully.
+2025-03-17 09:28:51,506 - Initialization successful.
+2025-03-17 09:28:51,507 - Camera now open.
+2025-03-17 09:28:51,512 - Camera configuration has been adjusted!
+2025-03-17 09:28:51,515 - Configuration successful!
+2025-03-17 09:28:51,616 - Camera started
+2025-03-17 09:38:25,144 - Camera stopped
+2025-03-17 09:38:25,164 - Camera closed successfully.
+2025-03-17 09:38:31,225 - Initialization successful.
+2025-03-17 09:38:31,226 - Camera now open.
+2025-03-17 09:38:31,231 - Camera configuration has been adjusted!
+2025-03-17 09:38:31,233 - Configuration successful!
+2025-03-17 09:38:31,329 - Camera started
+2025-03-17 09:45:03,514 - Camera stopped
+2025-03-17 09:45:03,720 - Camera closed successfully.

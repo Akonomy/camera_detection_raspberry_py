@@ -3,32 +3,36 @@ import numpy as np
 
 def determine_tracked_box(session_data, target_box=None, mandatory=False, zone_center=(247, 100)):
     """
-    Determină cutia (sau cutia blocantă) ce trebuie urmărită/mutată, pe baza:
-      - informațiilor din sesiune (poziție, culoare, litere etc.)
-      - opțional, a unei cutii țintă specificate (ex: ("A", "blue") sau un dict cu cheile "box_color" și "letters")
-      - opțional, dacă ținta este mandatory (adică se dorește să fie urmărită chiar dacă e blocată)
+    Determină cutia de urmărit și/sau cutia blocantă, pe baza informațiilor din sesiune,
+    ținând cont de opțiunea *mandatory*:
+    
+    - Dacă *mandatory* este True, se dorește urmărirea unei cutii specifice (target).
+      Dacă targetul este blocat (adică există alte cutii în fața lui în aceeași coloană),
+      se returnează tot targetul (flag2=1) împreună cu lista cutiilor ce trebuie mutate
+      (blocking_boxes) și nivelul de acces (numărul de cutii de mutat).
+      
+    - Dacă *mandatory* este False, nu se impune ca targetul să fie urmărit:
+      • Dacă targetul există și este accesibil (index 0 în coloană), se urmărește targetul.
+      • Dacă targetul este blocat (index > 0), se ignoră targetul și se alege cutia
+        cea mai accesibilă din întreaga sesiune (calculată pe baza distanței față de centru).
     
     Returnează un tuple:
-      (tracked_box_info, flag1, flag2, nivel_acces, lista_cutii)
+      (tracked_box_info, flag1, flag2, access_level, blocking_boxes)
       
-      - tracked_box_info: dict cu poziția, distanța de la centru, culoarea, litera și coloana (pentru debug)
-      - flag1: 1 dacă cutia țintă (target) a fost găsită în sesiune, 0 altfel
-      - flag2: 1 dacă cutia returnată este chiar cutia țintă, 0 dacă s-a returnat o cutie blocantă (cea ce trebuie mutată)
-      - nivel_acces: un nivel de acces de la 0 la 10 (0 = imediat accesibil; 1 înseamnă că trebuie mutată 1 cutie etc.)
-      - lista_cutii: lista (în ordine) de cutii ce trebuie mutate pentru a ajunge la țintă, fiecare reprezentată ca (culoare, literă)
+      unde:
+      - tracked_box_info: dict cu informații: "position", "distance", "box_color", "letter", "column"
+      - flag1: 1 dacă a fost găsită cel puțin o cutie corespunzătoare targetului (dacă target_box a fost specificat), 0 altfel.
+      - flag2: 1 dacă cutia returnată este targetul (adică, se urmărește cutia dorită), 0 dacă s-a returnat o cutie blocantă sau o altă cutie.
+      - access_level: numărul de cutii ce trebuie mutate (clamped la maxim 10)
+      - blocking_boxes: lista cutiilor care blochează accesul (fiecare element ca (box_color, letter))
     """
-    
-    # Dacă nu există cutii în sesiune, returnăm None cu flagurile 0
     if not session_data:
         return None, 0, 0, None, []
     
-    # Extragem coordonatele x ale cutiilor
-    xs = [ pkg["position"][0] for pkg in session_data.values() ]
-    # Calculăm percentila 20, 40, 60, 80 pentru a defini granițele coloanelor
+    # Calculăm limitele pentru atribuirea coloanelor pe baza coordonatelor x ale cutiilor
+    xs = [pkg["position"][0] for pkg in session_data.values()]
     p20, p40, p60, p80 = np.percentile(xs, [20, 40, 60, 80])
     
-    # Funcție care asignează o cutie unei coloane (0: safe stânga, 1: traiectorie stânga, 
-    # 2: mijloc (problematic), 3: traiectorie dreapta, 4: safe dreapta)
     def assign_column(x):
         if x < p20:
             return 0
@@ -40,39 +44,55 @@ def determine_tracked_box(session_data, target_box=None, mandatory=False, zone_c
             return 3
         else:
             return 4
-    
-    # Adăugăm la fiecare cutie informația despre coloana în care se află
+
+    # Atribuim fiecărei cutii coloana corespunzătoare
     for key, pkg in session_data.items():
         x = pkg["position"][0]
         pkg["column"] = assign_column(x)
     
-    # Grupăm cutiile după coloană
+    # Grupăm cutiile pe coloane și sortăm în fiecare coloană după coordonata y descrescătoare 
+    # (y mai mare = mai aproape de robot)
     columns = {i: [] for i in range(5)}
     for pkg in session_data.values():
         col = pkg["column"]
         columns[col].append(pkg)
-    
-    # În fiecare coloană, sortăm cutiile în funcție de coordonata y descrescătoare
-    # (presupunând că y mai mare înseamnă că cutia este mai aproape de robot)
     for col in columns:
         columns[col].sort(key=lambda pkg: pkg["position"][1], reverse=True)
     
-    # Inițializări
+    # Determinăm cutia "overall best" – cea mai apropiată de centru, pe baza distanței Euclidiene
+    center_x, center_y = zone_center
+    overall_best = None
+    best_dist = float('inf')
+    for pkg in session_data.values():
+        x, y = pkg["position"]
+        dist = math.sqrt((x - center_x)**2 + (y - center_y)**2)
+        if dist < best_dist:
+            best_dist = dist
+            overall_best = pkg
+    # Calculăm indexul în coloană pentru overall_best
+    overall_col = overall_best["column"]
+    overall_idx = columns[overall_col].index(overall_best)
+    overall_access = overall_idx
+    overall_blocking = [
+        (b["box_color"], b["letters"][0] if b.get("letters") else None)
+        for b in columns[overall_col][:overall_idx]
+    ]
+    
     target_found = 0
     target_in_return = 0
     chosen_box = None
     access_level = 0
-    blocking_boxes = []  # lista cutiilor care blochează accesul (de tip (culoare, literă))
+    blocking_boxes = []
     
-    # Dacă a fost specificată o cutie țintă, căutăm în sesiune
     if target_box is not None:
-        # Extragem culoarea și litera din target
+        # Extragem target_color și target_letter din target_box
         if isinstance(target_box, (tuple, list)):
             target_color, target_letter = target_box
         else:
             target_color = target_box.get("box_color")
             target_letter = target_box.get("letters")[0] if target_box.get("letters") else None
         
+        # Selectăm cutiile ce corespund targetului
         matching_boxes = []
         for pkg in session_data.values():
             pkg_letter = pkg["letters"][0] if pkg.get("letters") else None
@@ -81,61 +101,57 @@ def determine_tracked_box(session_data, target_box=None, mandatory=False, zone_c
         
         if matching_boxes:
             target_found = 1
-            # Dintre toate potrivirile, alegem pe cea mai accesibilă (cu indexul cel mai mic în coloana respectivă)
+            # Selectăm candidate-ul target ca fiind cel cu cel mai mic index în propria coloană
             best_access = float('inf')
-            best_box = None
+            candidate = None
             for box in matching_boxes:
                 col = box["column"]
-                # Determinăm poziția în coloana respectivă
                 idx = columns[col].index(box)
                 if idx < best_access:
                     best_access = idx
-                    best_box = box
-            # Dacă cutia țintă nu este imediat accesibilă și nu este mandatory,
-            # alegem să returnăm cutia blocantă (cea cu index 0 din aceeași coloană)
-            if best_access > 0 and not mandatory:
-                chosen_box = columns[best_box["column"]][0]
-                # Nivelul de acces se va considera ca fiind numărul de cutii care trebuie mutate
+                    candidate = box
+            candidate_blocking = [
+                (b["box_color"], b["letters"][0] if b.get("letters") else None)
+                for b in columns[candidate["column"]][:best_access]
+            ]
+            # Logica depinde de parametrul mandatory
+            if mandatory:
+                # Vreau targetul indiferent de blocare: returnez candidate cu flag2=1,
+                # dar indic nivelul de acces (câte cutii sunt în față) și lista cutiilor blocante.
+                chosen_box = candidate
                 access_level = best_access
-                # Lista cutiilor ce blochează: toate cele cu index < best_access
-                blocking_boxes = [
-                    (b["box_color"], b["letters"][0] if b.get("letters") else None)
-                    for b in columns[best_box["column"]][:best_access]
-                ]
-                target_in_return = 0
-            else:
-                # Dacă target-ul este accesibil (sau este mandatory), returnăm target-ul
-                chosen_box = best_box
-                access_level = best_access
-                blocking_boxes = [
-                    (b["box_color"], b["letters"][0] if b.get("letters") else None)
-                    for b in columns[best_box["column"]][:best_access]
-                ]
+                blocking_boxes = candidate_blocking
                 target_in_return = 1
-        # Dacă target-ul specificat nu a fost găsit, se va alege cutia cea mai apropiată de centru
-    if chosen_box is None:
-        # Selectăm cutia cea mai apropiată de centru
-        center_x, center_y = zone_center
-        best_dist = float('inf')
-        best_box = None
-        for pkg in session_data.values():
-            x, y = pkg["position"]
-            dist = math.sqrt((x - center_x)**2 + (y - center_y)**2)
-            if dist < best_dist:
-                best_dist = dist
-                best_box = pkg
-        chosen_box = best_box
-        col = chosen_box["column"]
-        idx = columns[col].index(chosen_box)
-        access_level = idx
-        blocking_boxes = [
-            (b["box_color"], b["letters"][0] if b.get("letters") else None)
-            for b in columns[col][:idx]
-        ]
-        target_in_return = 0
+            else:
+                # Dacă nu este mandatory, prefer cel mai accesibil box din întreaga sesiune,
+                # CU excepția cazului în care targetul este accesibil (index 0).
+                if best_access == 0:
+                    chosen_box = candidate
+                    access_level = 0
+                    blocking_boxes = []
+                    target_in_return = 1
+                else:
+                    # Targetul există dar este blocat, deci alegem overall best
+                    chosen_box = overall_best
+                    access_level = overall_access
+                    blocking_boxes = overall_blocking
+                    target_in_return = 0
+        else:
+            # Nu s-a găsit target-ul, deci alegem overall best
+            chosen_box = overall_best
+            access_level = overall_access
+            blocking_boxes = overall_blocking
+            target_found = 0
+            target_in_return = 0
+    else:
+        # Niciun target specificat; alegem overall best
+        chosen_box = overall_best
+        access_level = overall_access
+        blocking_boxes = overall_blocking
         target_found = 0
+        target_in_return = 0
 
-    # Construim informațiile cutiei urmărite
+    # Construim informațiile pentru cutia returnată
     tracked_info = {
         "position": chosen_box["position"],
         "distance": math.sqrt((chosen_box["position"][0] - zone_center[0])**2 + (chosen_box["position"][1] - zone_center[1])**2),
@@ -144,7 +160,6 @@ def determine_tracked_box(session_data, target_box=None, mandatory=False, zone_c
         "column": chosen_box["column"]
     }
     
-    # Nivelul de acces este clamped la maxim 10
     access_level = min(access_level, 10)
     
     return tracked_info, target_found, target_in_return, access_level, blocking_boxes
@@ -152,9 +167,8 @@ def determine_tracked_box(session_data, target_box=None, mandatory=False, zone_c
 # ---------------------------
 # EXEMPLE DE UTILIZARE:
 # ---------------------------
-
 if __name__ == "__main__":
-    # Exemplu ipotetic de session_data – cheile pot fi orice, dar cel puțin trebuie să conțină "position", "box_color" și "letters"
+    # Exemplu ipotetic de session_data
     session_data = {
         "box1": {"position": (244, 164), "box_color": "Green", "letters": ["A"]},
         "box2": {"position": (450, 167), "box_color": "Green", "letters": ["K"]},
@@ -170,15 +184,13 @@ if __name__ == "__main__":
         "box12": {"position": (355, 275), "box_color": "Red", "letters": ["O"]}
     }
     
-    # Să presupunem că vrem să accesăm cutia "A blue"
-    target = ("A", "blue")
-    # Apelăm funcția – în acest exemplu, target nu este mandatory, deci dacă e blocată se va returna cutia blocantă
-    tracked, flag1, flag2, nivel_acces, lista_cutii = determine_tracked_box(session_data, target_box=target, mandatory=False, zone_center=(256, 256))
+    # Exemplu de apel: dacă targetul este specificat, de exemplu ("Red", "A")
+    target = ("Red", "A")
+    # Dacă mandatory e True, dorim targetul, chiar dacă e blocat; dacă e False, se alege cea mai accesibilă cutie
+    tracked, flag1, flag2, nivel_acces, lista_cutii = determine_tracked_box(session_data, target_box=target, mandatory=True, zone_center=(256, 256))
     
     print("Tracked Box Info:", tracked)
     print("Flag1 (target găsit):", flag1)
-    print("Flag2 (cutia returnată este target):", flag2)
+    print("Flag2 (cutia returnată este targetul):", flag2)
     print("Nivel acces:", nivel_acces)
     print("Lista cutii de mutat:", lista_cutii)
-
-

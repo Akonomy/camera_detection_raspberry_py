@@ -12669,3 +12669,127 @@
 2025-03-18 11:33:52,668 - Camera started
 2025-03-18 11:34:36,333 - Camera stopped
 2025-03-18 11:34:36,540 - Camera closed successfully.
+2025-03-18 14:49:39,804 - Initialization successful.
+2025-03-18 14:49:39,806 - Camera now open.
+2025-03-18 14:49:39,811 - Camera configuration has been adjusted!
+2025-03-18 14:49:39,815 - Configuration successful!
+2025-03-18 14:49:39,911 - Camera started
+2025-03-18 14:51:18,085 - Camera stopped
+2025-03-18 14:51:18,294 - Camera closed successfully.
+2025-03-18 15:02:27,673 - Initialization successful.
+2025-03-18 15:02:27,674 - Camera now open.
+2025-03-18 15:02:27,681 - Camera configuration has been adjusted!
+2025-03-18 15:02:27,683 - Configuration successful!
+2025-03-18 15:02:27,777 - Camera started
+2025-03-18 16:20:21,532 - Camera stopped
+2025-03-18 16:20:21,747 - Camera closed successfully.
+2025-03-18 16:20:28,639 - Initialization successful.
+2025-03-18 16:20:28,639 - Camera now open.
+2025-03-18 16:20:28,652 - Camera configuration has been adjusted!
+2025-03-18 16:20:28,664 - Configuration successful!
+2025-03-18 16:20:28,757 - Camera started
+2025-03-18 16:21:40,655 - Camera stopped
+2025-03-18 16:21:40,862 - Camera closed successfully.
+2025-03-18 16:27:36,721 - Initialization successful.
+2025-03-18 16:27:36,722 - Camera now open.
+2025-03-18 16:27:36,728 - Camera configuration has been adjusted!
+2025-03-18 16:27:36,730 - Configuration successful!
+2025-03-18 16:27:36,825 - Camera started
+2025-03-18 16:28:25,634 - Camera stopped
+2025-03-18 16:28:25,845 - Camera closed successfully.
+2025-03-18 16:32:49,374 - Initialization successful.
+2025-03-18 16:32:49,375 - Camera now open.
+2025-03-18 16:32:49,380 - Camera configuration has been adjusted!
+2025-03-18 16:32:49,388 - Configuration successful!
+2025-03-18 16:32:49,486 - Camera started
+2025-03-18 16:34:06,501 - Camera stopped
+2025-03-18 16:34:06,709 - Camera closed successfully.
+2025-03-18 16:34:12,431 - Initialization successful.
+2025-03-18 16:34:12,432 - Camera now open.
+2025-03-18 16:34:12,436 - Camera configuration has been adjusted!
+2025-03-18 16:34:12,439 - Configuration successful!
+2025-03-18 16:34:12,532 - Camera started
+2025-03-18 16:34:54,026 - Camera stopped
+2025-03-18 16:34:54,236 - Camera closed successfully.
+2025-03-18 16:56:54,468 - Initialization successful.
+2025-03-18 16:56:54,468 - Camera now open.
+2025-03-18 16:56:54,473 - Camera configuration has been adjusted!
+2025-03-18 16:56:54,479 - Configuration successful!
+2025-03-18 16:56:54,576 - Camera started
+2025-03-18 16:58:09,450 - Camera stopped
+2025-03-18 16:58:09,655 - Camera closed successfully.
+2025-03-18 17:19:38,562 - Initialization successful.
+2025-03-18 17:19:38,562 - Camera now open.
+2025-03-18 17:19:38,569 - Camera configuration has been adjusted!
+2025-03-18 17:19:38,571 - Configuration successful!
+2025-03-18 17:19:38,664 - Camera started
+2025-03-18 17:19:42,641 - Eroare la actualizarea hărții: name 'analyze_target_zones' is not defined
+2025-03-18 17:19:50,523 - Eroare la actualizarea hărții: name 'analyze_target_zones' is not defined
+2025-03-18 17:19:57,812 - Eroare la actualizarea hărții: name 'analyze_target_zones' is not defined
+2025-03-18 17:20:05,158 - Eroare la actualizarea hărții: name 'analyze_target_zones' is not defined
+2025-03-18 17:20:12,365 - Eroare la actualizarea hărții: name 'analyze_target_zones' is not defined
+2025-03-18 17:20:19,650 - Camera stopped
+2025-03-18 17:20:19,658 - Camera closed successfully.
+2025-03-18 17:21:46,563 - Initialization successful.
+2025-03-18 17:21:46,563 - Camera now open.
+2025-03-18 17:21:46,568 - Camera configuration has been adjusted!
+2025-03-18 17:21:46,573 - Configuration successful!
+2025-03-18 17:21:46,670 - Camera started
+2025-03-18 17:23:28,539 - Camera stopped
+2025-03-18 17:23:28,755 - Camera closed successfully.
+2025-03-18 17:23:35,596 - Initialization successful.
+2025-03-18 17:23:35,603 - Camera now open.
+2025-03-18 17:23:35,613 - Camera configuration has been adjusted!
+2025-03-18 17:23:35,620 - Configuration successful!
+2025-03-18 17:23:35,719 - Camera started
+2025-03-18 17:27:00,543 - Camera stopped
+2025-03-18 17:27:00,749 - Camera closed successfully.
+2025-03-18 17:27:07,357 - Initialization successful.
+2025-03-18 17:27:07,358 - Camera now open.
+2025-03-18 17:27:07,362 - Camera configuration has been adjusted!
+2025-03-18 17:27:07,365 - Configuration successful!
+2025-03-18 17:27:07,458 - Camera started
+2025-03-18 17:30:55,398 - Camera stopped
+2025-03-18 17:30:55,603 - Camera closed successfully.
+2025-03-18 17:31:02,150 - Initialization successful.
+2025-03-18 17:31:02,151 - Camera now open.
+2025-03-18 17:31:02,155 - Camera configuration has been adjusted!
+2025-03-18 17:31:02,159 - Configuration successful!
+2025-03-18 17:31:02,259 - Camera started
+2025-03-18 17:31:22,484 - Camera stopped
+2025-03-18 17:31:22,689 - Camera closed successfully.
+2025-03-18 17:31:27,544 - Initialization successful.
+2025-03-18 17:31:27,544 - Camera now open.
+2025-03-18 17:31:27,550 - Camera configuration has been adjusted!
+2025-03-18 17:31:27,553 - Configuration successful!
+2025-03-18 17:31:27,658 - Camera started
+2025-03-18 17:38:19,967 - Camera stopped
+2025-03-18 17:38:20,172 - Camera closed successfully.
+2025-03-18 17:38:26,544 - Initialization successful.
+2025-03-18 17:38:26,544 - Camera now open.
+2025-03-18 17:38:26,549 - Camera configuration has been adjusted!
+2025-03-18 17:38:26,555 - Configuration successful!
+2025-03-18 17:38:26,652 - Camera started
+2025-03-18 17:40:54,892 - Camera stopped
+2025-03-18 17:40:55,098 - Camera closed successfully.
+2025-03-18 17:41:01,470 - Initialization successful.
+2025-03-18 17:41:01,470 - Camera now open.
+2025-03-18 17:41:01,476 - Camera configuration has been adjusted!
+2025-03-18 17:41:01,481 - Configuration successful!
+2025-03-18 17:41:01,573 - Camera started
+2025-03-18 17:44:39,102 - Camera stopped
+2025-03-18 17:44:39,324 - Camera closed successfully.
+2025-03-18 17:44:50,288 - Initialization successful.
+2025-03-18 17:44:50,288 - Camera now open.
+2025-03-18 17:44:50,294 - Camera configuration has been adjusted!
+2025-03-18 17:44:50,297 - Configuration successful!
+2025-03-18 17:44:50,391 - Camera started
+2025-03-18 17:49:45,752 - Camera stopped
+2025-03-18 17:49:45,941 - Camera closed successfully.
+2025-03-18 17:51:13,410 - Initialization successful.
+2025-03-18 17:51:13,410 - Camera now open.
+2025-03-18 17:51:13,415 - Camera configuration has been adjusted!
+2025-03-18 17:51:13,417 - Configuration successful!
+2025-03-18 17:51:13,512 - Camera started
+2025-03-18 17:57:06,964 - Camera stopped
+2025-03-18 17:57:07,170 - Camera closed successfully.

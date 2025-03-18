@@ -20,7 +20,7 @@ from BOX_DETECT.box_detect import detect_objects
 from BOX_DETECT.utils import assign_letters_to_packages, calculate_box_distance, build_session_data
 from BOX_DETECT.angle_analysis import get_box_inclination_angle
 
-from UTILS.MAP import process_boxes, BoxMapApp
+from UTILS.MAP import process_boxes, BoxMapApp,analyze_target_zones
 
 logging.basicConfig(filename="session_log.txt", level=logging.INFO,
                     format="%(asctime)s - %(message)s")
@@ -66,8 +66,7 @@ def merge_similar_packages(session_data, merge_distance_threshold=50):
         letter = letters[0] if letters else None
         group_key = (color, letter)
         groups.setdefault(group_key, []).append(pkg)
-    merged_packages = {}
-    merged_id = 1
+    merged_list = []
     for group_key, pkg_list in groups.items():
         clusters = []
         for pkg in pkg_list:
@@ -92,22 +91,22 @@ def merge_similar_packages(session_data, merge_distance_threshold=50):
                 positions = [pkg.get("position") for pkg in cluster["packages"]]
                 xs = [p[0] for p in positions]
                 ys = [p[1] for p in positions]
-                new_center = (sum(xs)/len(xs), sum(ys)/len(ys))
+                new_center = (sum(xs) / len(xs), sum(ys) / len(ys))
                 boxes = []
                 for pkg in cluster["packages"]:
                     pos = pkg.get("position")
                     size = pkg.get("size")
                     if size is not None and None not in size:
                         w, h = size
-                        top_left = (pos[0]-w/2, pos[1]-h/2)
-                        bottom_right = (pos[0]+w/2, pos[1]+h/2)
+                        top_left = (pos[0] - w / 2, pos[1] - h / 2)
+                        bottom_right = (pos[0] + w / 2, pos[1] + h / 2)
                         boxes.append((top_left, bottom_right))
                 if boxes:
                     min_x = min([b[0][0] for b in boxes])
                     min_y = min([b[0][1] for b in boxes])
                     max_x = max([b[1][0] for b in boxes])
                     max_y = max([b[1][1] for b in boxes])
-                    new_size = (int(max_x-min_x), int(max_y-min_y))
+                    new_size = (int(max_x - min_x), int(max_y - min_y))
                 else:
                     new_size = None
                 merged_pkg = {
@@ -116,9 +115,26 @@ def merge_similar_packages(session_data, merge_distance_threshold=50):
                     "position": (int(new_center[0]), int(new_center[1])),
                     "size": new_size
                 }
-            merged_packages[f"merged_{merged_id}"] = merged_pkg
-            merged_id += 1
-    return merged_packages
+            merged_list.append(merged_pkg)
+    # Generăm ID-uri din culoare și literă
+    new_merged = {}
+    id_counts = {}
+    for pkg in merged_list:
+        color = pkg["box_color"].capitalize()
+        if pkg.get("letters"):
+            letter = pkg["letters"][0].upper()
+            base = f"{color}{letter}"
+        else:
+            base = f"{color}"
+        if base in id_counts:
+            id_counts[base] += 1
+            new_id = f"{base}{id_counts[base]}"
+        else:
+            id_counts[base] = 1
+            # Dacă nu are literă, chiar și prima apariție primește numărul 1
+            new_id = f"{base}{id_counts[base]}" if not pkg.get("letters") else base
+        new_merged[new_id] = pkg
+    return new_merged
 
 def add_grid(image, grid_size=64):
     h, w = image.shape[:2]
@@ -166,6 +182,117 @@ color_map = {
     "Blue": (0,0,255)
 }
 
+# --- Funcții noi pentru analiză sesiune ---
+
+def classify_box_relative(other, target):
+    x, y = other["real_position"]
+    bx, by = target["real_position"]
+    left = x - 1.5
+    right = x + 1.5
+    top = y + 1.5
+    bottom = y - 1.5
+    danger_A = 0.0
+    if right > (bx - 10.5) and left < (bx + 10.5):
+        if bottom < (by - 7):
+            danger_A = min(top, by - 7) - bottom
+    danger_B = 0.0
+    horiz_overlap_B = max(0, min(right, bx + 5) - max(left, bx - 5))
+    if horiz_overlap_B > 0:
+        vertical_overlap_B = max(0, min(top, by - 1.5) - max(bottom, by - 7))
+        danger_B = vertical_overlap_B
+    danger_overlap = max(danger_A, danger_B)
+    if danger_overlap >= 0.5:
+        return "Danger"
+    warning_left = 0.0
+    horiz_overlap_left = max(0, min(right, bx - 5) - max(left, bx - 10.5))
+    if horiz_overlap_left > 0:
+        vertical_overlap_left = max(0, min(top, by - 1.5) - max(bottom, by - 7))
+        warning_left = vertical_overlap_left
+    warning_right = 0.0
+    horiz_overlap_right = max(0, min(right, bx + 10.5) - max(left, bx + 5))
+    if horiz_overlap_right > 0:
+        vertical_overlap_right = max(0, min(top, by - 1.5) - max(bottom, by - 7))
+        warning_right = vertical_overlap_right
+    warning_overlap = max(warning_left, warning_right)
+    if warning_overlap >= 1.0:
+        return "Warning"
+    return "Safe"
+
+def select_best_candidate(boxes):
+    best_candidate_id = None
+    best_candidate = None
+    best_danger_count = float('inf')
+    best_dist = float('inf')
+    for box_id, box in boxes.items():
+        danger_count = 0
+        for other_id, other in boxes.items():
+            if other_id == box_id:
+                continue
+            if classify_box_relative(other, box) == "Danger":
+                danger_count += 1
+        x, y = box["real_position"]
+        d = math.sqrt(x*x + y*y)
+        if danger_count == 0:
+            if d < best_dist:
+                best_candidate_id = box_id
+                best_candidate = box
+                best_dist = d
+                best_danger_count = 0
+        else:
+            if best_candidate is None or best_danger_count > danger_count or (best_danger_count == danger_count and d < best_dist):
+                best_candidate_id = box_id
+                best_candidate = box
+                best_danger_count = danger_count
+                best_dist = d
+    return best_candidate_id, best_candidate
+
+def analyze_session_boxes(session, target_box_id=None, mandatory=False):
+    if target_box_id is not None and target_box_id in session:
+        candidate_id = target_box_id
+        candidate = session[target_box_id]
+        target_specified = True
+    else:
+        candidate_id, candidate = select_best_candidate(session)
+        target_specified = False
+
+    danger_list = []
+    warning_list = []
+    for box_id, box in session.items():
+        if box_id == candidate_id:
+            continue
+        cls = classify_box_relative(box, candidate)
+        if cls == "Danger":
+            danger_list.append((box_id, box))
+        elif cls == "Warning":
+            warning_list.append((box_id, box))
+    candidate_y = candidate["real_position"][1]
+    danger_list.sort(key=lambda item: abs(item[1]["real_position"][1] - candidate_y))
+    warning_list.sort(key=lambda item: abs(item[1]["real_position"][1] - candidate_y))
+
+    if mandatory:
+        if danger_list:
+            result_list = [item[0] for item in danger_list]
+        elif warning_list:
+            result_list = [item[0] for item in warning_list]
+        else:
+            result_list = [candidate_id]
+    else:
+        if danger_list or warning_list:
+            result_list = [item[0] for item in danger_list] + [item[0] for item in warning_list]
+        else:
+            result_list = [candidate_id]
+
+    target_in_first = 1 if result_list[0] == candidate_id else 0
+    danger_count = len(danger_list)
+    target_specified_in_session = 1 if (target_specified and candidate_id == target_box_id) else 0
+
+    flags = {
+        "target_in_first": target_in_first,
+        "danger_neighbor_count": danger_count,
+        "target_specified_in_session": target_specified_in_session
+    }
+    return result_list, flags
+
 MAP_UPDATE_INTERVAL = 5
 last_map_update = 0
 
@@ -175,7 +302,6 @@ map_app = None
 def camera_loop():
     global last_map_update, picam2, map_app
     session_number = 1
-    PIXELS_PER_CM = 10
 
     while True:
         image = picam2.capture_array()
@@ -202,6 +328,9 @@ def camera_loop():
 
         session_dict = {}
         if session_data:
+            
+            
+           
             for box_id, pkg in session_data.items():
                 pkg_position = pkg.get("position", (0,0))
                 distance = math.sqrt((pkg_position[0]-zone_center[0])**2 + (pkg_position[1]-zone_center[1])**2)
@@ -219,17 +348,24 @@ def camera_loop():
                 }
 
         print(f"Session {session_number}:")
-        for box_id, details in session_dict.items():
-            print(f"{box_id}: {details}")
-        print("-"*50)
+        # for box_id, details in session_dict.items():
+            # print(f"{box_id}: {details}")
+        # print("-"*50)
         session_number += 1
+        
+        
 
         if session_data and (time.time()-last_map_update) > MAP_UPDATE_INTERVAL:
             try:
                 map_data = process_boxes(session_dict)
+                
+              
+                safe_flag, danger_list, warning_list = analyze_target_zones(map_data, target_box_id="BlueK")
+                print(danger_list,"[...]" ,warning_list)
                 if map_app is not None:
                     map_app.root.after(0, lambda: map_app.update_map(map_data))
                 last_map_update = time.time()
+                
             except Exception as e:
                 logging.error("Eroare la actualizarea hărții: " + str(e))
 
@@ -241,8 +377,15 @@ def camera_loop():
     cv2.destroyAllWindows()
 
 if __name__ == '__main__':
+    DEBUG = True  # setează la True pentru a afișa interfața, sau False pentru a o dezactiva
+
     initial_data = {}  # începe cu dicționar gol
-    map_app = BoxMapApp(initial_data)
-    camera_thread = threading.Thread(target=camera_loop, daemon=True)
-    camera_thread.start()
-    map_app.root.mainloop()
+
+    if DEBUG:
+        map_app = BoxMapApp(initial_data)
+        camera_thread = threading.Thread(target=camera_loop, daemon=True)
+        camera_thread.start()
+        map_app.root.mainloop()
+    else:
+        # Nu se afișează interfața Tkinter; rulează direct camera_loop
+        camera_loop()

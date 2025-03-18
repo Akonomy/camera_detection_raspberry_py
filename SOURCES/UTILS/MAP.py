@@ -5,7 +5,8 @@ Descriere: Primește un dicționar cu informații despre cutii (culoare, literă
            convertește coordonatele detectate (pixeli) în coordonate reale (cm) folosind funcțiile de
            conversie și desenează o interfață Tkinter fixă cu un grid (de la -25 la 25 pe axa X și -10 la 30 pe axa Y).
            Pe hartă se afișează etichete cu coordonate (ex. -25 cm, -24 cm, …, 25 cm pe X și -10, -9, …, 30 cm pe Y).
-           De asemenea, se permite click pe hartă pentru afișarea coordonatelor reale.
+           Se permite click pe hartă pentru afișarea coordonatelor reale și, după selectarea unei cutii,
+           se pot vizualiza zonele relative (safe, warning, danger) desenate ca dreptunghiuri filled cu transparență.
 """
 
 import tkinter as tk
@@ -97,7 +98,7 @@ class BoxMapApp:
         self.canvas = tk.Canvas(self.root, width=self.canvas_width, height=self.canvas_height, bg="white")
         self.canvas.grid(row=0, column=0, columnspan=4)
 
-        # Desenăm gridul cu patratele și etichete
+        # Desenăm gridul și axele
         self.draw_grid()
         self.draw_axes()
 
@@ -122,18 +123,20 @@ class BoxMapApp:
         self.dy_max_entry.insert(0, "5")
         self.dy_max_entry.grid(row=2, column=3)
 
-        # Butoane (opționale)
+        # Butoane
         self.select_button = tk.Button(self.root, text="Select Random Box", command=self.select_random_box)
         self.select_button.grid(row=3, column=0, columnspan=2)
         self.find_nearby_button = tk.Button(self.root, text="Find Nearby Boxes", command=self.find_nearby_boxes)
         self.find_nearby_button.grid(row=3, column=2, columnspan=2)
+        self.zone_button = tk.Button(self.root, text="Show Zones", command=self.draw_zones)
+        self.zone_button.grid(row=4, column=0, columnspan=4)
 
         self.draw_map()
 
     def real_to_canvas(self, x, y):
         """Transformă coordonatele reale (cm) în coordonate de canvas (pixeli)."""
         canvas_x = (x - self.min_x) * self.scale
-        # Inversează axa Y: valorile mai mari de y se vor afișa mai sus
+        # Inversăm axa Y: valorile mai mari de y se vor afișa mai sus
         canvas_y = (self.max_y - y) * self.scale
         return canvas_x, canvas_y
 
@@ -144,7 +147,7 @@ class BoxMapApp:
         return x, y
 
     def draw_grid(self):
-        """Desenează gridul cu pas de 1 cm (patratele)."""
+        """Desenează gridul cu pas de 1 cm."""
         grid_step = 1  # 1 cm
         x = self.min_x
         while x <= self.max_x:
@@ -193,6 +196,15 @@ class BoxMapApp:
             self.canvas.create_rectangle(left_c, top_c, right_c, bottom_c,
                                          fill=fill_color, outline="black", width=2, tags=box_id)
             self.canvas.create_text(cx, cy, text=box["letter"], fill="white", font=("Arial", 12))
+        # Evidențiem cutia selectată
+        if self.selected_box_id:
+            sel_box = self.boxes[self.selected_box_id]
+            bx, by = sel_box["real_position"]
+            cx, cy = self.real_to_canvas(bx, by)
+            size_px = get_box_draw_size(sel_box, scale=self.scale)
+            half_px = size_px / 2
+            self.canvas.create_rectangle(cx - half_px - 3, cy - half_px - 3, cx + half_px + 3, cy + half_px + 3,
+                                         outline="blue", width=3, dash=(4,2), tags="selected")
 
     def update_map(self, new_boxes):
         self.boxes = new_boxes
@@ -234,15 +246,119 @@ class BoxMapApp:
         self.draw_map()
 
     def on_canvas_click(self, event):
-        """La click pe canvas, afișează coordonatele reale (în cm)."""
+        """Afișează coordonatele reale (cm) la click."""
         cx, cy = event.x, event.y
         rx, ry = self.canvas_to_real(cx, cy)
         print(f"Canvas click at ({cx}, {cy}) => Real coordinates: ({rx:.2f} cm, {ry:.2f} cm)")
-        # Opțional: poți afișa coordonatele pe canvas
         self.canvas.create_text(cx, cy, text=f"({rx:.1f}, {ry:.1f})", fill="blue", font=("Arial", 8))
 
-    def canvas_to_real(self, cx, cy):
-        """Transformă coordonatele din canvas (pixeli) în coordonate reale (cm)."""
-        x = cx / self.scale + self.min_x
-        y = self.max_y - (cy / self.scale)
-        return x, y
+    def draw_zone(self, x_left, x_right, y_bottom, y_top, fill_color, stipple, tag):
+        """
+        Helper pentru a desena un dreptunghi filled (cu transparență).
+        Se presupune că y_top > y_bottom (în coordonate reale).
+        """
+        # În coordonate canvas, punctul de sus-stânga corespunde real_to_canvas(x_left, y_top)
+        # Iar cel din dreapta-jos corespunde real_to_canvas(x_right, y_bottom)
+        p_top_left = self.real_to_canvas(x_left, y_top)
+        p_bottom_right = self.real_to_canvas(x_right, y_bottom)
+        self.canvas.create_rectangle(p_top_left[0], p_top_left[1],
+                                     p_bottom_right[0], p_bottom_right[1],
+                                     fill=fill_color, stipple=stipple, outline="", tags=tag)
+
+    def draw_zones(self):
+        """
+        Desenează zonele relative la cutia selectată, conform noii partiționări:
+        
+        -- Safe Zone (verde) --
+          * Safe central: x din [bx-10.5, bx+10.5], y din [by-1.5, max_y]
+          * Safe lateral stânga: x din [min_x, bx-10.5], y din [min_y, max_y]
+          * Safe lateral dreapta: x din [bx+10.5, max_x], y din [min_y, max_y]
+        
+        -- Warning Zones (portocaliu) --
+          * Warning stâng: x din [bx-10.5, bx-5], y din [by-7, by-1.5]
+          * Warning drept: x din [bx+5, bx+10.5], y din [by-7, by-1.5]
+        
+        -- Danger Zones (roșu) --
+          * Danger zone A: x din [bx-10.5, bx+10.5], y din [min_y, by-7]
+          * Danger zone B: x din [bx-5, bx+5], y din [by-7, by-1.5]
+        
+        Ordinea de desenare (de jos în sus) este: danger, apoi warning, apoi safe.
+        """
+        self.canvas.delete("zone")
+        if not self.selected_box_id:
+            print("No box selected to draw zones!")
+            return
+
+        sel_box = self.boxes[self.selected_box_id]
+        bx, by = sel_box["real_position"]
+
+        # -- Definim limitele (toate în cm) --
+        # Safe Zone:
+        safe_central_left = bx - 10.5
+        safe_central_right = bx + 10.5
+        safe_y_bottom = by - 1.5  # linia de început a safe zone (partea superioară a cutiei)
+        safe_y_top = self.max_y
+
+        safe_left_left = self.min_x
+        safe_left_right = bx - 10.5
+
+        safe_right_left = bx + 10.5
+        safe_right_right = self.max_x
+
+        # Warning Zones (se extind între by-1.5 și by-7)
+        warning_y_top = by - 1.5
+        warning_y_bottom = by - 7
+        warning_left_left = bx - 10.5
+        warning_left_right = bx - 5
+        warning_right_left = bx + 5
+        warning_right_right = bx + 10.5
+
+        # Danger Zones
+        # Danger A: întreaga lățime în zona inferioară
+        danger_A_left = bx - 10.5
+        danger_A_right = bx + 10.5
+        danger_A_y_top = by - 7
+        danger_A_y_bottom = self.min_y
+        # Danger B: zona centrală de deasupra (pentru x între bx-5 și bx+5)
+        danger_B_left = bx - 5
+        danger_B_right = bx + 5
+        danger_B_y_top = by - 1.5
+        danger_B_y_bottom = by - 7
+
+        # -- Desenăm în ordinea dorită --
+        # 1. Danger zones (desenăm mai întâi, ca fundal)
+        self.draw_zone(danger_A_left, danger_A_right, danger_A_y_bottom, danger_A_y_top, "red", "gray50", "zone")
+        self.draw_zone(danger_B_left, danger_B_right, danger_B_y_bottom, danger_B_y_top, "red", "gray50", "zone")
+
+        # 2. Warning zones (pe deasupra danger)
+        self.draw_zone(warning_left_left, warning_left_right, warning_y_bottom, warning_y_top, "orange", "gray50", "zone")
+        self.draw_zone(warning_right_left, warning_right_right, warning_y_bottom, warning_y_top, "orange", "gray50", "zone")
+
+        # 3. Safe zones (desenăm ultimul, pentru ca să fie vizibile)
+        self.draw_zone(safe_central_left, safe_central_right, safe_y_bottom, safe_y_top, "green", "gray50", "zone")
+        self.draw_zone(safe_left_left, safe_left_right, self.min_y, self.max_y, "green", "gray50", "zone")
+        self.draw_zone(safe_right_left, safe_right_right, self.min_y, self.max_y, "green", "gray50", "zone")
+
+        print("Filled zones drawn relative to selected box:", self.selected_box_id)
+
+if __name__ == "__main__":
+    # Exemplu de dicționar de sesiune (cutia implicită "K" albastră și altă cutie "A")
+    session = {
+        "K": {
+            "position": (250, 150),  # valori în pixeli
+            "size": (20, 20),
+            "box_color": "blue",
+            "letters": "K",
+            "angle": 0
+        },
+        "A": {
+            "position": (300, 200),
+            "size": (30, 30),
+            "box_color": "red",
+            "letters": "A",
+            "angle": 0
+        }
+    }
+    boxes = process_boxes(session)
+    app = BoxMapApp(boxes)
+    app.root.mainloop()

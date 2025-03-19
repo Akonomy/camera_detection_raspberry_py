@@ -360,8 +360,8 @@ def camera_loop():
                 map_data = process_boxes(session_dict)
                 
               
-                safe_flag, danger_list, warning_list = analyze_target_zones(map_data, target_box_id="BlueK")
-                print(danger_list,"[...]" ,warning_list)
+                safe_flag, danger_list,proxi_list, warning_list = analyze_target_zones(map_data, target_box_id="BlueK")
+                print("[.DANGER.]\n",danger_list,"\n[.WARNING.]\n" ,warning_list, "\n[.PROXI.]\n" ,proxi_list)
                 if map_app is not None:
                     map_app.root.after(0, lambda: map_app.update_map(map_data))
                 last_map_update = time.time()

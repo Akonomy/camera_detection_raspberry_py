@@ -12793,3 +12793,298 @@
 2025-03-18 17:51:13,512 - Camera started
 2025-03-18 17:57:06,964 - Camera stopped
 2025-03-18 17:57:07,170 - Camera closed successfully.
+2025-03-18 20:23:54,601 - Initialization successful.
+2025-03-18 20:23:54,602 - Camera now open.
+2025-03-18 20:23:54,608 - Camera configuration has been adjusted!
+2025-03-18 20:23:54,609 - Configuration successful!
+2025-03-18 20:23:54,716 - Camera started
+2025-03-18 20:42:05,762 - Camera stopped
+2025-03-18 20:42:10,833 - Initialization successful.
+2025-03-18 20:42:10,833 - Camera now open.
+2025-03-18 20:42:10,839 - Camera configuration has been adjusted!
+2025-03-18 20:42:10,843 - Configuration successful!
+2025-03-18 20:42:10,942 - Camera started
+2025-03-18 20:42:37,378 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:42:41,052 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:42:44,654 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:42:55,473 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:42:59,066 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:43:02,732 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:43:06,421 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:43:10,008 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:43:13,546 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:43:17,220 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:43:20,844 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:43:24,455 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:43:46,195 - Camera stopped
+2025-03-18 20:43:46,401 - Camera closed successfully.
+2025-03-18 20:45:02,009 - Initialization successful.
+2025-03-18 20:45:02,010 - Camera now open.
+2025-03-18 20:45:02,016 - Camera configuration has been adjusted!
+2025-03-18 20:45:02,018 - Configuration successful!
+2025-03-18 20:45:02,118 - Camera started
+2025-03-18 20:45:13,800 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:45:17,335 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:45:20,960 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:45:24,612 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:45:28,142 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:45:31,817 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:45:35,355 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:45:45,878 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:45:49,427 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:45:53,048 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:45:56,649 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:46:00,467 - Camera stopped
+2025-03-18 20:46:00,678 - Camera closed successfully.
+2025-03-18 20:46:18,152 - Initialization successful.
+2025-03-18 20:46:18,153 - Camera now open.
+2025-03-18 20:46:18,158 - Camera configuration has been adjusted!
+2025-03-18 20:46:18,161 - Configuration successful!
+2025-03-18 20:46:18,281 - Camera started
+2025-03-18 20:46:29,963 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:46:33,632 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:46:44,244 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:46:47,859 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:46:51,455 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:46:51,842 - Camera stopped
+2025-03-18 20:46:52,055 - Camera closed successfully.
+2025-03-18 20:47:08,371 - Initialization successful.
+2025-03-18 20:47:08,371 - Camera now open.
+2025-03-18 20:47:08,377 - Camera configuration has been adjusted!
+2025-03-18 20:47:08,382 - Configuration successful!
+2025-03-18 20:47:08,485 - Camera started
+2025-03-18 20:47:20,314 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:47:23,976 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:47:27,525 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:47:31,082 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:47:34,717 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:47:38,276 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:47:41,924 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:47:45,531 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:47:49,318 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:47:53,036 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:48:03,699 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:48:07,106 - Camera stopped
+2025-03-18 20:48:07,342 - Camera closed successfully.
+2025-03-18 20:48:41,834 - Initialization successful.
+2025-03-18 20:48:41,834 - Camera now open.
+2025-03-18 20:48:41,840 - Camera configuration has been adjusted!
+2025-03-18 20:48:41,843 - Configuration successful!
+2025-03-18 20:48:41,939 - Camera started
+2025-03-18 20:48:46,122 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:48:50,280 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:48:53,967 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:48:57,452 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:49:01,049 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:49:04,576 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:49:07,936 - Camera stopped
+2025-03-18 20:49:08,131 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:49:08,145 - Camera closed successfully.
+2025-03-18 20:49:14,729 - Initialization successful.
+2025-03-18 20:49:14,729 - Camera now open.
+2025-03-18 20:49:14,734 - Camera configuration has been adjusted!
+2025-03-18 20:49:14,736 - Configuration successful!
+2025-03-18 20:49:14,842 - Camera started
+2025-03-18 20:49:30,075 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:49:33,678 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:49:37,435 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:49:41,019 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:49:44,628 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:49:48,215 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:49:51,910 - Camera stopped
+2025-03-18 20:49:52,115 - Camera closed successfully.
+2025-03-18 20:53:46,813 - Initialization successful.
+2025-03-18 20:53:46,814 - Camera now open.
+2025-03-18 20:53:46,820 - Camera configuration has been adjusted!
+2025-03-18 20:53:46,825 - Configuration successful!
+2025-03-18 20:53:46,925 - Camera started
+2025-03-18 20:53:58,993 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:02,693 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:06,283 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:09,953 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:13,577 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:17,102 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:20,630 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:24,169 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:27,862 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:38,499 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:42,090 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:45,754 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:49,393 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:53,006 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:54:56,641 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:55:00,091 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:55:03,782 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:55:14,680 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:55:18,288 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:55:21,993 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 20:55:23,121 - Camera stopped
+2025-03-18 20:55:23,329 - Camera closed successfully.
+2025-03-18 21:10:15,156 - Initialization successful.
+2025-03-18 21:10:15,157 - Camera now open.
+2025-03-18 21:10:15,162 - Camera configuration has been adjusted!
+2025-03-18 21:10:15,164 - Configuration successful!
+2025-03-18 21:10:15,264 - Camera started
+2025-03-18 21:10:19,252 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 21:10:23,263 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 21:10:26,947 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 21:10:34,145 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:10:37,699 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 21:10:41,204 - Camera stopped
+2025-03-18 21:10:41,405 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 21:10:41,412 - Camera closed successfully.
+2025-03-18 21:11:12,881 - Initialization successful.
+2025-03-18 21:11:12,883 - Camera now open.
+2025-03-18 21:11:12,889 - Camera configuration has been adjusted!
+2025-03-18 21:11:12,895 - Configuration successful!
+2025-03-18 21:11:12,990 - Camera started
+2025-03-18 21:11:17,280 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 21:11:21,435 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 21:11:25,173 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 21:11:28,840 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 21:11:32,489 - Eroare la actualizarea hărții: 'real_position'
+2025-03-18 21:11:33,845 - Camera stopped
+2025-03-18 21:11:34,028 - Camera closed successfully.
+2025-03-18 21:12:30,555 - Initialization successful.
+2025-03-18 21:12:30,556 - Camera now open.
+2025-03-18 21:12:30,562 - Camera configuration has been adjusted!
+2025-03-18 21:12:30,567 - Configuration successful!
+2025-03-18 21:12:30,668 - Camera started
+2025-03-18 21:23:26,328 - Camera stopped
+2025-03-18 21:23:26,546 - Camera closed successfully.
+2025-03-18 21:44:25,012 - Initialization successful.
+2025-03-18 21:44:25,013 - Camera now open.
+2025-03-18 21:44:25,019 - Camera configuration has been adjusted!
+2025-03-18 21:44:25,021 - Configuration successful!
+2025-03-18 21:44:25,118 - Camera started
+2025-03-18 21:44:47,327 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:44:50,865 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:44:54,543 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:44:58,209 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:01,879 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:05,545 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:09,084 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:12,748 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:16,155 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:22,943 - Camera stopped
+2025-03-18 21:45:23,196 - Camera closed successfully.
+2025-03-18 21:45:29,168 - Initialization successful.
+2025-03-18 21:45:29,169 - Camera now open.
+2025-03-18 21:45:29,174 - Camera configuration has been adjusted!
+2025-03-18 21:45:29,176 - Configuration successful!
+2025-03-18 21:45:29,275 - Camera started
+2025-03-18 21:45:33,257 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:37,409 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:41,084 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:44,749 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:48,285 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:51,822 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:55,495 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:45:59,175 - Eroare la actualizarea hărții: too many values to unpack (expected 3)
+2025-03-18 21:46:01,102 - Camera stopped
+2025-03-18 21:46:01,298 - Camera closed successfully.
+2025-03-18 21:47:55,527 - Initialization successful.
+2025-03-18 21:47:55,528 - Camera now open.
+2025-03-18 21:47:55,535 - Camera configuration has been adjusted!
+2025-03-18 21:47:55,538 - Configuration successful!
+2025-03-18 21:47:55,642 - Camera started
+2025-03-18 21:53:40,208 - Camera stopped
+2025-03-18 21:53:40,414 - Camera closed successfully.
+2025-03-18 21:53:46,279 - Initialization successful.
+2025-03-18 21:53:46,280 - Camera now open.
+2025-03-18 21:53:46,285 - Camera configuration has been adjusted!
+2025-03-18 21:53:46,288 - Configuration successful!
+2025-03-18 21:53:46,386 - Camera started
+2025-03-18 21:57:10,349 - Camera stopped
+2025-03-18 21:57:10,555 - Camera closed successfully.
+2025-03-19 08:41:34,679 - Initialization successful.
+2025-03-19 08:41:34,686 - Camera now open.
+2025-03-19 08:41:34,691 - Camera configuration has been adjusted!
+2025-03-19 08:41:34,693 - Configuration successful!
+2025-03-19 08:41:34,793 - Camera started
+2025-03-19 08:45:48,635 - Camera stopped
+2025-03-19 08:45:48,844 - Camera closed successfully.
+2025-03-19 08:45:54,009 - Initialization successful.
+2025-03-19 08:45:54,009 - Camera now open.
+2025-03-19 08:45:54,014 - Camera configuration has been adjusted!
+2025-03-19 08:45:54,019 - Configuration successful!
+2025-03-19 08:45:54,112 - Camera started
+2025-03-19 08:50:06,307 - Camera stopped
+2025-03-19 08:50:06,315 - Camera closed successfully.
+2025-03-19 08:51:55,604 - Initialization successful.
+2025-03-19 08:51:55,604 - Camera now open.
+2025-03-19 08:51:55,609 - Camera configuration has been adjusted!
+2025-03-19 08:51:55,613 - Configuration successful!
+2025-03-19 08:51:55,709 - Camera started
+2025-03-19 08:56:28,222 - Camera stopped
+2025-03-19 08:56:28,432 - Camera closed successfully.
+2025-03-19 08:58:57,441 - Initialization successful.
+2025-03-19 08:58:57,441 - Camera now open.
+2025-03-19 08:58:57,446 - Camera configuration has been adjusted!
+2025-03-19 08:58:57,448 - Configuration successful!
+2025-03-19 08:58:57,545 - Camera started
+2025-03-19 08:59:57,907 - Camera stopped
+2025-03-19 08:59:58,114 - Camera closed successfully.
+2025-03-19 09:00:49,615 - Initialization successful.
+2025-03-19 09:00:49,616 - Camera now open.
+2025-03-19 09:00:49,620 - Camera configuration has been adjusted!
+2025-03-19 09:00:49,622 - Configuration successful!
+2025-03-19 09:00:49,724 - Camera started
+2025-03-19 09:02:10,599 - Camera stopped
+2025-03-19 09:02:10,820 - Camera closed successfully.
+2025-03-19 09:11:11,871 - Initialization successful.
+2025-03-19 09:11:11,871 - Camera now open.
+2025-03-19 09:11:11,877 - Camera configuration has been adjusted!
+2025-03-19 09:11:11,879 - Configuration successful!
+2025-03-19 09:11:11,974 - Camera started
+2025-03-19 09:13:59,870 - Camera stopped
+2025-03-19 09:14:00,079 - Camera closed successfully.
+2025-03-19 09:17:38,066 - Initialization successful.
+2025-03-19 09:17:38,067 - Camera now open.
+2025-03-19 09:17:38,072 - Camera configuration has been adjusted!
+2025-03-19 09:17:38,079 - Configuration successful!
+2025-03-19 09:17:38,172 - Camera started
+2025-03-19 09:18:30,034 - Camera stopped
+2025-03-19 09:18:30,242 - Camera closed successfully.
+2025-03-19 09:55:28,685 - Initialization successful.
+2025-03-19 09:55:28,685 - Camera now open.
+2025-03-19 09:55:28,690 - Camera configuration has been adjusted!
+2025-03-19 09:55:28,694 - Configuration successful!
+2025-03-19 09:55:28,787 - Camera started
+2025-03-19 09:55:52,960 - Camera stopped
+2025-03-19 09:55:53,167 - Camera closed successfully.
+2025-03-19 09:55:59,654 - Initialization successful.
+2025-03-19 09:55:59,655 - Camera now open.
+2025-03-19 09:55:59,660 - Camera configuration has been adjusted!
+2025-03-19 09:55:59,665 - Configuration successful!
+2025-03-19 09:55:59,758 - Camera started
+2025-03-19 10:02:47,443 - Camera stopped
+2025-03-19 10:02:47,649 - Camera closed successfully.
+2025-03-19 10:02:54,035 - Initialization successful.
+2025-03-19 10:02:54,036 - Camera now open.
+2025-03-19 10:02:54,043 - Camera configuration has been adjusted!
+2025-03-19 10:02:54,051 - Configuration successful!
+2025-03-19 10:02:54,144 - Camera started
+2025-03-19 10:05:16,736 - Camera stopped
+2025-03-19 10:05:16,946 - Camera closed successfully.
+2025-03-19 10:05:22,297 - Initialization successful.
+2025-03-19 10:05:22,298 - Camera now open.
+2025-03-19 10:05:22,302 - Camera configuration has been adjusted!
+2025-03-19 10:05:22,305 - Configuration successful!
+2025-03-19 10:05:22,402 - Camera started
+2025-03-19 10:06:37,659 - Camera stopped
+2025-03-19 10:06:37,867 - Camera closed successfully.
+2025-03-19 10:06:42,984 - Initialization successful.
+2025-03-19 10:06:42,985 - Camera now open.
+2025-03-19 10:06:42,989 - Camera configuration has been adjusted!
+2025-03-19 10:06:42,991 - Configuration successful!
+2025-03-19 10:06:43,085 - Camera started
+2025-03-19 10:10:20,199 - Camera stopped
+2025-03-19 10:10:20,406 - Camera closed successfully.
+2025-03-19 10:10:27,217 - Initialization successful.
+2025-03-19 10:10:27,217 - Camera now open.
+2025-03-19 10:10:27,223 - Camera configuration has been adjusted!
+2025-03-19 10:10:27,226 - Configuration successful!
+2025-03-19 10:10:27,320 - Camera started
+2025-03-19 10:12:48,438 - Camera stopped
+2025-03-19 10:12:48,644 - Camera closed successfully.

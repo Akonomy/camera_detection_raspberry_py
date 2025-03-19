@@ -6,23 +6,27 @@ Descriere: Primește un dicționar cu informații despre cutii (culoare, literă
            conversie și desenează o interfață Tkinter fixă cu un grid (de la -25 la 25 pe axa X și -10 la 30 pe axa Y).
            Pe hartă se afișează etichete cu coordonate (ex. -25 cm, -24 cm, …, 25 cm pe X și -10, -9, …, 30 cm pe Y).
            Se permite click pe hartă pentru afișarea coordonatelor reale și, după selectarea unei cutii,
-           se pot vizualiza zonele relative (safe, warning, danger) desenate ca dreptunghiuri filled cu transparență.
-           După desenarea zonelor se analizează și se afișează (în consolă) lista cutiilor din fiecare categorie,
-           conform următoarei logici:
-             - Danger (prioritar): dacă mai mult de 0.5 cm din cutie cade în zona Danger.
-             - Warning: dacă (și doar dacă nu e în Danger) cel puțin 1 cm din cutie cade în zona Warning.
-             - Safe: dacă cutia nu depășește aceste praguri.
-           (Se consideră că „marginea” cutiei este la 1.5 cm de la centrul cutiei, deci cutia este aproximativ un pătrat de 3 cm.)
+           se pot vizualiza zonele relative desenate ca dreptunghiuri filled cu transparență.
            
-           Noua funcționalitate de analiză (funcția analyze_session_boxes) primește:
-             - o sesiune,
-             - opțional un ID de cutie target,
-             - opțional un flag mandatory (True sau False; implicit False, adică “common”).
-           Dacă nu se primește o cutie target, se alege cea mai apropiată de centru care nu are vecini în Danger.
-           În funcție de flag, se returnează o listă de ID-uri ordonată (crescător după diferența verticală față de target)
-           și trei flaguri explicative:
-             - "target_in_first": 1 dacă prima cutie din listă este targetul solicitat,
-             - "danger_neighbor_count": numărul de vecini Danger,
+           Zonele existente sunt:
+             - Danger: cu două subzone (Danger A și Danger B)
+             - Warning: zone laterale
+             - Safe: zona centrală plus zone laterale complete
+             
+           Noua funcționalitate este introducerea zonei **proximity**, definită astfel:
+             - Proximity zone (culoare: purple): 
+                 • pe verticală de la [by - 1.5, by + 2]
+                 • pe orizontală: de la [bx - 3, bx - 1.5] (zona stângă) și [bx + 1.5, bx + 3] (zona dreaptă)
+           Logica de clasificare devine:
+             1. Dacă o cutie intersectează zona Danger (≥0.5 cm suprapunere verticală) → "Danger"
+             2. Altfel, dacă are marginea în zona proximity → "Proximity"
+             3. Altfel, dacă are suprapunere cu zona Warning (≥1 cm) → "Warning"
+             4. În caz contrar → "Safe" (și nu este afișată la "Show Zones")
+           
+           Se introduce și funcția analyze_session_boxes care, pe baza unui target (dacă nu se furnizează se alege automat),
+           returnează o listă de ID-uri (sortată crescător după diferența verticală față de target) și trei flaguri:
+             - "target_in_first": 1 dacă primul element din listă este targetul solicitat,
+             - "danger_neighbor_count": numărul de vecini clasificați ca Danger,
              - "target_specified_in_session": 1 dacă targetul a fost furnizat și găsit, 0 altfel.
 """
 
@@ -43,6 +47,21 @@ def get_center_x(detected_y):
 
 def get_scale_x(detected_y):
     return 0.0000608 * detected_y + 0.046936
+    
+    
+def get_effective_margin(box):
+    """
+    Pentru o cutie cu dimensiuni reale (w, h) și un unghi de rotație (angle, în grade),
+    dacă abs(angle) > 15, se consideră că marginea efectivă este distanța de la centru la colț,
+    adică sqrt((w/2)**2 + (h/2)**2). Altfel se folosește distanța minimă (min(w, h)/2).
+    """
+    w, h = box.get("real_size", (3, 3))  # presupunem implicit 3 cm dacă nu e specificat
+    if abs(box.get("angle", 0)) > 25:
+        return math.sqrt((w/2)**2 + (h/2)**2)
+    else:
+        return min(w, h) / 2
+
+
 
 def getRealCoordinates(detected_x, detected_y):
     center_x = get_center_x(detected_y)
@@ -92,7 +111,7 @@ def get_box_draw_size(box, default_min=2, default_max=3, scale=10):
     clamped_cm = max(default_min, min(avg_cm, default_max))
     return int(clamped_cm * scale)
 
-# --- Funcție de desenare și interfață Tkinter ---
+# --- Funcții de desenare și interfață Tkinter ---
 class BoxMapApp:
     def __init__(self, boxes):
         self.boxes = boxes  # Dicționarul cu cutii procesate
@@ -219,6 +238,12 @@ class BoxMapApp:
             self.canvas.create_rectangle(cx - half_px - 3, cy - half_px - 3,
                                          cx + half_px + 3, cy + half_px + 3,
                                          outline="blue", width=3, dash=(4,2), tags="selected")
+        # Desenăm opțional indicatori pentru cutiile din nearby
+        for nb in self.nearby_box_ids:
+            if nb in self.boxes:
+                bx, by = self.boxes[nb]["real_position"]
+                cx, cy = self.real_to_canvas(bx, by)
+                self.canvas.create_oval(cx-5, cy-5, cx+5, cy+5, outline="magenta", width=2)
 
     def update_map(self, new_boxes):
         self.boxes = new_boxes
@@ -275,12 +300,18 @@ class BoxMapApp:
     def draw_zones(self):
         """
         Desenează zonele relative la cutia selectată conform partiționării definite:
-          - Safe Zone (verde): zona centrală de la [bx-10.5, bx+10.5] și y din [by-1.5, max_y],
-            plus zone laterale (din [min_x, bx-10.5] și [bx+10.5, max_x], y din [min_y, max_y]).
-          - Warning Zones (portocaliu): pentru x între [bx-10.5, bx-5] și [bx+5, bx+10.5], y din [by-7, by-1.5].
-          - Danger Zones (roșu): Danger A – x din [bx-10.5, bx+10.5], y din [min_y, by-7];
-            Danger B – x din [bx-5, bx+5], y din [by-7, by-1.5].
-        După desenarea zonelor se apelează analiza cutiilor (analyze_boxes).
+          - Danger Zones (roșu): 
+              • Danger A – x din [bx-10.5, bx+10.5], y din [min_y, by-7];
+              • Danger B – x din [bx-5, bx+5], y din [by-7, by-1.5].
+          - Proximity Zones (purple): 
+              • Stânga – x din [bx-3, bx-1.5], y din [by-1.5, by+2];
+              • Dreapta – x din [bx+1.5, bx+3], y din [by-1.5, by+2].
+          - Warning Zones (portocaliu): x între [bx-10.5, bx-5] și [bx+5, bx+10.5], y din [by-7, by-1.5].
+          - Safe Zones (verde): zona centrală de la [bx-10.5, bx+10.5] și y din [by-1.5, max_y],
+                               plus zone laterale din [min_x, bx-10.5] și [bx+10.5, max_x].
+        După desenarea zonelor se apelează analiza cutiilor (metoda analyze_boxes).
+        Dacă o cutie intersectează mai multe zone, se consideră că aparține zonei cu prioritate:
+            Danger > Proximity > Warning > Safe.
         """
         self.canvas.delete("zone")
         if not self.selected_box_id:
@@ -290,6 +321,7 @@ class BoxMapApp:
         sel_box = self.boxes[self.selected_box_id]
         bx, by = sel_box["real_position"]
 
+        # Safe Zone
         safe_central_left = bx - 10.5
         safe_central_right = bx + 10.5
         safe_y_bottom = by - 1.5
@@ -301,6 +333,7 @@ class BoxMapApp:
         safe_right_left = bx + 10.5
         safe_right_right = self.max_x
 
+        # Warning Zones
         warning_y_top = by - 1.5
         warning_y_bottom = by - 7
         warning_left_left = bx - 10.5
@@ -308,6 +341,7 @@ class BoxMapApp:
         warning_right_left = bx + 5
         warning_right_right = bx + 10.5
 
+        # Danger Zones
         danger_A_left = bx - 10.5
         danger_A_right = bx + 10.5
         danger_A_y_top = by - 7
@@ -318,15 +352,33 @@ class BoxMapApp:
         danger_B_y_top = by - 1.5
         danger_B_y_bottom = by - 7
 
+        # Proximity Zones
+        proximity_y_bottom = by - 1.5
+        proximity_y_top = by + 2
+        proximity_left_left = bx - 3.5
+        proximity_left_right = bx - 1.5
+        proximity_right_left = bx + 1.5
+        proximity_right_right = bx + 3.5
+
+        # Desenăm zonele Danger
         self.draw_zone(danger_A_left, danger_A_right, danger_A_y_bottom, danger_A_y_top, "red", "gray50", "zone")
         self.draw_zone(danger_B_left, danger_B_right, danger_B_y_bottom, danger_B_y_top, "red", "gray50", "zone")
 
+        # Desenăm zonele Warning
         self.draw_zone(warning_left_left, warning_left_right, warning_y_bottom, warning_y_top, "orange", "gray50", "zone")
         self.draw_zone(warning_right_left, warning_right_right, warning_y_bottom, warning_y_top, "orange", "gray50", "zone")
 
+        # Desenăm zonele Safe (se poate suprapune peste safe)
         self.draw_zone(safe_central_left, safe_central_right, safe_y_bottom, safe_y_top, "green", "gray50", "zone")
         self.draw_zone(safe_left_left, safe_left_right, self.min_y, self.max_y, "green", "gray50", "zone")
         self.draw_zone(safe_right_left, safe_right_right, self.min_y, self.max_y, "green", "gray50", "zone")
+
+
+
+        # Desenăm zonele Proximity
+        self.draw_zone(proximity_left_left, proximity_left_right, proximity_y_bottom, proximity_y_top, "purple", "gray50", "zone")
+        self.draw_zone(proximity_right_left, proximity_right_right, proximity_y_bottom, proximity_y_top, "purple", "gray50", "zone")
+
 
         print("Filled zones drawn relative to selected box:", self.selected_box_id)
         self.analyze_boxes()
@@ -334,9 +386,12 @@ class BoxMapApp:
     def classify_box(self, box, target_box):
         """
         Clasifică o cutie (box) relativ la cutia target (target_box) considerând că fiecare cutie este un pătrat de 3 cm.
-        Returnează "Danger" dacă intersecția verticală cu zona Danger este >= 0.5 cm,
-        "Warning" dacă intersecția cu zona Warning este >= 1 cm (și nu e Danger),
-        altfel "Safe".
+        Prioritatea: Danger > Proximity > Warning > Safe.
+        Returnează:
+           - "Danger" dacă intersecția verticală cu zona Danger este >= 0.5 cm,
+           - "Proximity" dacă cutia intersectează zona proximity,
+           - "Warning" dacă intersecția cu zona Warning este >= 1 cm (și nu e în Danger sau Proximity),
+           - altfel "Safe".
         """
         x, y = box["real_position"]
         bx, by = target_box["real_position"]
@@ -344,7 +399,10 @@ class BoxMapApp:
         right = x + 1.5
         top = y + 1.5
         bottom = y - 1.5
+        
+        
 
+        # Calcul Danger (la fel ca înainte)
         danger_A = 0.0
         if right > (bx - 10.5) and left < (bx + 10.5):
             if bottom < (by - 7):
@@ -360,6 +418,25 @@ class BoxMapApp:
         if danger_overlap >= 0.5:
             return "Danger"
 
+        # Verificare zonă Proximity: se verifică dacă există intersecție nenulă
+        prox_bottom = by - 1.5
+        prox_top = by + 2
+        prox_left_left = bx - 3.5
+        prox_left_right = bx - 1.5
+        prox_right_left = bx + 1.5
+        prox_right_right = bx + 3.5
+
+        def intersects(zone_left, zone_right, zone_bottom, zone_top, rect_left, rect_right, rect_bottom, rect_top):
+            horiz_overlap = min(zone_right, rect_right) - max(zone_left, rect_left)
+            vert_overlap = min(zone_top, rect_top) - max(zone_bottom, rect_bottom)
+            return horiz_overlap > 0 and vert_overlap > 0
+
+        in_proximity = (intersects(prox_left_left, prox_left_right, prox_bottom, prox_top, left, right, bottom, top) or
+                        intersects(prox_right_left, prox_right_right, prox_bottom, prox_top, left, right, bottom, top))
+        if in_proximity:
+            return "Proximity"
+
+        # Calcul Warning (la fel ca înainte)
         warning_left = 0.0
         horiz_overlap_left = max(0, min(right, bx - 5) - max(left, bx - 10.5))
         if horiz_overlap_left > 0:
@@ -381,13 +458,15 @@ class BoxMapApp:
     def analyze_boxes(self):
         """
         Parcurge toate cutiile (exceptând cea selectată) și le clasifică relativ la cutia selectată,
-        afișând în consolă liste separate pentru "Danger", "Warning" și "Safe".
+        afișând în consolă liste separate pentru "Danger", "Proximity", "Warning" și "Safe".
+        Se afișează doar cutiile din zonele Danger, Proximity și Warning.
         """
         if not self.selected_box_id:
             print("No box selected for analysis!")
             return
         sel_box = self.boxes[self.selected_box_id]
         danger_list = []
+        proximity_list = []
         warning_list = []
         safe_list = []
         for box_id, box in self.boxes.items():
@@ -396,29 +475,36 @@ class BoxMapApp:
             cls = self.classify_box(box, sel_box)
             if cls == "Danger":
                 danger_list.append((box_id, box))
+            elif cls == "Proximity":
+                proximity_list.append((box_id, box))
             elif cls == "Warning":
                 warning_list.append((box_id, box))
             else:
                 safe_list.append((box_id, box))
         print("Analysis of boxes relative to selected box:")
         print("Danger:", [(bid, b["color"], b["letter"]) for bid, b in danger_list])
+        print("Proximity:", [(bid, b["color"], b["letter"]) for bid, b in proximity_list])
         print("Warning:", [(bid, b["color"], b["letter"]) for bid, b in warning_list])
-        print("Safe:", [(bid, b["color"], b["letter"]) for bid, b in safe_list])
+        print("Safe:", [(bid, b["color"], b["letter"]) for bid, b in safe_list if False])  # Safe nu se afișează
 
 # --- Funcții de analiză pentru sesiune (modul complet) ---
 
 def classify_box_relative(other, target):
     """
     Funcție de clasificare similară cu metoda classify_box, dar la nivel de modul.
-    Returnează "Danger", "Warning" sau "Safe" pentru cutia 'other' relativ la cutia 'target'.
+    Prioritatea: Danger > Proximity > Warning > Safe.
+    Returnează "Danger", "Proximity", "Warning" sau "Safe" pentru cutia 'other' relativ la cutia 'target'.
     """
     x, y = other["real_position"]
     bx, by = target["real_position"]
+
     left = x - 1.5
     right = x + 1.5
     top = y + 1.5
     bottom = y - 1.5
 
+
+    # Calcul Danger
     danger_A = 0.0
     if right > (bx - 10.5) and left < (bx + 10.5):
         if bottom < (by - 7):
@@ -434,6 +520,26 @@ def classify_box_relative(other, target):
     if danger_overlap >= 0.5:
         return "Danger"
 
+    # Verificare zonă Proximity
+    prox_bottom = by - 1.5
+    prox_top = by + 2
+    prox_left_left = bx - 3.6
+    prox_left_right = bx - 1.5
+    prox_right_left = bx + 1.5
+    prox_right_right = bx + 3.6
+
+    def intersects(zone_left, zone_right, zone_bottom, zone_top, rect_left, rect_right, rect_bottom, rect_top):
+        horiz_overlap = min(zone_right, rect_right) - max(zone_left, rect_left)
+        vert_overlap = min(zone_top, rect_top) - max(zone_bottom, rect_bottom)
+        return horiz_overlap > 0 and vert_overlap > 0
+
+
+    in_proximity = (intersects(prox_left_left, prox_left_right, prox_bottom, prox_top, left, right, bottom, top) or
+                    intersects(prox_right_left, prox_right_right, prox_bottom, prox_top, left, right, bottom, top))
+    if in_proximity:
+        return "Proximity"
+
+    # Calcul Warning
     warning_left = 0.0
     horiz_overlap_left = max(0, min(right, bx - 5) - max(left, bx - 10.5))
     if horiz_overlap_left > 0:
@@ -486,8 +592,6 @@ def select_best_candidate(boxes):
                 best_dist = d
     return best_candidate_id, best_candidate
 
-# Snippet din MAP.py
-
 def analyze_target_zones(session, target_box_id=None):
     """
     Analizează zona în jurul unei cutii target din sesiune.
@@ -495,20 +599,24 @@ def analyze_target_zones(session, target_box_id=None):
     Parametri:
       - session: dicționarul de sesiune cu cutii procesate (formatul este cel generat de process_boxes)
       - target_box_id: (opțional) ID-ul cutiei target. Dacă nu este furnizat sau nu se găsește,
-          se returnează flag-ul 1 (safe) și liste goale.
+          se returnează safe_flag = 1 și liste goale.
     
     Returnează un tuple format din:
-      - safe_flag: 1 dacă nici o cutie nu se găsește în zona Danger sau Warning (adică targetul este considerat safe),
+      - safe_flag: 1 dacă nici o cutie nu se găsește în zonele Danger, Proximity sau Warning (adică targetul este considerat safe),
                     0 dacă există cel puțin o cutie în oricare dintre aceste zone.
       - danger_list: listă de tuple (ID, culoare, literă) pentru cutiile clasificate ca fiind în Danger
+      - proximity_list: listă de tuple (ID, culoare, literă) pentru cutiile clasificate ca fiind în Proximity
       - warning_list: listă de tuple (ID, culoare, literă) pentru cutiile clasificate ca fiind în Warning
     """
-    # Dacă nu se furnizează target sau nu se găsește în sesiune, considerăm că targetul este safe
+    
+
+    
     if target_box_id is None or target_box_id not in session:
-        return 1, [], []
+        return 1, [], [], []
     
     candidate = session[target_box_id]
     danger_list = []
+    proximity_list = []
     warning_list = []
     
     for box_id, box in session.items():
@@ -517,14 +625,60 @@ def analyze_target_zones(session, target_box_id=None):
         classification = classify_box_relative(box, candidate)
         if classification == "Danger":
             danger_list.append((box_id, box.get("color"), box.get("letter")))
+        elif classification == "Proximity":
+            proximity_list.append((box_id, box.get("color"), box.get("letter")))
         elif classification == "Warning":
             warning_list.append((box_id, box.get("color"), box.get("letter")))
     
-    # Dacă niciuna din liste nu conține elemente, targetul este considerat safe.
-    safe_flag = 1 if not danger_list and not warning_list else 0
-    return safe_flag, danger_list, warning_list
+    safe_flag = 1 if not danger_list and not proximity_list and not warning_list else 0
+    return safe_flag, danger_list, proximity_list, warning_list
 
+def analyze_session_boxes(session, target_box_id=None, mandatory=False):
+    """
+    Analizează sesiunea de cutii și returnează o listă de ID-uri ordonată crescător după diferența verticală față de target,
+    împreună cu trei flaguri explicative:
+      - "target_in_first": 1 dacă prima cutie din listă este targetul solicitat,
+      - "danger_neighbor_count": numărul de vecini clasificați ca Danger,
+      - "target_specified_in_session": 1 dacă targetul a fost furnizat și găsit, 0 altfel.
+    
+    Dacă target_box_id nu este furnizat sau nu se găsește în sesiune, se alege cea mai apropiată de centru care nu are vecini în Danger.
+    Dacă mandatory este True, targetul este inclus în listă chiar dacă nu este clasificat ca non-safe.
+    """
+    
 
+    
+    target_specified = 1 if target_box_id in session else 0
+    if target_box_id is None or target_box_id not in session:
+        target_box_id, target_box = select_best_candidate(session)
+    else:
+        target_box = session[target_box_id]
+
+    danger_count = 0
+    neighbors = []
+    for box_id, box in session.items():
+        if box_id == target_box_id:
+            continue
+        cls = classify_box_relative(box, target_box)
+        if cls == "Danger":
+            danger_count += 1
+        if cls in ["Danger", "Proximity", "Warning"]:
+            diff = abs(box["real_position"][1] - target_box["real_position"][1])
+            neighbors.append((box_id, diff))
+    neighbors.sort(key=lambda x: x[1])
+    neighbor_ids = [nid for nid, _ in neighbors]
+    target_in_first = 0
+    if mandatory:
+        neighbor_ids.insert(0, target_box_id)
+        target_in_first = 1
+    else:
+        if neighbor_ids and neighbor_ids[0] == target_box_id:
+            target_in_first = 1
+    flags = {
+        "target_in_first": target_in_first,
+        "danger_neighbor_count": danger_count,
+        "target_specified_in_session": target_specified
+    }
+    return neighbor_ids, flags
 
 # --- Exemplu de utilizare a modulului complet ---
 if __name__ == "__main__":
@@ -553,7 +707,6 @@ if __name__ == "__main__":
     app.root.mainloop()
 
     # Exemplu de apelare a funcției de analiză fără interfață:
-    # target_box_id poate fi setat la "K" sau altceva, iar mandatory poate fi True sau False (default False, common)
     result_list, flags = analyze_session_boxes(boxes, target_box_id="K", mandatory=True)
     print("Analysis result (mandatory):", result_list)
     print("Flags:", flags)

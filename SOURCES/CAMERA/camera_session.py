@@ -199,7 +199,29 @@ def camera_loop(callback=None):
             
     picam.stop()
     cv2.destroyAllWindows()
-
+def capture_raw_image():
+    """
+    Capturează o imagine de la cameră și aplică doar:
+      - Redimensionare la 512x512.
+      - Conversie de la BGR la RGB.
+    
+    Această funcție sare peste orice procesare suplimentară (ex.: detecția cutiilor sau a literelor)
+    și returnează direct imaginea preprocesată.
+    
+    Returnează:
+      - raw_image: imaginea capturată și preprocesată.
+    """
+    picam = Picamera2()
+    picam.configure(picam.create_still_configuration())
+    picam.start()
+    image = picam.capture_array()
+    image = cv2.resize(image, (512, 512))
+    #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    picam.stop()
+    return image
+    
+    
+    
 if __name__ == "__main__":
     # Exemplu de rulare continuă: se afișează fereastra cu imaginea procesată
     camera_loop()

@@ -5,7 +5,8 @@ Script: detect_rotated_parallelogram.py
 Utilizare modulară:
   from detect_rotated_parallelogram import detect_rotated_lines_in_mosaic
 
-  coords_cyan = detect_rotated_lines_in_mosaic(debug=False)
+  # Se presupune că 'image_copy' este deja obținută din alt modul (de exemplu, din camera)
+  coords_cyan = detect_rotated_lines_in_mosaic(image_copy, debug=False)
   # coords_cyan va fi o listă de tuple (x_cm, y_cm) deduplicate
      pentru fiecare celulă detectată cu bloc cyan
 
@@ -16,7 +17,7 @@ import cv2
 import numpy as np
 import tkinter as tk
 import math
-from CAMERA.camera_session import capture_raw_image
+from CAMERA.camera_session import capture_raw_image  # Se folosește doar pentru rularea standalone
 
 ### Funcții pentru conversie (corecție perspectivă) ###
 def convert_px_to_cm(detected_x, detected_y):
@@ -250,20 +251,22 @@ def show_tkinter_cm_interface(cyan_coords, timeout=60000):
     root.after(timeout, root.destroy)
     root.mainloop()
 
-### Funcția principală (modulară) ###
-def detect_rotated_lines_in_mosaic(debug=False):
+### Funcția principală modificată ###
+def detect_rotated_lines_in_mosaic(image_copy, debug=False):
     """
-    Procesează imaginea de la cameră pentru a detecta blocurile roșii/cyan,
+    Procesează o imagine preluată ca parametru pentru a detecta blocurile roșii/cyan,
     efectuează conversia în coordonate (cm) și deduplicatează rezultatul, astfel încât
     dacă mai multe blocuri se mapează la aceeași celulă, se returnează o singură coordonată.
     
     Dacă debug=True, se afișează ferestrele OpenCV și interfețele Tkinter.
     
+    Parametru:
+      - image_copy: O copie a imaginii (preprocesată, de dimensiune 512x512) care va fi folosită pentru procesare.
+    
     Returnează:
       - o listă de tuple (x_cm, y_cm) deduplicate.
     """
-    raw_img = capture_raw_image()
-    mosaic_64 = create_64x64_mosaic(raw_img)
+    mosaic_64 = create_64x64_mosaic(image_copy)
     mosaic_64_marked = mark_red_blocks_as_cyan(mosaic_64)
 
     mask_cyan = np.zeros((64, 64), dtype=np.uint8)
@@ -274,8 +277,7 @@ def detect_rotated_lines_in_mosaic(debug=False):
     contours, _ = cv2.findContours(mask_cyan, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
     if debug:
-        show_opencv_windows(raw_img, mosaic_64_marked, contours)
-    if debug:
+        show_opencv_windows(image_copy, mosaic_64_marked, contours)
         show_tkinter_grid(mosaic_64_marked, timeout=70000)
     
     cyan_coords = get_cyan_block_coordinates(mosaic_64_marked)
@@ -292,7 +294,8 @@ def detect_rotated_lines_in_mosaic(debug=False):
 ### Exemplu de rulare standalone ###
 if __name__ == "__main__":
     try:
-        coords = detect_rotated_lines_in_mosaic(debug=True)
+        raw_img = capture_raw_image()  # Capturează o imagine (512x512) folosind modulul de cameră
+        coords = detect_rotated_lines_in_mosaic(raw_img, debug=True)
         print("Coordonate (cm) detectate (deduplicate):", coords)
     except KeyboardInterrupt:
         pass

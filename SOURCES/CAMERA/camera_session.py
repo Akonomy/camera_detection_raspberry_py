@@ -7,9 +7,13 @@ Descriere: Modul generalizat pentru capturarea și procesarea datelor de la came
   - Detectează cutiile folosind funcțiile din BOX_DETECT.
   - Realizează îmbinarea cutiilor similare.
   - Asigură că fiecare cutie are cheia "angle" (calculată sau implicit 0).
-  - Oferă două funcții:
+  - Oferă două funcții principale:
       • capture_and_process_session() – capturează o singură imagine și returnează (image, session_data)
       • camera_loop(callback=None) – rulează continuu, apelând callback-ul pentru fiecare cadru.
+      
+Pentru debug, am adăugat funcția:
+      • camera_loop_raw(callback=None) – rulează continuu și returnează doar o copie a imaginii brute
+        (similar cu funcția capture_raw_image()), fără procesări suplimentare.
 """
 
 import os
@@ -199,11 +203,12 @@ def camera_loop(callback=None):
             
     picam.stop()
     cv2.destroyAllWindows()
+
 def capture_raw_image():
     """
     Capturează o imagine de la cameră și aplică doar:
       - Redimensionare la 512x512.
-      - Conversie de la BGR la RGB.
+      - (Opțional) Conversie de la BGR la RGB.
     
     Această funcție sare peste orice procesare suplimentară (ex.: detecția cutiilor sau a literelor)
     și returnează direct imaginea preprocesată.
@@ -216,12 +221,48 @@ def capture_raw_image():
     picam.start()
     image = picam.capture_array()
     image = cv2.resize(image, (512, 512))
-    #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     picam.stop()
     return image
+
+#############################################
+# Funcții suplimentare pentru debug testing
+#############################################
+
+def camera_loop_raw(callback=None):
+    """
+    Rulează un loop continuu care capturează o imagine "raw" (preprocesată, redimensionată la 512x512) de la cameră,
+    fără a trece prin procesările din BOX_DETECT.
     
+    Dacă callback este definit, acesta va fi apelat pentru fiecare cadru cu parametrii:
+      - raw_image: copia imaginii brute preprocesate.
+    Dacă callback este None, se afișează pur și simplu imaginea într-o fereastră OpenCV.
     
+    Apăsați 'q' pentru a ieși din loop.
+    """
+    picam = Picamera2()
+    picam.configure(picam.create_still_configuration())
+    picam.start()
     
+    while True:
+        image = picam.capture_array()
+        image = cv2.resize(image, (512, 512))
+        raw_image = image.copy()
+        
+        if callback:
+            callback(raw_image)
+        else:
+            cv2.imshow("Raw Image", raw_image)
+        
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+            
+    picam.stop()
+    cv2.destroyAllWindows()
+
 if __name__ == "__main__":
     # Exemplu de rulare continuă: se afișează fereastra cu imaginea procesată
-    camera_loop()
+    # camera_loop()
+
+    # Exemplu de rulare pentru debug: loop raw fără procesare BOX_DETECT
+    camera_loop_raw()

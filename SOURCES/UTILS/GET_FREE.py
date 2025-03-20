@@ -90,7 +90,7 @@ def find_free_position(boxes, zone_limits, step=0.2, max_attempts=1000):
     
     # Dacă grid-ul nu a dat rezultate, încercăm poziții random în interiorul zonei
     for _ in range(max_attempts):
-        candidate_x = random.uniform(zone_limits["left"] + 2.5, zone_limits["right"] - 2.5)
+        candidate_x = random.uniform(zone_limits["left"] + 2, zone_limits["right"] - 2)
         candidate_y = random.uniform(zone_limits["bottom"] + 2, zone_limits["top"] - 2)
         candidate = (candidate_x, candidate_y)
         candidate_box = {"real_position": candidate, "real_size": (3, 3), "angle": 0}

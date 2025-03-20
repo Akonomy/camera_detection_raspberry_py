@@ -287,7 +287,7 @@ def detect_rotated_lines_in_mosaic(debug=False):
     if debug:
         show_tkinter_cm_interface(deduped_coords, timeout=60000)
 
-    return deduped_coords
+    return cyan_coords
 
 ### Exemplu de rulare standalone ###
 if __name__ == "__main__":

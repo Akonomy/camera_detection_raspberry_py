@@ -111,6 +111,10 @@ def get_box_draw_size(box, default_min=2, default_max=3, scale=10):
     clamped_cm = max(default_min, min(avg_cm, default_max))
     return int(clamped_cm * scale)
 
+
+
+
+
 # --- Funcții de desenare și interfață Tkinter ---
 class BoxMapApp:
     def __init__(self, boxes):
@@ -517,7 +521,7 @@ def classify_box_relative(other, target):
         danger_B = vertical_overlap_B
 
     danger_overlap = max(danger_A, danger_B)
-    if danger_overlap >= 0.5:
+    if danger_overlap >= 0.1:
         return "Danger"
 
     # Verificare zonă Proximity
@@ -679,7 +683,58 @@ def analyze_session_boxes(session, target_box_id=None, mandatory=False):
         "target_specified_in_session": target_specified
     }
     return neighbor_ids, flags
+    
+    
+    
 
+def analyze_virtual_box(virtual_position, session, ghost_size=(3, 3), ghost_angle=0):
+    """
+    Primește:
+      - virtual_position: un tuple (x, y) în centimetri,
+      - session: dicționarul de cutii procesate (unde fiecare cutie are cel puțin cheile "real_position", "real_size" și "angle"),
+      - ghost_size (opțional): dimensiunea virtuală a cutiei (default (3, 3) cm),
+      - ghost_angle (opțional): unghiul cutiei virtuale (default 0).
+      
+    Creează o cutie virtuală (ghost box) la poziția dată și analizează cutiile din sesiune relativ la aceasta,
+    folosind funcția de clasificare (classify_box_relative).
+    
+    Returnează un tuple format din:
+      - safe_flag: 1 dacă nici o cutie din sesiune nu se găsește în zonele Danger, Proximity sau Warning relativ la ghost box,
+                   0 altfel.
+      - danger_list: listă de tuple (ID, culoare, literă) pentru cutiile clasificate ca fiind în Danger.
+      - proximity_list: listă de tuple (ID, culoare, literă) pentru cutiile clasificate ca fiind în Proximity.
+      - warning_list: listă de tuple (ID, culoare, literă) pentru cutiile clasificate ca fiind în Warning.
+    """
+    # Creează cutia virtuală (ghost box)
+    ghost_box = {
+        "real_position": virtual_position,
+        "real_size": ghost_size,
+        "angle": ghost_angle,
+        "color": "ghost",  # sau orice altă etichetă pentru cutiile virtuale
+        "letter": ""
+    }
+    
+    danger_list = []
+    proximity_list = []
+    warning_list = []
+    
+    # Iterează peste toate cutiile din sesiune și le clasifică relativ la ghost_box
+    for box_id, box in session.items():
+        classification = classify_box_relative(box, ghost_box)
+        if classification == "Danger":
+            danger_list.append((box_id, box.get("color"), box.get("letter")))
+        elif classification == "Proximity":
+            proximity_list.append((box_id, box.get("color"), box.get("letter")))
+        elif classification == "Warning":
+            warning_list.append((box_id, box.get("color"), box.get("letter")))
+    
+    safe_flag = 1 if not danger_list and not proximity_list and not warning_list else 0
+    return safe_flag, danger_list, proximity_list, warning_list
+    
+    
+    
+    
+    
 # --- Exemplu de utilizare a modulului complet ---
 if __name__ == "__main__":
     # Exemplu de dicționar de sesiune cu două cutii: "K" (albastră) și "A" (roșie)

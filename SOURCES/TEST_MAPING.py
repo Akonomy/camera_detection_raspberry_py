@@ -136,9 +136,7 @@ def point_in_poly(x, y, poly):
     p1x, p1y = poly[0]
     for i in range(1, n+1):
         p2x, p2y = poly[i % n]
-        # Verificăm dacă y e în intervalul [min(p1y,p2y), max(p1y,p2y))
         if min(p1y, p2y) < y <= max(p1y, p2y):
-            # Evităm div. zero
             if p1y != p2y:
                 xinters = (y - p1y) * (p2x - p1x) / (p2y - p1y) + p1x
             else:
@@ -174,7 +172,6 @@ def main():
 
     # 5) ALEGEM CEA MAI MARE COMPONENTĂ (cea cu cele mai multe celule)
     if not comps_filtered:
-        # nimic valid
         largest_comp = []
     else:
         largest_comp = max(comps_filtered, key=len)  # componenta cu cele mai multe celule
@@ -214,9 +211,16 @@ def main():
     canvas.pack()
 
     def to_canvas_coords(rx, ry):
+        """Transformă (rx, ry) din cm în pixeli Canvas."""
         cx = (rx - x_min)*scale
         cy = height - (ry - y_min)*scale
         return cx, cy
+
+    def from_canvas_coords(cx, cy):
+        """Transformă coordonatele mouse (canvas_x, canvas_y) în (rx, ry) cm."""
+        rx = (cx / scale) + x_min
+        ry = y_min + (height - cy)/scale
+        return rx, ry
 
     # A) Desenăm toate punctele brute (roșu)
     for (x_cm, y_cm) in coords_raw:
@@ -245,6 +249,28 @@ def main():
             x1, y1 = hull_canvas_coords[i]
             x2, y2 = hull_canvas_coords[(i + 1) % len(hull_canvas_coords)]
             canvas.create_line(x1, y1, x2, y2, fill="blue", width=2)
+
+    # D) Funcția de click: verifică dacă e inside/outside hull
+    def on_canvas_click(event):
+        # 1) Transformăm coordonatele din pixeli Canvas în cm
+        rx, ry = from_canvas_coords(event.x, event.y)
+        # 2) Verificăm inside/outside
+        if point_in_poly(rx, ry, hull):
+            color = "magenta"  # interior
+        else:
+            color = "yellow"   # exterior
+        # 3) Desenăm un mic pătrat la poziția respectivă
+        size = 0.3  # cm
+        left = rx - size/2
+        right = rx + size/2
+        top = ry + size/2
+        bottom = ry - size/2
+        cx1, cy1 = to_canvas_coords(left, top)
+        cx2, cy2 = to_canvas_coords(right, bottom)
+        canvas.create_rectangle(cx1, cy1, cx2, cy2, fill=color, outline="black")
+
+    # Asociază funcția on_canvas_click la evenimentul <Button-1> (click stânga)
+    canvas.bind("<Button-1>", on_canvas_click)
 
     root.mainloop()
 

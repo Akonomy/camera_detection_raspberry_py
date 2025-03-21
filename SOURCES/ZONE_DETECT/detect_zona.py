@@ -31,7 +31,7 @@ def convert_px_to_cm(detected_x, detected_y):
         iar pentru detected_y mare (josul imaginii) y devine mic.
     """
     detected_y = 512 - detected_y
-    real_y = 0.05587 * detected_y - 4.47
+    real_y = 0.05587 * detected_y + -4.47
 
     center_x = 0.0203 * detected_y + 230.38
     scale_x = 0.0000608 * detected_y + 0.046936

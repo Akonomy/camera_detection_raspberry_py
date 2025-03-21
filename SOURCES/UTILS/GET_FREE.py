@@ -213,14 +213,15 @@ def debug_interface(boxes, zone_limits, hull, candidate_spot=None):
         canvas.create_line(0, cy, tick_length, cy, fill="black")
         if y % 5 == 0:
             canvas.create_text(tick_length + 15, cy, text=str(y), fill="black", font=("Arial", 10))
-    
-    # Desenăm poligonul hull
+        # Desenăm poligonul zonei (convex hull)
     if hull and len(hull) >= 3:
-        points = []
-        for (x, y) in hull:
-            cx, cy = real_to_canvas(x, y)
-            points.extend([cx, cy])
-        canvas.create_polygon(points, outline="blue", fill="", width=2)
+        hull_canvas_coords = [real_to_canvas(x, y) for x, y in hull]
+        # Desenăm linii între punctele poligonului
+        for i in range(len(hull_canvas_coords)):
+            x1, y1 = hull_canvas_coords[i]
+            x2, y2 = hull_canvas_coords[(i + 1) % len(hull_canvas_coords)]
+            canvas.create_line(x1, y1, x2, y2, fill="blue", width=2)
+    
     else:
         zx_left = zone_limits["left"]
         zx_right = zone_limits["right"]

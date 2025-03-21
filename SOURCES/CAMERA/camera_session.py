@@ -221,7 +221,7 @@ def capture_raw_image():
     picam.start()
     image = picam.capture_array()
     image = cv2.resize(image, (512, 512))
-    # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     picam.stop()
     return image
 

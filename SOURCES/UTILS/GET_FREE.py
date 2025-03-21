@@ -44,51 +44,48 @@ def is_position_free(candidate_box, boxes):
     return True
 
 
-
-def find_free_position(boxes, zone_limits, step=0.2, max_attempts=1000):
-    """
-    Caută o poziție liberă în interiorul zonei date (zone_limits) cu o căutare mai amănunțită:
-      1. Se generează un grid de puncte candidate în jurul centrului zonei.
-         Punctele sunt sortate după distanța față de centru.
-      2. Se verifică sistematic dacă poziția candidat (virtual box de 3x3 cm) este "Safe".
-      3. Dacă nicio poziție din grid nu este liberă, se încearcă poziții random (până la max_attempts).
-    Returnează:
-      - (candidate_x, candidate_y) dacă se găsește o poziție liberă,
-      - None dacă nu se găsește niciuna.
-    """
+def find_free_position(boxes, zone_limits, max_attempts=1000):
     import math, random
+    
     # Calculăm centrul zonei
     center_x = (zone_limits["left"] + zone_limits["right"]) / 2
     center_y = (zone_limits["top"] + zone_limits["bottom"]) / 2
 
     candidate_points = []
-    # Determinăm dimensiunile zonei
-    width = zone_limits["right"] - zone_limits["left"]
-    height = zone_limits["top"] - zone_limits["bottom"]
     
-    # Generăm un grid de puncte candidate în jurul centrului
-    dx = -width / 2
-    while dx <= width / 2:
-        dy = -height / 2
-        while dy <= height / 2:
-            candidate_x = center_x + dx
-            candidate_y = center_y + dy
+    # 1. Adaugă centrul zonei
+    candidate_points.append((center_x, center_y))
+    
+    # 2. Adaugă puncte la x-7 și x+7 (dacă se încadrează în zone)
+    x_offsets = [-7, 7]
+    for x_off in x_offsets:
+        candidate_x = center_x + x_off
+        if zone_limits["left"] <= candidate_x <= zone_limits["right"]:
+            candidate_points.append((candidate_x, center_y))
+    
+    # 3. Ajustări pe axa y (de exemplu, -0.5 și -1) cu aceleași x ca la centru
+    y_offsets = [-0.5, -1]
+    for y_off in y_offsets:
+        candidate_y = center_y + y_off
+        if zone_limits["bottom"] <= candidate_y <= zone_limits["top"]:
+            candidate_points.append((center_x, candidate_y))
+    
+    # 4. Poți combina offset-uri pe ambele axe pentru a acoperi mai multe cazuri:
+    for x_off in x_offsets:
+        for y_off in y_offsets:
+            candidate_x = center_x + x_off
+            candidate_y = center_y + y_off
             if (zone_limits["left"] <= candidate_x <= zone_limits["right"] and
                 zone_limits["bottom"] <= candidate_y <= zone_limits["top"]):
                 candidate_points.append((candidate_x, candidate_y))
-            dy += step
-        dx += step
     
-    # Sortează candidate_points după distanța față de centru
-    candidate_points.sort(key=lambda pt: math.sqrt((pt[0] - center_x) ** 2 + (pt[1] - center_y) ** 2))
-    
-    # Verificăm sistematic fiecare candidat din grid
+    # 5. Verificăm candidații predefiniți
     for candidate in candidate_points:
         candidate_box = {"real_position": candidate, "real_size": (3, 3), "angle": 0}
         if is_position_free(candidate_box, boxes):
             return candidate
-    
-    # Dacă grid-ul nu a dat rezultate, încercăm poziții random în interiorul zonei
+
+    # 6. Dacă niciunul nu a funcționat, căutare aleatorie
     for _ in range(max_attempts):
         candidate_x = random.uniform(zone_limits["left"] + 2, zone_limits["right"] - 2)
         candidate_y = random.uniform(zone_limits["bottom"] + 2, zone_limits["top"] - 2)
@@ -97,6 +94,7 @@ def find_free_position(boxes, zone_limits, step=0.2, max_attempts=1000):
         if is_position_free(candidate_box, boxes):
             return candidate
     return None
+
 
 
 

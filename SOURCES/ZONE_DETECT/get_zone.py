@@ -7,11 +7,11 @@ definită de componente conexe și convex hull. Funcția principală, detect_zon
 primește:
   - image_copy: o copie a imaginii (512x512) (obligatoriu),
   - positions: o poziție (tuple) sau o listă de poziții (opțional),
-  - debug: flag boolean; dacă True se afișează imaginea cu poligonul desenat.
+  - debug: flag boolean; dacă True se afișează copia imaginii cu poligonul desenat.
 
 La final, funcția returnează:
-  - zone_limits: un dicționar cu limitele zonei (left, right, top, bottom).
-  - pos_flags: o listă de 1 sau 0, indicând pentru fiecare poziție dacă este în zonă (1) sau nu (0).
+  - zone_limits: un dicționar cu limitele zonei (left, right, top, bottom),
+  - pos_flags: o listă de 1 sau 0, indicând pentru fiecare poziție dacă este în zonă (1) sau nu (0),
   - polygon_points: lista de tuple (x, y) reprezentând punctele care alcătuiesc convex hull-ul.
 """
 
@@ -100,9 +100,7 @@ def point_in_poly(x, y, poly):
 def getDetectedCoordinates(real_x, real_y):
     """
     Primește coordonate reale (x și y, în cm) și returnează coordonatele detectate (în pixeli),
-    folosind relațiile inverse ale celor din funcția getRealCoordinates.
-    
-    Relații:
+    folosind relațiile inverse:
       - detected_y = (real_y + 4.47) / 0.05587
       - center_x = 0.0203 * detected_y + 230.38
       - scale_x  = 0.0000608 * detected_y + 0.046936
@@ -128,7 +126,7 @@ def detect_zone(image_copy, positions=None, debug=False):
       3. Se selectează cel mai mare cluster și se calculează convex hull-ul acestuia.
       4. Se determină limitele extreme ale zonei din hull.
       5. (Opțional) Se verifică, pentru fiecare poziție dată, dacă se află în interiorul hull-ului.
-      6. Dacă debug==True, se afișează copia imaginii cu poligonul desenat (convertit în pixeli).
+      6. Dacă debug==True, se afișează copia imaginii cu poligonul convertit din cm în pixeli, desenat pe ea.
     
     Returnează:
       - zone_limits: dicționar cu "left", "right", "top", "bottom"
@@ -174,7 +172,7 @@ def detect_zone(image_copy, positions=None, debug=False):
             else:
                 pos_flags.append(0)
     
-    # 6) Dacă debug este True, deschide o fereastră cu copia imaginii și desenează poligonul convertit în pixeli
+    # 6) Dacă debug==True, afișează copia imaginii cu poligonul desenat (convertit din cm în pixeli)
     if debug:
         debug_img = image_copy.copy()
         if hull and len(hull) >= 3:

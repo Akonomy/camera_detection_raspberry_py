@@ -13123,3 +13123,584 @@
 2025-03-20 19:14:46,620 - Camera started
 2025-03-20 19:14:56,609 - Camera stopped
 2025-03-20 19:14:56,621 - Camera closed successfully.
+2025-03-21 22:21:17,837 - Initialization successful.
+2025-03-21 22:21:17,839 - Camera now open.
+2025-03-21 22:21:17,845 - Camera configuration has been adjusted!
+2025-03-21 22:21:17,848 - Configuration successful!
+2025-03-21 22:21:17,954 - Camera started
+2025-03-21 22:21:18,195 - Session update 1: tracked_package: None | suggested command: None
+2025-03-21 22:21:18,195 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:20,197 - Session update 2: tracked_package: None | suggested command: None
+2025-03-21 22:21:20,198 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:22,152 - Detected packages: merged_1: color Green, letter ['A'], position (135, 239)
+2025-03-21 22:21:22,199 - Session update 3: tracked_package: None | suggested command: None
+2025-03-21 22:21:22,200 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:24,201 - Session update 4: tracked_package: None | suggested command: None
+2025-03-21 22:21:24,201 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:26,203 - Session update 5: tracked_package: None | suggested command: None
+2025-03-21 22:21:26,204 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:26,290 - Detected packages: merged_1: color Green, letter ['A'], position (134, 239)
+2025-03-21 22:21:28,205 - Session update 6: tracked_package: None | suggested command: None
+2025-03-21 22:21:28,205 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:29,833 - Detected packages: merged_1: color Green, letter ['A'], position (135, 238)
+2025-03-21 22:21:30,206 - Session update 7: tracked_package: None | suggested command: None
+2025-03-21 22:21:30,207 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:32,208 - Session update 8: tracked_package: None | suggested command: None
+2025-03-21 22:21:32,208 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:33,372 - Detected packages: merged_1: color Green, letter ['A'], position (134, 239)
+2025-03-21 22:21:34,213 - Session update 9: tracked_package: None | suggested command: None
+2025-03-21 22:21:34,214 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:36,215 - Session update 10: tracked_package: None | suggested command: None
+2025-03-21 22:21:36,216 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:36,914 - Detected packages: merged_1: color Green, letter ['A'], position (135, 238)
+2025-03-21 22:21:38,217 - Session update 11: tracked_package: None | suggested command: None
+2025-03-21 22:21:38,217 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:40,219 - Session update 12: tracked_package: None | suggested command: None
+2025-03-21 22:21:40,219 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:40,575 - Detected packages: merged_1: color Green, letter ['A'], position (134, 239)
+2025-03-21 22:21:42,220 - Session update 13: tracked_package: None | suggested command: None
+2025-03-21 22:21:42,220 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:44,116 - Detected packages: merged_1: color Green, letter ['A'], position (134, 239)
+2025-03-21 22:21:44,222 - Session update 14: tracked_package: None | suggested command: None
+2025-03-21 22:21:44,222 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:46,226 - Session update 15: tracked_package: None | suggested command: None
+2025-03-21 22:21:46,227 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:47,648 - Detected packages: merged_1: color Green, letter ['A'], position (134, 239)
+2025-03-21 22:21:48,233 - Session update 16: tracked_package: None | suggested command: None
+2025-03-21 22:21:48,234 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:50,238 - Session update 17: tracked_package: None | suggested command: None
+2025-03-21 22:21:50,238 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:51,180 - Detected packages: merged_1: color Green, letter ['A'], position (134, 239)
+2025-03-21 22:21:52,240 - Session update 18: tracked_package: None | suggested command: None
+2025-03-21 22:21:52,241 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:54,242 - Session update 19: tracked_package: None | suggested command: None
+2025-03-21 22:21:54,242 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:54,722 - Detected packages: merged_1: color Green, letter ['A'], position (134, 239)
+2025-03-21 22:21:56,245 - Session update 20: tracked_package: None | suggested command: None
+2025-03-21 22:21:56,246 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:21:58,263 - Detected packages: merged_1: color Green, letter ['A'], position (133, 239)
+2025-03-21 22:21:58,263 - Session update 21: tracked_package: None | suggested command: None
+2025-03-21 22:21:58,263 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:00,267 - Session update 22: tracked_package: None | suggested command: None
+2025-03-21 22:22:00,268 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:01,801 - Detected packages: merged_1: color Green, letter ['A'], position (133, 239)
+2025-03-21 22:22:02,270 - Session update 23: tracked_package: None | suggested command: None
+2025-03-21 22:22:02,271 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:04,272 - Session update 24: tracked_package: None | suggested command: None
+2025-03-21 22:22:04,272 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:05,330 - Detected packages: merged_1: color Green, letter ['A'], position (135, 240)
+2025-03-21 22:22:05,331 - Suggested command: latest_cmds: (-6.0, 9.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:06,275 - Session update 25: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 0, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:06,275 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:22:06,275 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:22:08,279 - Session update 26: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 0, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:08,280 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:22:08,280 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:22:08,870 - Detected packages: 
+2025-03-21 22:22:08,871 - Suggested command: latest_cmds: (-6.0, 9.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:10,281 - Session update 27: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 1, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:10,282 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:22:12,283 - Session update 28: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 1, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:12,283 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:22:12,402 - Detected packages: merged_1: color Sample, letter [], position (284, 209)
+2025-03-21 22:22:12,403 - Suggested command: latest_cmds: (-6.0, 9.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:14,284 - Session update 29: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 2, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:14,284 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:22:14,285 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:15,969 - Detected packages: merged_1: color Sample, letter [], position (230, 200)
+2025-03-21 22:22:15,970 - Suggested command: latest_cmds: (-6.0, 9.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:16,286 - Session update 30: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 3, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:16,286 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:22:16,286 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:18,291 - Session update 31: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 3, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:18,292 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:22:18,292 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:19,488 - Detected packages: merged_1: color Sample, letter ['O'], position (236, 199)
+2025-03-21 22:22:19,489 - Suggested command: latest_cmds: (-6.0, 9.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:20,293 - Session update 32: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 4, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:20,293 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:22:20,293 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:22,297 - Session update 33: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 4, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:22,297 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:22:22,298 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:23,017 - Detected packages: merged_1: color Sample, letter ['O'], position (236, 199)
+2025-03-21 22:22:23,017 - Suggested command: latest_cmds: (-6.0, 9.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:24,300 - Session update 34: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 5, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:24,300 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:22:24,300 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:26,301 - Session update 35: tracked_package: {'box_color': 'Green', 'letters': ['A'], 'position': (135, 240), 'size': (66, 82), 'distance': 179.29, 'status': 'REJECTED', 'miss_detections': 5, 'stable': False} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:26,301 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:22:26,302 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:26,561 - Detected packages: merged_1: color Sample, letter ['O'], position (236, 199)
+2025-03-21 22:22:26,562 - Pachetul urmărit a lipsit prea mult => renunțăm la urmărire.
+2025-03-21 22:22:28,303 - Session update 36: tracked_package: None | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:28,303 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:30,086 - Detected packages: merged_1: color Sample, letter ['O'], position (235, 199)
+2025-03-21 22:22:30,304 - Session update 37: tracked_package: None | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:30,305 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:32,308 - Session update 38: tracked_package: None | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:32,310 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:33,632 - Detected packages: merged_1: color Sample, letter ['O'], position (236, 201)
+2025-03-21 22:22:33,633 - Suggested command: latest_cmds: (0.0, 7.0) ; latest_comanda: (1, 2, 1, [180])
+2025-03-21 22:22:34,313 - Distance changed to 101.6 at 2025-03-21 22:22:34
+2025-03-21 22:22:34,318 - Session update 39: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (236, 201), 'size': (53, 83), 'distance': 101.6, 'status': 'REJECTED', 'miss_detections': 0, 'stable': False} | suggested command: (1, 2, 1, [180])
+2025-03-21 22:22:34,319 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:22:34,319 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:22:36,321 - Session update 40: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (236, 201), 'size': (53, 83), 'distance': 101.6, 'status': 'REJECTED', 'miss_detections': 0, 'stable': False} | suggested command: (1, 2, 1, [180])
+2025-03-21 22:22:36,322 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:22:36,322 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:22:37,159 - Detected packages: merged_1: color Sample, letter ['O'], position (236, 201)
+2025-03-21 22:22:37,159 - Suggested command: latest_cmds: (0.0, 7.0) ; latest_comanda: (1, 2, 1, [180])
+2025-03-21 22:22:38,323 - Session update 41: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (236, 201), 'size': (53, 83), 'distance': 101.6, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 2, 1, [180])
+2025-03-21 22:22:38,323 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:22:38,323 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:22:38,337 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 2, 1, [180])
+2025-03-21 22:22:40,338 - Session update 42: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (236, 201), 'size': (53, 83), 'distance': 101.6, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 2, 1, [180])
+2025-03-21 22:22:40,339 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:40,698 - Detected packages: merged_1: color Sample, letter [], position (228, 83)
+2025-03-21 22:22:40,698 - Suggested command: latest_cmds: (0.0, 7.0) ; latest_comanda: (1, 2, 1, [180])
+2025-03-21 22:22:42,340 - Session update 43: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (236, 201), 'size': (53, 83), 'distance': 101.6, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 2, 1, [180])
+2025-03-21 22:22:42,340 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:22:42,341 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:44,218 - Detected packages: merged_1: color Sample, letter ['O'], position (228, 83)
+2025-03-21 22:22:44,219 - Suggested command: latest_cmds: (0.0, 0.0) ; latest_comanda: (0, 0, 0, [])
+2025-03-21 22:22:44,341 - Distance changed to 25.5 at 2025-03-21 22:22:44
+2025-03-21 22:22:44,342 - Session update 44: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (228, 83), 'size': (62, 81), 'distance': 25.5, 'status': 'CLOSE', 'miss_detections': 0} | suggested command: (0, 0, 0, [])
+2025-03-21 22:22:44,346 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:22:44,346 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:22:46,347 - Session update 45: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (228, 83), 'size': (62, 81), 'distance': 25.5, 'status': 'CLOSE', 'miss_detections': 0} | suggested command: (0, 0, 0, [])
+2025-03-21 22:22:46,348 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:22:46,348 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:22:47,718 - Detected packages: merged_1: color Sample, letter ['O'], position (228, 83)
+2025-03-21 22:22:47,719 - Suggested command: latest_cmds: (0.0, 0.0) ; latest_comanda: (0, 0, 0, [])
+2025-03-21 22:22:48,349 - Session update 46: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (228, 83), 'size': (61, 80), 'distance': 25.5, 'status': 'CLOSE', 'miss_detections': 0} | suggested command: (0, 0, 0, [])
+2025-03-21 22:22:48,350 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:22:48,350 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:22:48,363 - AUTO EXECUTED COMMAND FROM QUEUE: (0, 0, 0, [])
+2025-03-21 22:22:50,365 - Session update 47: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (228, 83), 'size': (61, 80), 'distance': 25.5, 'status': 'CLOSE', 'miss_detections': 0} | suggested command: (0, 0, 0, [])
+2025-03-21 22:22:50,366 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:51,251 - Detected packages: merged_1: color Sample, letter ['O'], position (228, 83)
+2025-03-21 22:22:51,252 - Suggested command: latest_cmds: (0.0, 0.0) ; latest_comanda: (0, 0, 0, [])
+2025-03-21 22:22:52,367 - Session update 48: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (228, 83), 'size': (61, 80), 'distance': 25.5, 'status': 'CLOSE', 'miss_detections': 0} | suggested command: (0, 0, 0, [])
+2025-03-21 22:22:52,368 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:22:52,368 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:22:54,369 - Session update 49: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (228, 83), 'size': (61, 80), 'distance': 25.5, 'status': 'CLOSE', 'miss_detections': 0} | suggested command: (0, 0, 0, [])
+2025-03-21 22:22:54,370 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:22:54,370 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:22:54,790 - Detected packages: merged_1: color Blue, letter [], position (369, 500)
+2025-03-21 22:22:54,791 - Suggested command: latest_cmds: (0.0, 0.0) ; latest_comanda: (0, 0, 0, [])
+2025-03-21 22:22:56,371 - Session update 50: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (228, 83), 'size': (61, 80), 'distance': 25.5, 'status': 'CLOSE', 'miss_detections': 1} | suggested command: (0, 0, 0, [])
+2025-03-21 22:22:56,371 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:22:56,371 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:22:58,325 - Detected packages: merged_1: color Sample, letter ['O'], position (120, 116)
+2025-03-21 22:22:58,326 - Suggested command: latest_cmds: (-6.0, 2.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:58,372 - Distance changed to 128.0 at 2025-03-21 22:22:58
+2025-03-21 22:22:58,373 - Session update 51: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (120, 116), 'size': (69, 88), 'distance': 128.0, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:22:58,373 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:22:58,373 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:23:00,375 - Session update 52: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (120, 116), 'size': (69, 88), 'distance': 128.0, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:00,376 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:23:00,376 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:23:01,905 - Detected packages: merged_1: color Sample, letter ['O'], position (120, 115)
+2025-03-21 22:23:01,906 - Suggested command: latest_cmds: (-6.0, 2.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:02,377 - Distance changed to 127.88 at 2025-03-21 22:23:02
+2025-03-21 22:23:02,380 - Session update 53: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (120, 115), 'size': (70, 87), 'distance': 127.88, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:02,381 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:23:02,381 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:23:02,395 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:04,398 - Session update 54: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (120, 115), 'size': (70, 87), 'distance': 127.88, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:04,398 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:05,658 - Detected packages: merged_1: color Sample, letter ['O'], position (120, 115), merged_2: color Blue, letter [], position (372, 500)
+2025-03-21 22:23:05,659 - Suggested command: latest_cmds: (-6.0, 2.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:06,401 - Session update 55: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (120, 115), 'size': (70, 88), 'distance': 127.88, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:06,401 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:23:06,401 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:23:08,404 - Session update 56: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (120, 115), 'size': (70, 88), 'distance': 127.88, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:08,404 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:23:08,405 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:23:09,261 - Detected packages: merged_1: color Sample, letter [], position (472, 433), merged_2: color Sample, letter ['O'], position (120, 115)
+2025-03-21 22:23:09,262 - Suggested command: latest_cmds: (-6.0, 2.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:10,408 - Session update 57: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (120, 115), 'size': (70, 88), 'distance': 127.88, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:10,410 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:23:10,411 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:23:10,423 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:12,424 - Session update 58: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (120, 115), 'size': (70, 88), 'distance': 127.88, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:12,425 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:12,810 - Detected packages: merged_1: color Sample, letter [], position (208, 90)
+2025-03-21 22:23:12,811 - Suggested command: latest_cmds: (-6.0, 2.0) ; latest_comanda: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:14,432 - Session update 59: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (120, 115), 'size': (70, 88), 'distance': 127.88, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 4, 10, [167, 169, 185, 194])
+2025-03-21 22:23:14,433 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:23:14,433 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:16,414 - Detected packages: merged_1: color Sample, letter ['O'], position (207, 89)
+2025-03-21 22:23:16,415 - Suggested command: latest_cmds: (-1.5, 0.5) ; latest_comanda: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:23:16,434 - Distance changed to 41.48 at 2025-03-21 22:23:16
+2025-03-21 22:23:16,435 - Session update 60: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (207, 89), 'size': (61, 84), 'distance': 41.48, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:23:16,435 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:23:16,435 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:23:18,436 - Session update 61: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (207, 89), 'size': (61, 84), 'distance': 41.48, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:23:18,436 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:23:18,436 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:23:18,592 - Camera stopped
+2025-03-21 22:23:18,803 - Camera closed successfully.
+2025-03-21 22:23:25,650 - Initialization successful.
+2025-03-21 22:23:25,651 - Camera now open.
+2025-03-21 22:23:25,657 - Camera configuration has been adjusted!
+2025-03-21 22:23:25,660 - Configuration successful!
+2025-03-21 22:23:25,761 - Camera started
+2025-03-21 22:23:26,002 - Session update 1: tracked_package: None | suggested command: None
+2025-03-21 22:23:26,002 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:28,003 - Session update 2: tracked_package: None | suggested command: None
+2025-03-21 22:23:28,004 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:29,796 - Detected packages: merged_1: color Sample, letter ['O'], position (404, 135)
+2025-03-21 22:23:29,796 - Suggested command: latest_cmds: (-9.5, 3.0) ; latest_comanda: (1, 6, 10, [167, 169, 185, 194])
+2025-03-21 22:23:30,006 - Session update 3: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (404, 135), 'size': (72, 89), 'distance': 160.85, 'status': 'REJECTED', 'miss_detections': 0, 'stable': False} | suggested command: (1, 6, 10, [167, 169, 185, 194])
+2025-03-21 22:23:30,006 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:23:30,006 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:23:32,011 - Session update 4: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (404, 135), 'size': (72, 89), 'distance': 160.85, 'status': 'REJECTED', 'miss_detections': 0, 'stable': False} | suggested command: (1, 6, 10, [167, 169, 185, 194])
+2025-03-21 22:23:32,012 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:23:32,012 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:23:34,020 - Detected packages: merged_1: color Sample, letter [], position (142, 167)
+2025-03-21 22:23:34,020 - Session update 5: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (404, 135), 'size': (72, 89), 'distance': 160.85, 'status': 'REJECTED', 'miss_detections': 1, 'stable': False} | suggested command: (1, 6, 10, [167, 169, 185, 194])
+2025-03-21 22:23:34,020 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:23:34,021 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:34,021 - Suggested command: latest_cmds: (-9.5, 3.0) ; latest_comanda: (1, 6, 10, [167, 169, 185, 194])
+2025-03-21 22:23:36,022 - Session update 6: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (404, 135), 'size': (72, 89), 'distance': 160.85, 'status': 'REJECTED', 'miss_detections': 1, 'stable': False} | suggested command: (1, 6, 10, [167, 169, 185, 194])
+2025-03-21 22:23:36,022 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:23:36,022 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:37,683 - Detected packages: merged_1: color Sample, letter ['O'], position (106, 147)
+2025-03-21 22:23:37,684 - Suggested command: latest_cmds: (7.0, 3.5) ; latest_comanda: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:38,023 - Distance changed to 148.63 at 2025-03-21 22:23:38
+2025-03-21 22:23:38,024 - Session update 7: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (106, 147), 'size': (68, 87), 'distance': 148.63, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:38,025 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:23:38,025 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:23:40,026 - Session update 8: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (106, 147), 'size': (68, 87), 'distance': 148.63, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:40,027 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:23:40,027 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:23:41,220 - Detected packages: merged_1: color Sample, letter ['O'], position (106, 147)
+2025-03-21 22:23:41,221 - Suggested command: latest_cmds: (7.0, 3.5) ; latest_comanda: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:42,028 - Session update 9: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (106, 147), 'size': (69, 87), 'distance': 148.63, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:42,029 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:23:42,029 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:23:42,043 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:44,044 - Session update 10: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (106, 147), 'size': (69, 87), 'distance': 148.63, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:44,044 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:44,759 - Detected packages: merged_1: color Sample, letter [], position (20, 140)
+2025-03-21 22:23:44,760 - Suggested command: latest_cmds: (7.0, 3.5) ; latest_comanda: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:46,046 - Session update 11: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (106, 147), 'size': (69, 87), 'distance': 148.63, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:46,046 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:23:46,046 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:48,047 - Session update 12: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (106, 147), 'size': (69, 87), 'distance': 148.63, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:48,048 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:23:48,048 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:48,275 - Detected packages: merged_1: color Sample, letter [], position (241, 166)
+2025-03-21 22:23:48,276 - Suggested command: latest_cmds: (7.0, 3.5) ; latest_comanda: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:50,049 - Session update 13: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (106, 147), 'size': (69, 87), 'distance': 148.63, 'status': 'REJECTED', 'miss_detections': 2} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:50,050 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:23:50,050 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:51,882 - Detected packages: merged_1: color Sample, letter [], position (160, 162)
+2025-03-21 22:23:51,883 - Suggested command: latest_cmds: (7.0, 3.5) ; latest_comanda: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:52,051 - Session update 14: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (106, 147), 'size': (69, 87), 'distance': 148.63, 'status': 'REJECTED', 'miss_detections': 3} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:52,051 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:23:52,051 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:54,052 - Session update 15: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (106, 147), 'size': (69, 87), 'distance': 148.63, 'status': 'REJECTED', 'miss_detections': 3} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:23:54,054 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:23:54,055 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:23:55,455 - Detected packages: merged_1: color Sample, letter ['O'], position (141, 175)
+2025-03-21 22:23:55,456 - Suggested command: latest_cmds: (5.5, 5.5) ; latest_comanda: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:23:56,055 - Distance changed to 129.85 at 2025-03-21 22:23:56
+2025-03-21 22:23:56,057 - Session update 16: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (141, 175), 'size': (62, 84), 'distance': 129.85, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:23:56,057 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:23:56,057 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:23:58,059 - Session update 17: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (141, 175), 'size': (62, 84), 'distance': 129.85, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:23:58,060 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:23:58,060 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:23:58,991 - Detected packages: merged_1: color Sample, letter ['O'], position (134, 169)
+2025-03-21 22:23:58,992 - Suggested command: latest_cmds: (5.5, 5.0) ; latest_comanda: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:24:00,061 - Distance changed to 132.4 at 2025-03-21 22:24:00
+2025-03-21 22:24:00,063 - Session update 18: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (134, 169), 'size': (64, 85), 'distance': 132.4, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:24:00,064 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:24:00,065 - Session validity check: Valid=False | Message: Variația poziției este prea mare; sesiunile sunt instabile.
+2025-03-21 22:24:02,067 - Session update 19: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (134, 169), 'size': (64, 85), 'distance': 132.4, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:24:02,067 - Auto session add: Sesiune adăugată cu id 4.
+2025-03-21 22:24:02,067 - Session validity check: Valid=False | Message: Variația poziției este prea mare; sesiunile sunt instabile.
+2025-03-21 22:24:02,515 - Detected packages: merged_1: color Sample, letter ['O'], position (134, 169)
+2025-03-21 22:24:02,517 - Suggested command: latest_cmds: (5.5, 5.0) ; latest_comanda: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:24:04,069 - Session update 20: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (134, 169), 'size': (64, 84), 'distance': 132.4, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:24:04,069 - Auto session add: Sesiune adăugată cu id 5.
+2025-03-21 22:24:04,069 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:24:04,085 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:24:06,055 - Detected packages: merged_1: color Sample, letter [], position (63, 157)
+2025-03-21 22:24:06,056 - Suggested command: latest_cmds: (5.5, 5.0) ; latest_comanda: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:24:06,088 - Session update 21: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (134, 169), 'size': (64, 84), 'distance': 132.4, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:24:06,088 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:08,090 - Session update 22: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (134, 169), 'size': (64, 84), 'distance': 132.4, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 3, 9, [191, 180, 187, 176])
+2025-03-21 22:24:08,090 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:24:08,091 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:09,694 - Detected packages: merged_1: color Sample, letter ['O'], position (30, 140)
+2025-03-21 22:24:09,695 - Suggested command: latest_cmds: (11.5, 3.5) ; latest_comanda: (1, 5, 9, [191, 180, 187, 176])
+2025-03-21 22:24:10,092 - Distance changed to 220.66 at 2025-03-21 22:24:10
+2025-03-21 22:24:10,093 - Session update 23: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (30, 140), 'size': (60, 85), 'distance': 220.66, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 5, 9, [191, 180, 187, 176])
+2025-03-21 22:24:10,093 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:24:10,094 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:24:12,095 - Session update 24: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (30, 140), 'size': (60, 85), 'distance': 220.66, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 5, 9, [191, 180, 187, 176])
+2025-03-21 22:24:12,096 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:24:12,096 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:24:13,367 - Detected packages: merged_1: color Sample, letter [], position (315, 482), merged_2: color Sample, letter ['O'], position (29, 136)
+2025-03-21 22:24:13,368 - Suggested command: latest_cmds: (11.5, 3.0) ; latest_comanda: (1, 5, 9, [191, 180, 187, 176])
+2025-03-21 22:24:14,096 - Distance changed to 220.95 at 2025-03-21 22:24:14
+2025-03-21 22:24:14,098 - Session update 25: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (29, 136), 'size': (59, 87), 'distance': 220.95, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 5, 9, [191, 180, 187, 176])
+2025-03-21 22:24:14,098 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:24:14,098 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:24:14,111 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 5, 9, [191, 180, 187, 176])
+2025-03-21 22:24:16,113 - Session update 26: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (29, 136), 'size': (59, 87), 'distance': 220.95, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 5, 9, [191, 180, 187, 176])
+2025-03-21 22:24:16,113 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:17,109 - Detected packages: merged_1: color Red, letter [], position (449, 319)
+2025-03-21 22:24:17,110 - Suggested command: latest_cmds: (11.5, 3.0) ; latest_comanda: (1, 5, 9, [191, 180, 187, 176])
+2025-03-21 22:24:18,115 - Session update 27: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (29, 136), 'size': (59, 87), 'distance': 220.95, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 5, 9, [191, 180, 187, 176])
+2025-03-21 22:24:18,115 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:24:18,115 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:18,902 - Camera stopped
+2025-03-21 22:24:19,108 - Camera closed successfully.
+2025-03-21 22:24:25,384 - Initialization successful.
+2025-03-21 22:24:25,385 - Camera now open.
+2025-03-21 22:24:25,391 - Camera configuration has been adjusted!
+2025-03-21 22:24:25,394 - Configuration successful!
+2025-03-21 22:24:25,498 - Camera started
+2025-03-21 22:24:25,736 - Session update 1: tracked_package: None | suggested command: None
+2025-03-21 22:24:25,736 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:27,740 - Session update 2: tracked_package: None | suggested command: None
+2025-03-21 22:24:27,741 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:29,644 - Detected packages: merged_1: color Sample, letter [], position (98, 157)
+2025-03-21 22:24:29,645 - Suggested command: latest_cmds: (-7.5, 4.5) ; latest_comanda: (1, 5, 10, [167, 169, 185, 194])
+2025-03-21 22:24:29,743 - Session update 3: tracked_package: {'box_color': 'Sample', 'letters': [], 'position': (98, 157), 'size': (68, 85), 'distance': 159.53, 'status': 'REJECTED', 'miss_detections': 0, 'stable': False} | suggested command: (1, 5, 10, [167, 169, 185, 194])
+2025-03-21 22:24:29,743 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:24:29,744 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:24:31,747 - Session update 4: tracked_package: {'box_color': 'Sample', 'letters': [], 'position': (98, 157), 'size': (68, 85), 'distance': 159.53, 'status': 'REJECTED', 'miss_detections': 0, 'stable': False} | suggested command: (1, 5, 10, [167, 169, 185, 194])
+2025-03-21 22:24:31,748 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:24:31,748 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:24:33,751 - Session update 5: tracked_package: {'box_color': 'Sample', 'letters': [], 'position': (98, 157), 'size': (68, 85), 'distance': 159.53, 'status': 'REJECTED', 'miss_detections': 0, 'stable': False} | suggested command: (1, 5, 10, [167, 169, 185, 194])
+2025-03-21 22:24:33,751 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:24:33,751 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:24:33,755 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 5, 10, [167, 169, 185, 194])
+2025-03-21 22:24:33,882 - Detected packages: merged_1: color Sample, letter ['O'], position (98, 157)
+2025-03-21 22:24:33,883 - Pachetul fără litere nu mai este detectat => alegem un alt pachet.
+2025-03-21 22:24:33,884 - Suggested command: latest_cmds: (-7.5, 4.5) ; latest_comanda: (1, 5, 10, [167, 169, 185, 194])
+2025-03-21 22:24:35,759 - Session update 6: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (98, 157), 'size': (69, 85), 'distance': 159.53, 'status': 'REJECTED'} | suggested command: (1, 5, 10, [167, 169, 185, 194])
+2025-03-21 22:24:35,759 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:37,510 - Detected packages: merged_1: color Red, letter [], position (409, 503), merged_2: color Sample, letter [], position (215, 130)
+2025-03-21 22:24:37,511 - Suggested command: latest_cmds: (-7.5, 4.5) ; latest_comanda: (1, 5, 10, [167, 169, 185, 194])
+2025-03-21 22:24:37,764 - Session update 7: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (98, 157), 'size': (69, 85), 'distance': 159.53, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 5, 10, [167, 169, 185, 194])
+2025-03-21 22:24:37,765 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:24:37,766 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:39,771 - Session update 8: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (98, 157), 'size': (69, 85), 'distance': 159.53, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 5, 10, [167, 169, 185, 194])
+2025-03-21 22:24:39,771 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:24:39,771 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:41,064 - Detected packages: merged_1: color Red, letter [], position (411, 504), merged_2: color Sample, letter ['O'], position (215, 130)
+2025-03-21 22:24:41,065 - Suggested command: latest_cmds: (-1.0, 3.0) ; latest_comanda: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:24:41,773 - Distance changed to 43.86 at 2025-03-21 22:24:41
+2025-03-21 22:24:41,776 - Session update 9: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (215, 130), 'size': (58, 89), 'distance': 43.86, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:24:41,777 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:24:41,777 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:24:43,780 - Session update 10: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (215, 130), 'size': (58, 89), 'distance': 43.86, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:24:43,780 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:24:43,780 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:24:44,586 - Detected packages: merged_1: color Red, letter [], position (411, 504), merged_2: color Sample, letter ['O'], position (215, 130)
+2025-03-21 22:24:44,587 - Suggested command: latest_cmds: (-1.0, 3.0) ; latest_comanda: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:24:45,782 - Session update 11: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (215, 130), 'size': (58, 89), 'distance': 43.86, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:24:45,782 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:24:45,782 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:24:45,799 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:24:47,802 - Session update 12: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (215, 130), 'size': (58, 89), 'distance': 43.86, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:24:47,803 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:48,126 - Detected packages: merged_1: color Sample, letter [], position (241, 134)
+2025-03-21 22:24:48,127 - Suggested command: latest_cmds: (-1.0, 3.0) ; latest_comanda: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:24:49,805 - Session update 13: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (215, 130), 'size': (58, 89), 'distance': 43.86, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 1, 10, [167, 169, 185, 194])
+2025-03-21 22:24:49,805 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:24:49,805 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:51,658 - Detected packages: merged_1: color Sample, letter ['O'], position (241, 134)
+2025-03-21 22:24:51,659 - Suggested command: latest_cmds: (0.5, 3.0) ; latest_comanda: (1, 1, 1, [120])
+2025-03-21 22:24:51,806 - Distance changed to 34.53 at 2025-03-21 22:24:51
+2025-03-21 22:24:51,807 - Session update 14: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 134), 'size': (58, 88), 'distance': 34.53, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:24:51,807 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:24:51,807 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:24:53,809 - Session update 15: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 134), 'size': (58, 88), 'distance': 34.53, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:24:53,809 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:24:53,809 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:24:55,197 - Detected packages: merged_1: color Sample, letter ['O'], position (241, 134)
+2025-03-21 22:24:55,198 - Suggested command: latest_cmds: (0.5, 3.0) ; latest_comanda: (1, 1, 1, [120])
+2025-03-21 22:24:55,811 - Session update 16: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 134), 'size': (57, 89), 'distance': 34.53, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:24:55,812 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:24:55,812 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:24:55,827 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 1, 1, [120])
+2025-03-21 22:24:57,828 - Session update 17: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 134), 'size': (57, 89), 'distance': 34.53, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:24:57,828 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:24:58,734 - Detected packages: merged_1: color Sample, letter [], position (243, 89)
+2025-03-21 22:24:58,735 - Suggested command: latest_cmds: (0.5, 3.0) ; latest_comanda: (1, 1, 1, [120])
+2025-03-21 22:24:59,830 - Session update 18: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 134), 'size': (57, 89), 'distance': 34.53, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:24:59,831 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:24:59,831 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:01,832 - Session update 19: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 134), 'size': (57, 89), 'distance': 34.53, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:01,832 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:25:01,832 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:02,272 - Detected packages: merged_1: color Sample, letter ['O'], position (243, 89)
+2025-03-21 22:25:03,833 - Distance changed to 11.7 at 2025-03-21 22:25:03
+2025-03-21 22:25:03,834 - Session update 20: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (243, 89), 'size': (60, 89), 'distance': 11.7, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:03,836 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:25:03,837 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:25:05,803 - Detected packages: merged_1: color Sample, letter ['O'], position (243, 89)
+2025-03-21 22:25:05,841 - Session update 21: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (243, 89), 'size': (61, 90), 'distance': 11.7, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:05,842 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:25:05,842 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:25:07,845 - Session update 22: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (243, 89), 'size': (61, 90), 'distance': 11.7, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:07,845 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:25:07,845 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:25:07,859 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 1, 1, [120])
+2025-03-21 22:25:09,344 - Detected packages: merged_1: color Sample, letter ['O'], position (243, 89)
+2025-03-21 22:25:09,862 - Session update 23: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (243, 89), 'size': (60, 90), 'distance': 11.7, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:09,862 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:11,865 - Session update 24: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (243, 89), 'size': (60, 90), 'distance': 11.7, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:11,865 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:25:11,866 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:25:12,876 - Detected packages: merged_1: color Sample, letter [], position (241, 54)
+2025-03-21 22:25:13,869 - Session update 25: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (243, 89), 'size': (60, 90), 'distance': 11.7, 'status': 'PASS', 'miss_detections': 1} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:13,869 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:25:13,869 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:15,871 - Session update 26: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (243, 89), 'size': (60, 90), 'distance': 11.7, 'status': 'PASS', 'miss_detections': 1} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:15,871 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:25:15,871 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:16,410 - Detected packages: merged_1: color Sample, letter [], position (241, 56)
+2025-03-21 22:25:17,873 - Session update 27: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (243, 89), 'size': (60, 90), 'distance': 11.7, 'status': 'PASS', 'miss_detections': 2} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:17,873 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:25:17,873 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:19,874 - Session update 28: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (243, 89), 'size': (60, 90), 'distance': 11.7, 'status': 'PASS', 'miss_detections': 2} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:19,875 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:25:19,875 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:19,926 - Detected packages: merged_1: color Sample, letter [], position (242, 62)
+2025-03-21 22:25:21,877 - Session update 29: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (243, 89), 'size': (60, 90), 'distance': 11.7, 'status': 'PASS', 'miss_detections': 3} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:21,877 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:25:21,877 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:23,447 - Detected packages: merged_1: color Sample, letter ['O'], position (246, 97)
+2025-03-21 22:25:23,879 - Distance changed to 3.16 at 2025-03-21 22:25:23
+2025-03-21 22:25:23,888 - Session update 30: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (246, 97), 'size': (59, 90), 'distance': 3.16, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:23,889 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:25:23,889 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:25:25,894 - Session update 31: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (246, 97), 'size': (59, 90), 'distance': 3.16, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:25,895 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:25:25,895 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:25:26,976 - Detected packages: merged_1: color Sample, letter ['O'], position (241, 101), merged_2: color Blue, letter [], position (461, 488)
+2025-03-21 22:25:27,896 - Distance changed to 6.08 at 2025-03-21 22:25:27
+2025-03-21 22:25:27,897 - Session update 32: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 101), 'size': (60, 89), 'distance': 6.08, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:27,897 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:25:27,898 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:25:27,907 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 1, 1, [120])
+2025-03-21 22:25:29,911 - Session update 33: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 101), 'size': (60, 89), 'distance': 6.08, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:29,912 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:30,499 - Detected packages: merged_1: color Sample, letter [], position (238, 67)
+2025-03-21 22:25:31,914 - Session update 34: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 101), 'size': (60, 89), 'distance': 6.08, 'status': 'PASS', 'miss_detections': 1} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:31,914 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:25:31,914 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:33,916 - Session update 35: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 101), 'size': (60, 89), 'distance': 6.08, 'status': 'PASS', 'miss_detections': 1} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:33,916 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:25:33,916 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:34,151 - Detected packages: 
+2025-03-21 22:25:35,917 - Session update 36: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (241, 101), 'size': (60, 89), 'distance': 6.08, 'status': 'PASS', 'miss_detections': 2} | suggested command: (1, 1, 1, [120])
+2025-03-21 22:25:35,918 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:37,716 - Detected packages: merged_1: color Sample, letter ['O'], position (395, 37)
+2025-03-21 22:25:37,716 - Salt mare de distanță => renunțăm la urmărire și alegem un nou pachet.
+2025-03-21 22:25:37,717 - Suggested command: latest_cmds: (8.0, -2.5) ; latest_comanda: (1, 2, 2, [100])
+2025-03-21 22:25:37,918 - Distance changed to 160.85 at 2025-03-21 22:25:37
+2025-03-21 22:25:37,919 - Session update 37: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (395, 37), 'size': (81, 75), 'distance': 160.85, 'status': 'REJECTED'} | suggested command: (1, 2, 2, [100])
+2025-03-21 22:25:37,919 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:25:37,920 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:25:39,924 - Session update 38: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (395, 37), 'size': (81, 75), 'distance': 160.85, 'status': 'REJECTED'} | suggested command: (1, 2, 2, [100])
+2025-03-21 22:25:39,926 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:25:39,926 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:25:41,347 - Detected packages: merged_1: color Sample, letter ['O'], position (397, 37)
+2025-03-21 22:25:41,348 - Suggested command: latest_cmds: (8.0, -2.5) ; latest_comanda: (1, 2, 2, [100])
+2025-03-21 22:25:41,927 - Distance changed to 162.69 at 2025-03-21 22:25:41
+2025-03-21 22:25:41,931 - Session update 39: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (397, 37), 'size': (81, 75), 'distance': 162.69, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 2, 2, [100])
+2025-03-21 22:25:41,931 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:25:41,931 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:25:41,943 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 2, 2, [100])
+2025-03-21 22:25:43,944 - Session update 40: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (397, 37), 'size': (81, 75), 'distance': 162.69, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 2, 2, [100])
+2025-03-21 22:25:43,944 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:44,886 - Detected packages: merged_1: color Sample, letter [], position (389, 64)
+2025-03-21 22:25:44,886 - Suggested command: latest_cmds: (8.0, -2.5) ; latest_comanda: (1, 2, 2, [100])
+2025-03-21 22:25:45,946 - Session update 41: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (397, 37), 'size': (81, 75), 'distance': 162.69, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 2, 2, [100])
+2025-03-21 22:25:45,946 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:25:45,946 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:47,947 - Session update 42: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (397, 37), 'size': (81, 75), 'distance': 162.69, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 2, 2, [100])
+2025-03-21 22:25:47,947 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:25:47,948 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:48,414 - Detected packages: merged_1: color Sample, letter ['O'], position (389, 62)
+2025-03-21 22:25:48,415 - Suggested command: latest_cmds: (8.0, -1.0) ; latest_comanda: (1, 1, 2, [80])
+2025-03-21 22:25:49,948 - Distance changed to 147.0 at 2025-03-21 22:25:49
+2025-03-21 22:25:49,949 - Session update 43: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (389, 62), 'size': (75, 97), 'distance': 147.0, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 2, [80])
+2025-03-21 22:25:49,950 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:25:49,950 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:25:51,955 - Detected packages: merged_1: color Sample, letter ['O'], position (390, 63), merged_2: color Blue, letter [], position (458, 487)
+2025-03-21 22:25:51,955 - Session update 44: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (390, 63), 'size': (75, 97), 'distance': 147.71, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 2, [80])
+2025-03-21 22:25:51,956 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:25:51,956 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:25:51,957 - Suggested command: latest_cmds: (8.0, -1.0) ; latest_comanda: (1, 1, 2, [80])
+2025-03-21 22:25:53,957 - Distance changed to 147.71 at 2025-03-21 22:25:53
+2025-03-21 22:25:53,958 - Session update 45: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (390, 63), 'size': (75, 97), 'distance': 147.71, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 2, [80])
+2025-03-21 22:25:53,958 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:25:53,961 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:25:53,971 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 1, 2, [80])
+2025-03-21 22:25:55,523 - Detected packages: merged_1: color Sample, letter ['O'], position (390, 63), merged_2: color Blue, letter [], position (455, 487)
+2025-03-21 22:25:55,524 - Suggested command: latest_cmds: (8.0, -1.0) ; latest_comanda: (1, 1, 2, [80])
+2025-03-21 22:25:55,973 - Session update 46: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (390, 63), 'size': (73, 95), 'distance': 147.71, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 2, [80])
+2025-03-21 22:25:55,973 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:25:57,978 - Session update 47: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (390, 63), 'size': (73, 95), 'distance': 147.71, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 1, 2, [80])
+2025-03-21 22:25:57,979 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:25:57,980 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:25:59,096 - Detected packages: merged_1: color Sample, letter ['O'], position (377, 78)
+2025-03-21 22:25:59,097 - Suggested command: latest_cmds: (7.5, 0.0) ; latest_comanda: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:25:59,981 - Distance changed to 131.85 at 2025-03-21 22:25:59
+2025-03-21 22:25:59,982 - Session update 48: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (377, 78), 'size': (71, 94), 'distance': 131.85, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:25:59,983 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:25:59,983 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:26:01,984 - Session update 49: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (377, 78), 'size': (71, 94), 'distance': 131.85, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:01,987 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:26:01,988 - Session validity check: Valid=False | Message: Variația poziției este prea mare; sesiunile sunt instabile.
+2025-03-21 22:26:02,635 - Detected packages: merged_1: color Sample, letter ['O'], position (378, 78)
+2025-03-21 22:26:02,636 - Suggested command: latest_cmds: (7.5, 0.0) ; latest_comanda: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:03,990 - Distance changed to 132.83 at 2025-03-21 22:26:03
+2025-03-21 22:26:03,991 - Session update 50: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (378, 78), 'size': (67, 94), 'distance': 132.83, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:03,992 - Auto session add: Sesiune adăugată cu id 4.
+2025-03-21 22:26:03,992 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:26:04,007 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:06,008 - Session update 51: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (378, 78), 'size': (67, 94), 'distance': 132.83, 'status': 'REJECTED', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:06,008 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:26:06,164 - Detected packages: merged_1: color Sample, letter [], position (247, 86)
+2025-03-21 22:26:06,165 - Suggested command: latest_cmds: (7.5, 0.0) ; latest_comanda: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:08,031 - Session update 52: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (378, 78), 'size': (67, 94), 'distance': 132.83, 'status': 'REJECTED', 'miss_detections': 1} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:08,032 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:26:08,032 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:26:09,701 - Detected packages: merged_1: color Sample, letter ['A'], position (441, 410), merged_2: color Sample, letter ['O'], position (239, 90)
+2025-03-21 22:26:10,033 - Distance changed to 12.81 at 2025-03-21 22:26:10
+2025-03-21 22:26:10,039 - Session update 53: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (239, 90), 'size': (73, 81), 'distance': 12.81, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:10,041 - Auto session add: Sesiune adăugată cu id 1.
+2025-03-21 22:26:10,042 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 1).
+2025-03-21 22:26:12,045 - Session update 54: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (239, 90), 'size': (73, 81), 'distance': 12.81, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:12,045 - Auto session add: Sesiune adăugată cu id 2.
+2025-03-21 22:26:12,045 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 2).
+2025-03-21 22:26:13,311 - Detected packages: merged_1: color Sample, letter ['O'], position (240, 90)
+2025-03-21 22:26:14,046 - Distance changed to 12.21 at 2025-03-21 22:26:14
+2025-03-21 22:26:14,047 - Session update 55: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (240, 90), 'size': (72, 81), 'distance': 12.21, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:14,048 - Auto session add: Sesiune adăugată cu id 3.
+2025-03-21 22:26:14,048 - Session validity check: Valid=True | Message: Sesiunile sunt stabile.
+2025-03-21 22:26:14,060 - AUTO EXECUTED COMMAND FROM QUEUE: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:16,062 - Session update 56: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (240, 90), 'size': (72, 81), 'distance': 12.21, 'status': 'PASS', 'miss_detections': 0} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:16,062 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:26:16,839 - Detected packages: merged_1: color Sample, letter [], position (124, 89)
+2025-03-21 22:26:18,064 - Session update 57: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (240, 90), 'size': (72, 81), 'distance': 12.21, 'status': 'PASS', 'miss_detections': 1} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:18,064 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:26:18,064 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:26:20,066 - Session update 58: tracked_package: {'box_color': 'Sample', 'letters': ['O'], 'position': (240, 90), 'size': (72, 81), 'distance': 12.21, 'status': 'PASS', 'miss_detections': 1} | suggested command: (1, 4, 9, [191, 180, 187, 176])
+2025-03-21 22:26:20,066 - Auto session add: Pachetul urmărit nu a fost găsit în datele sesiunii; s-a curățat istoricul.
+2025-03-21 22:26:20,066 - Session validity check: Valid=False | Message: Nu sunt suficiente sesiuni pentru validare (memorate: 0).
+2025-03-21 22:26:20,387 - Detected packages: 
+2025-03-21 22:26:21,246 - Camera stopped
+2025-03-21 22:26:21,455 - Camera closed successfully.

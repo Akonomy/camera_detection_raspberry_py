@@ -58,7 +58,7 @@ def getRealCoordinates(detected_x, detected_y):
     scale_x = get_scale_x(detected_y)
     
     # Calculul real_x: diferența de la centru, scalată
-    real_x = (detected_x - center_x) * scale_x
+    real_x = (detected_x - center_x) * scale_x  
     
     # Calculul real_y
     real_y = get_real_y(detected_y)

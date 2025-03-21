@@ -17,7 +17,7 @@ def get_free_spot_from_camera():
     image_copy, session_data = capture_and_process_session()
     
     # Apelează funcția de analiză pentru a căuta un loc liber, cu max_boxes=3 și debug=True
-    result = analyze_zone_and_find_spot(image_copy, session_data, max_boxes=4, debug=True)
+    result = analyze_zone_and_find_spot(image_copy, session_data, max_boxes=3, debug=True)
     
     print("Rezultat:", result)
     return result

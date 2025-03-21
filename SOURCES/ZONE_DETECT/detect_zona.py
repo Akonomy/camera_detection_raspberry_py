@@ -30,6 +30,7 @@ def convert_px_to_cm(detected_x, detected_y):
       - Pentru un detected_y mic (susul imaginii) se obține un y mare,
         iar pentru detected_y mare (josul imaginii) y devine mic.
     """
+    
     detected_y =  detected_y
     real_y = 0.05587 * detected_y + -4.47
 

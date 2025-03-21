@@ -179,9 +179,24 @@ def detect_zone(image_copy, positions=None, debug=False):
             pts = [getDetectedCoordinates(x, y) for (x, y) in hull]
             pts_array = np.array(pts, dtype=np.int32)
             cv2.polylines(debug_img, [pts_array], isClosed=True, color=(255, 0, 0), thickness=2)
+        # Adăugăm punctele suplimentare: (+5,0), (-5,0), (0,+5) și (0,-5)
+        extra_points = {
+            "+X": (5, 0),
+            "-X": (-5, 0),
+            "+Y": (0, 5),
+            "-Y": (0, -5)
+        }
+        for label, real_pt in extra_points.items():
+            detected_pt = getDetectedCoordinates(real_pt[0], real_pt[1])
+            # Desenează un cerc mic la poziția detectată
+            cv2.circle(debug_img, detected_pt, radius=5, color=(0, 255, 0), thickness=-1)
+            # Adaugă eticheta lângă punct (offset de 10 pixeli)
+            cv2.putText(debug_img, label, (detected_pt[0] + 10, detected_pt[1] + 10),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
         cv2.imshow("Detected Zone", debug_img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+
     
     return zone_limits, pos_flags, hull
 

@@ -43,6 +43,7 @@ def get_real_y(detected_y):
     return 0.05587 * detected_y - 4.47
 
 def get_center_x(detected_y):
+	
     return 0.0203 * detected_y + 230.38
 
 def get_scale_x(detected_y):
@@ -60,13 +61,13 @@ def get_effective_margin(box):
         return math.sqrt((w/2)**2 + (h/2)**2)
     else:
         return min(w, h) / 2
-
+	`````````````````````````````````````````
 
 
 def getRealCoordinates(detected_x, detected_y):
     center_x = get_center_x(detected_y)
     scale_x = get_scale_x(detected_y)
-    real_x = (detected_x - center_x) * scale_x
+    real_x = (detected_x - center_x) * scale_x 
     real_y = get_real_y(detected_y)
     return round_to_half(real_x), round_to_half(real_y)
 
@@ -521,7 +522,7 @@ def classify_box_relative(other, target):
         danger_B = vertical_overlap_B
 
     danger_overlap = max(danger_A, danger_B)
-    if danger_overlap >= 0.1:
+    if danger_overlap >= 0.6:
         return "Danger"
 
     # Verificare zonă Proximity

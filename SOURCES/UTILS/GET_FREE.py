@@ -6,8 +6,8 @@ Descriere: Acest modul importă funcționalitățile din UTILS.MAP și ZONE_DETE
           analizează zona detectată, numără cutiile din interiorul acesteia și, dacă nu este FULL, caută o poziție liberă
           (respectând regulile de proximitate și siguranță).
           
-          Pentru debug se desenează o interfață Tkinter în care se vizualizează limita zonei, cutiile existente și eventual
-          poziția candidat găsită.
+          Pentru debug se desenează o interfață Tkinter în care se vizualizează conturul zonei (poligonul convex),
+          cutiile existente și eventual poziția candidat găsită.
 """
 
 import tkinter as tk
@@ -24,9 +24,8 @@ parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
     
-
-
 # Importăm funcția de detectare a zonei din ZONE_DETECT.get_zone
+# Această versiune modificată de detect_zone returnează acum și poligonul (lista de puncte hull)
 from ZONE_DETECT.get_zone import detect_zone
 
 # Funcție helper: verifică dacă o poziție candidat (ca virtual box 3x3 cm) este liberă față de toate cutiile existente.
@@ -42,7 +41,6 @@ def is_position_free(candidate_box, boxes):
         if classify_box_relative(candidate_box, box) != "Safe" or classify_box_relative(box, candidate_box) != "Safe":
             return False
     return True
-
 
 def find_free_position(boxes, zone_limits, max_attempts=1000):
     import math, random
@@ -70,7 +68,7 @@ def find_free_position(boxes, zone_limits, max_attempts=1000):
         if zone_limits["bottom"] <= candidate_y <= zone_limits["top"]:
             candidate_points.append((center_x, candidate_y))
     
-    # 4. Poți combina offset-uri pe ambele axe pentru a acoperi mai multe cazuri:
+    # 4. Combinăm offset-uri pe ambele axe
     for x_off in x_offsets:
         for y_off in y_offsets:
             candidate_x = center_x + x_off
@@ -95,9 +93,6 @@ def find_free_position(boxes, zone_limits, max_attempts=1000):
             return candidate
     return None
 
-
-
-
 def analyze_zone_and_find_spot(image_copy, session, max_boxes, debug=False):
     """
     Funcția principală.
@@ -111,13 +106,14 @@ def analyze_zone_and_find_spot(image_copy, session, max_boxes, debug=False):
     Pași:
       1. Se procesează sesiunea cu process_boxes.
       2. Se extrag pozițiile (în cm) din cutiile procesate.
-      3. Se apelează detect_zone cu aceste poziții (debug=False) pentru a obține limitele zonei și o listă de flaguri.
+      3. Se apelează detect_zone cu aceste poziții (debug=False) pentru a obține limitele zonei, 
+         flagurile pozițiilor și poligonul (convex hull).
       4. Se numără cutiile din interiorul zonei.
          - Dacă count >= max_boxes → return "FULL"
          - Altfel, se caută o poziție liberă (virtual box de 3x3 cm) în interiorul zonei.
       5. Dacă se găsește o poziție liberă, se returnează coordonatele (x, y) în cm.
       
-    Pentru debug, se desenează interfața cu limita zonei, cutiile și (dacă există) poziția candidat.
+    Pentru debug, se desenează interfața cu poligonul zonei, cutiile și (dacă există) poziția candidat.
     """
     # 1. Procesează sesiunea
     processed_boxes = process_boxes(session)
@@ -125,8 +121,9 @@ def analyze_zone_and_find_spot(image_copy, session, max_boxes, debug=False):
     # 2. Extrage pozițiile din cutiile procesate
     positions = [box["real_position"] for box in processed_boxes.values()]
     
-    # 3. Folosește detect_zone pentru a obține zona (cu debug=False)
-    zone_limits, pos_flags = detect_zone(image_copy, positions=positions, debug=False)
+    # 3. Folosește detect_zone pentru a obține zona.
+    # Această versiune modificată de detect_zone returnează și hull (poligonul convex)
+    zone_limits, pos_flags, hull = detect_zone(image_copy, positions=positions, debug=False)
     
     # 4. Numără cutiile din interiorul zonei
     count_in_zone = sum(pos_flags)
@@ -138,7 +135,7 @@ def analyze_zone_and_find_spot(image_copy, session, max_boxes, debug=False):
     if count_in_zone >= max_boxes:
         if debug:
             print("Zona este FULL.")
-            debug_interface(processed_boxes, zone_limits, candidate_spot=None)
+            debug_interface(processed_boxes, zone_limits, hull, candidate_spot=None)
         return "FULL"
     
     # 5. Caută o poziție liberă
@@ -148,18 +145,19 @@ def analyze_zone_and_find_spot(image_copy, session, max_boxes, debug=False):
             print("Poziție liberă găsită:", free_spot)
         else:
             print("Nu s-a găsit poziție liberă.")
-        debug_interface(processed_boxes, zone_limits, candidate_spot=free_spot)
+        debug_interface(processed_boxes, zone_limits, hull, candidate_spot=free_spot)
     
     if free_spot is not None:
         return free_spot
     else:
         return "FULL"
 
-def debug_interface(boxes, zone_limits, candidate_spot=None):
+def debug_interface(boxes, zone_limits, hull, candidate_spot=None):
     """
     Desenează o interfață Tkinter pentru debug:
       - Grid și coordonate (de la -25 la 25 pe X și de la -10 la 30 pe Y).
-      - Limitele zonei (obținute din detect_zone) sunt desenate ca un dreptunghi.
+      - Axa de coordonate și graduații: linii (tick marks) la fiecare 1 cm și etichete la fiecare 5 cm.
+      - Poligonul convex (hull) detectat este desenat.
       - Se desenează cutiile din sesiune (cu culoare și litera lor).
       - Dacă există, se desenează și candidate_spot ca un oval magenta.
     """
@@ -179,8 +177,8 @@ def debug_interface(boxes, zone_limits, candidate_spot=None):
         cx = (x - min_x) * scale
         cy = (max_y - y) * scale
         return cx, cy
-    
-    # Desenăm grid (opțional)
+
+    # Desenăm grid-ul (linii de referință)
     for x in range(min_x, max_x+1):
         cx, _ = real_to_canvas(x, min_y)
         canvas.create_line(cx, 0, cx, canvas_height, fill="#e0e0e0")
@@ -188,14 +186,49 @@ def debug_interface(boxes, zone_limits, candidate_spot=None):
         _, cy = real_to_canvas(min_x, y)
         canvas.create_line(0, cy, canvas_width, cy, fill="#e0e0e0")
     
-    # Desenăm limita zonei detectate
-    zx_left = zone_limits["left"]
-    zx_right = zone_limits["right"]
-    zy_top = zone_limits["top"]
-    zy_bottom = zone_limits["bottom"]
-    p1 = real_to_canvas(zx_left, zy_top)
-    p2 = real_to_canvas(zx_right, zy_bottom)
-    canvas.create_rectangle(p1[0], p1[1], p2[0], p2[1], outline="blue", width=2)
+    # Adăugăm axele de coordonate (dacă 0 se încadrează în interval)
+    if 0 >= min_x and 0 <= max_x:
+        cx, _ = real_to_canvas(0, min_y)
+        canvas.create_line(cx, 0, cx, canvas_height, fill="gray", width=2)
+        canvas.create_text(cx + 15, 10,  fill="gray", font=("Arial", 10))
+    if 0 >= min_y and 0 <= max_y:
+        _, cy = real_to_canvas(min_x, 0)
+        canvas.create_line(0, cy, canvas_width, cy, fill="gray", width=2)
+        canvas.create_text(20, cy - 10, fill="gray", font=("Arial", 10))
+    
+    # Adăugăm graduații (tick marks) pe axa X (de la -25 la 25)
+    tick_length = 5  # lungimea tick-ului în pixeli
+    for x in range(min_x, max_x+1):
+        cx, cy = real_to_canvas(x, min_y)
+        # Desenăm un tick vertical la marginea de jos a canvas-ului
+        canvas.create_line(cx, canvas_height, cx, canvas_height - tick_length, fill="black")
+        # Etichetăm la fiecare 5 cm
+        if x % 5 == 0:
+            canvas.create_text(cx, canvas_height - tick_length - 10, text=str(x), fill="black", font=("Arial", 10))
+    
+    # Adăugăm graduații pe axa Y (de la -10 la 30)
+    for y in range(min_y, max_y+1):
+        cx, cy = real_to_canvas(min_x, y)
+        # Desenăm un tick orizontal la marginea stângă a canvas-ului
+        canvas.create_line(0, cy, tick_length, cy, fill="black")
+        if y % 5 == 0:
+            canvas.create_text(tick_length + 15, cy, text=str(y), fill="black", font=("Arial", 10))
+    
+    # Desenăm poligonul hull
+    if hull and len(hull) >= 3:
+        points = []
+        for (x, y) in hull:
+            cx, cy = real_to_canvas(x, y)
+            points.extend([cx, cy])
+        canvas.create_polygon(points, outline="blue", fill="", width=2)
+    else:
+        zx_left = zone_limits["left"]
+        zx_right = zone_limits["right"]
+        zy_top = zone_limits["top"]
+        zy_bottom = zone_limits["bottom"]
+        p1 = real_to_canvas(zx_left, zy_top)
+        p2 = real_to_canvas(zx_right, zy_bottom)
+        canvas.create_rectangle(p1[0], p1[1], p2[0], p2[1], outline="blue", width=2)
     
     # Desenăm cutiile procesate
     for box in boxes.values():
@@ -220,6 +253,8 @@ def debug_interface(boxes, zone_limits, candidate_spot=None):
                            outline="magenta", width=3)
     
     root.mainloop()
+
+
 
 # Exemplu de rulare standalone
 if __name__ == "__main__":

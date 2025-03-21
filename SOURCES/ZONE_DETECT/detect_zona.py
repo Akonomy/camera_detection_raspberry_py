@@ -203,7 +203,7 @@ def show_tkinter_cm_interface(cyan_coords, timeout=60000):
     """
     x_min, x_max = -25, 25
     y_min, y_max = -10, 30
-    scale = 20
+    scale = 10
     canvas_width = (x_max - x_min) * scale
     canvas_height = (y_max - y_min) * scale
 
@@ -217,11 +217,11 @@ def show_tkinter_cm_interface(cyan_coords, timeout=60000):
     canvas = tk.Canvas(root, width=canvas_width, height=canvas_height, bg="white")
     canvas.pack()
 
-    for x in range(x_min, x_max + 1):
+    for x in range(x_min, x_max + 1,5):
         cx, _ = to_canvas_coords(x, y_min)
         canvas.create_line(cx, 0, cx, canvas_height, fill="lightgray")
         canvas.create_text(cx, canvas_height - 10, text=str(x), fill="black", font=("Arial", 10))
-    for y in range(y_min, y_max + 1):
+    for y in range(y_min, y_max + 1, 5):
         _, cy = to_canvas_coords(x_min, y)
         canvas.create_line(0, cy, canvas_width, cy, fill="lightgray")
         canvas.create_text(20, cy, text=str(y), fill="black", font=("Arial", 10))

@@ -11,11 +11,8 @@ primește:
 
 La final, funcția returnează:
   - zone_limits: un dicționar cu limitele zonei (left, right, top, bottom),
-  - pos_flags: o listă de 1 sau 0, indicând pentru fiecare poziție dacă este în zonă (1) sau nu (0).
-  
-Utilizare:
-  from zone_module import detect_zone
-  zone_limits, flags = detect_zone(image_copy, positions=[(x1, y1), (x2, y2)], debug=False)
+  - pos_flags: o listă de 1 sau 0, indicând pentru fiecare poziție dacă este în zonă (1) sau nu (0),
+  - polygon_points: lista de tuple (x, y) reprezentând punctele care alcătuiesc poligonul (convex hull)
 """
 
 import tkinter as tk
@@ -168,6 +165,16 @@ def point_in_poly(x, y, poly):
         p1x, p1y = p2x, p2y
     return inside
 
+def adapt_hull_coordinates(hull, x_min, y_max):
+    """Transformă coordonatele hull (în cm) astfel încât originea să fie în stânga sus.
+    - x_adaptat = x - x_min
+    - y_adaptat = y_max - y
+    Returnează lista de puncte adaptate."""
+    adapted = []
+    for (x, y) in hull:
+        adapted.append((x - x_min, y_max - y))
+    return adapted
+
 ##############################################################################
 # Funcția principală de procesare a zonei
 ##############################################################################
@@ -189,10 +196,13 @@ def detect_zone(image_copy, positions=None, debug=False):
       4. Se determină limitele zonei (left, right, top, bottom) din convex hull.
       5. (Opțional) Se verifică, pentru fiecare poziție dată, dacă se află în interiorul zonei.
       6. Dacă debug==True, se afișează interfața Tkinter cu vizualizarea punctelor și conturului.
+      7. Dacă debug==True, se deschide o nouă interfață pentru a desena poligonul hull "în cm"
+         (fără scalări suplimentare, doar 1:1 convertit la pixeli pe baza unui canvas de 60x60 cm).
     
     Returnează:
       - zone_limits: dicționar cu cheile "left", "right", "top", "bottom".
       - pos_flags: listă de 1/0 pentru fiecare poziție (1 dacă este în zonă, 0 în caz contrar).
+      - polygon_points: lista de tuple (x, y) reprezentând punctele care alcătuiesc poligonul (convex hull)
     """
     # 1) Obținem coordonatele brute (în cm) din imagine
     coords_raw = detect_rotated_lines_in_mosaic(image_copy, debug=debug)
@@ -238,7 +248,7 @@ def detect_zone(image_copy, positions=None, debug=False):
     zone_limits = {"left": left_bound, "right": right_bound,
                    "top": top_bound, "bottom": bottom_bound}
 
-    # 9) (Opțional) Afișare interfață Tkinter dacă debug==True
+    # 9) (Opțional) Afișare interfață Tkinter pentru vizualizare standard
     if debug:
         scale = 20  # 1 cm = 20 pixeli
         canvas_width = (x_max - x_min) * scale
@@ -284,7 +294,6 @@ def detect_zone(image_copy, positions=None, debug=False):
 
         # D) Funcția de click: afișează dacă punctul este în interior sau exterior
         def on_canvas_click(event):
-            # Transformare coordonate canvas -> real (cm)
             rx = (event.x / scale) + x_min
             ry = y_min + (canvas_height - event.y) / scale
             if hull and point_in_poly(rx, ry, hull):
@@ -292,7 +301,6 @@ def detect_zone(image_copy, positions=None, debug=False):
             else:
                 flag = 0
             print(f"Click la ({rx:.2f}, {ry:.2f}): {'Inside' if flag==1 else 'Outside'}")
-            # Desenăm un mic pătrat la poziția click-ului
             size = 0.3  # cm
             left_rect = rx - size/2
             right_rect = rx + size/2
@@ -302,14 +310,12 @@ def detect_zone(image_copy, positions=None, debug=False):
             cx2, cy2 = to_canvas_coords(right_rect, bottom_rect)
             color = "magenta" if flag == 1 else "yellow"
             canvas.create_rectangle(cx1, cy1, cx2, cy2, fill=color, outline="black")
-
         canvas.bind("<Button-1>", on_canvas_click)
         root.mainloop()
 
     # 10) Procesăm parametrul positions (dacă este furnizat)
     pos_flags = []
     if positions is not None:
-        # Dacă este o singură poziție (tuple), o transformăm într-o listă
         if isinstance(positions, tuple) and len(positions) == 2 and isinstance(positions[0], (int, float)):
             positions = [positions]
         for pos in positions:
@@ -319,17 +325,57 @@ def detect_zone(image_copy, positions=None, debug=False):
             else:
                 pos_flags.append(0)
 
-    return zone_limits, pos_flags
+    # Adaptăm coordonatele hull pentru afișare în "sistemul în cm" 1:1
+    # (Folosim x_min=0 și y_max=30 pentru a "mută" originea în stânga sus)
+    adapted_hull = adapt_hull_coordinates(hull, x_min=0, y_max=30)
+
+    # Dacă debug este True, deschidem o nouă interfață pentru a desena poligonul hull
+    # fără scalări speciale (doar 1:1, folosind un canvas de 60x60 cm).
+    if debug:
+        cm_scale = 10  # 1 cm = 10 pixeli (pentru vizualizare)
+        canvas_cm_width = 60 * cm_scale
+        canvas_cm_height = 60 * cm_scale
+
+        # Funcție de conversie simplă: presupunem originea în stânga jos (0,0) și 1 cm = 10 pixeli.
+        def cm_to_canvas(x, y):
+            cx = (x+30) * cm_scale
+            cy = canvas_cm_height - (15+y) * cm_scale
+            return cx, cy
+
+        debug_root = tk.Tk()
+        debug_root.title("Debug - Hull în coordonate cm (1:1)")
+        debug_canvas = tk.Canvas(debug_root, width=canvas_cm_width, height=canvas_cm_height, bg="white")
+        debug_canvas.pack()
+
+        # Desenăm o grilă simplă (opțional)
+        for i in range(0, 61):
+            x_coord = i * cm_scale
+            debug_canvas.create_line(x_coord, 0, x_coord, canvas_cm_height, fill="#e0e0e0")
+        for i in range(0, 61):
+            y_coord = i * cm_scale
+            debug_canvas.create_line(0, canvas_cm_height - y_coord, canvas_cm_width, canvas_cm_height - y_coord, fill="#e0e0e0")
+
+        # Desenăm poligonul hull folosind coordonatele adaptate (care sunt în cm)
+        if adapted_hull and len(adapted_hull) >= 3:
+            points = []
+            for (x, y) in adapted_hull:
+                cx, cy = cm_to_canvas(x, y)
+                points.extend([cx, cy])
+            debug_canvas.create_polygon(points, outline="blue", fill="", width=2)
+        else:
+            debug_canvas.create_text(canvas_cm_width/2, canvas_cm_height/2, text="Hull invalid", fill="red", font=("Arial", 16))
+
+        debug_root.mainloop()
+
+    # Returnăm zone_limits, pos_flags și hull adaptat (în cm, 1:1)
+    return zone_limits, pos_flags, adapted_hull
 
 ##############################################################################
 # Exemplu de rulare standalone (doar pentru testare)
 ##############################################################################
 if __name__ == "__main__":
-    # Pentru testare, putem importa funcția de captură din modulul de cameră
     from CAMERA.camera_session import capture_raw_image
-    # Capturează o imagine (512x512)
     image_copy = capture_raw_image()
-    # Exemplu: verificăm dacă pozițiile date sunt în zonă
     test_positions = [(-20, 5), (0, 0), (10, 20)]
     limits, flags = detect_zone(image_copy, positions=test_positions, debug=True)
     print("Limitele zonei:", limits)

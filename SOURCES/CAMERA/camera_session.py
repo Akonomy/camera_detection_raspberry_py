@@ -2,31 +2,31 @@
 """
 Module: camera_session.py
 Descriere: Modul generalizat pentru capturarea și procesarea datelor de la cameră.
-  - Capturează o imagine de la cameră.
-  - Preprocesează imaginea (resize, rotire etc.) fără a adăuga desene finale.
-  - Detectează cutiile folosind funcțiile din BOX_DETECT.
-  - Realizează îmbinarea cutiilor similare.
-  - Asigură că fiecare cutie are cheia "angle" (calculată sau implicit 0).
-  - Oferă două funcții principale:
-      • capture_and_process_session() – capturează o singură imagine și returnează (image, session_data)
-      • camera_loop(callback=None) – rulează continuu, apelând callback-ul pentru fiecare cadru.
-      
-Pentru debug, am adăugat funcția:
-      • camera_loop_raw(callback=None) – rulează continuu și returnează doar o copie a imaginii brute
-        (similar cu funcția capture_raw_image()), fără procesări suplimentare.
+  - Se inițializează camera o singură dată cu init_camera().
+  - Funcțiile de capturare (capture_and_process_session, camera_loop, capture_raw_image, camera_loop_raw)
+    utilizează instanța inițializată.
+  - Camera se oprește prin apelarea funcției stop_camera().
+  
+Funcții principale:
+  • init_camera() – inițializează și pornește camera (se apelează o singură dată).
+  • stop_camera() – oprește camera.
+  • capture_and_process_session() – capturează o singură imagine și returnează (image, session_data).
+  • camera_loop(callback=None, only_image=False) – rulează continuu, apelând callback-ul pentru fiecare cadru.
+  • capture_raw_image() – capturează o imagine "raw" preprocesată.
+  • camera_loop_raw(callback=None) – rulează continuu și returnează doar copia imaginii brute preprocesate.
 """
 
 import os
 import sys
+import math
+import cv2
+import numpy as np
+from picamera2 import Picamera2
+
 # Adaugă directorul părinte la sys.path pentru a putea importa modulele din BOX_DETECT și UTILS
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
-    
-import cv2
-import math
-import numpy as np
-from picamera2 import Picamera2
 
 # Importurile pentru detecție și procesare
 from BOX_DETECT.letter_detect import detect_letters
@@ -40,6 +40,39 @@ ZONE_BOTTOM_RIGHT = (295, 160)
 ZONE_CENTER = ((ZONE_TOP_LEFT[0] + ZONE_BOTTOM_RIGHT[0]) // 2,
                (ZONE_TOP_LEFT[1] + ZONE_BOTTOM_RIGHT[1]) // 2)
 MERGE_DISTANCE_THRESHOLD = 50
+
+# Variabilă globală pentru instanța camerei
+global_picam = None
+
+def init_camera():
+    """
+    Inițializează și pornește camera, păstrând instanța într-o variabilă globală.
+    Dacă o instanță existentă este detectată, aceasta este oprită mai întâi.
+    """
+    global global_picam
+    if global_picam is not None:
+        try:
+            print("Camera este deja deschisă. Se încearcă închiderea acesteia înainte de reinițializare.")
+            stop_camera()
+        except Exception as e:
+            print("Eroare la închiderea camerei: ", e)
+    global_picam = Picamera2()
+    global_picam.configure(global_picam.create_still_configuration())
+    global_picam.start()
+    print("Camera a fost inițializată și pornește.")
+
+
+def stop_camera():
+    """
+    Oprește camera și resetează instanța globală.
+    """
+    global global_picam
+    if global_picam is not None:
+        global_picam.stop()
+        global_picam = None
+        print("Camera a fost oprită.")
+    else:
+        print("Camera nu a fost inițializată.")
 
 def merge_similar_packages(session_data, merge_distance_threshold=50):
     """Îmbină cutiile similare (implementare similară cu versiunea anterioară)."""
@@ -131,19 +164,19 @@ def capture_and_process_session():
       - Detectează cutiile și construiește dicționarul de sesiune.
     Returnează (processed_image, session_data).
     """
-    picam = Picamera2()
-    picam.configure(picam.create_still_configuration())
-    picam.start()
+    global global_picam
+    if global_picam is None:
+        raise Exception("Camera nu a fost inițializată. Apelează init_camera() înainte.")
     
     # Capturează și preprocesează imaginea
-    image = picam.capture_array()
+    image = global_picam.capture_array()
     image = cv2.resize(image, (512, 512))
     image = cv2.rotate(image, cv2.ROTATE_180)
     processed_image = image.copy()  # Copie fără desene
     
     # Detectare cutii
-    detections_letters = detect_letters(picam)
-    detections_boxes = detect_objects(picam)
+    detections_letters = detect_letters(global_picam)
+    detections_boxes = detect_objects(global_picam)
     
     matched_packages = assign_letters_to_packages(detections_letters, detections_boxes, threshold=5)
     box_distances = calculate_box_distance(detections_boxes, ZONE_CENTER, pass_threshold=20, max_distance=30)
@@ -158,50 +191,60 @@ def capture_and_process_session():
             except Exception:
                 pkg["angle"] = 0
                 
-    picam.stop()
     return processed_image, session_data
 
-def camera_loop(callback=None):
+def camera_loop(callback=None, only_image=False):
     """
     Rulează un loop continuu care capturează un cadru, îl procesează și returnează
     (processed_image, session_data) prin apelarea callback-ului dacă este definit.
-    Dacă callback este None, afișează pur și simplu imaginea procesată într-o fereastră OpenCV.
+    Dacă callback este None, afișează imaginea procesată într-o fereastră OpenCV.
+    
+    Parametrul only_image:
+      - Dacă este True, se omite complet procesarea cutiilor și se returnează o sesiune goală.
+      - Modul poate fi schimbat dinamic, de exemplu prin tasta 't'.
     """
-    picam = Picamera2()
-    picam.configure(picam.create_still_configuration())
-    picam.start()
+    global global_picam
+    if global_picam is None:
+        raise Exception("Camera nu a fost inițializată. Apelează init_camera() înainte.")
     
     while True:
-        image = picam.capture_array()
+        image = global_picam.capture_array()
         image = cv2.resize(image, (512, 512))
         image = cv2.rotate(image, cv2.ROTATE_180)
         processed_image = image.copy()
         
-        # Detectare cutii
-        detections_letters = detect_letters(picam)
-        detections_boxes = detect_objects(picam)
-        
-        matched_packages = assign_letters_to_packages(detections_letters, detections_boxes, threshold=5)
-        box_distances = calculate_box_distance(detections_boxes, ZONE_CENTER, pass_threshold=20, max_distance=30)
-        session_data = build_session_data(matched_packages, box_distances, detections_boxes)
-        session_data = merge_similar_packages(session_data, merge_distance_threshold=MERGE_DISTANCE_THRESHOLD)
-        # Asigură cheia "angle"
-        for pkg in session_data.values():
-            if "angle" not in pkg:
-                try:
-                    pkg["angle"] = get_box_inclination_angle(processed_image, pkg, margin=5, debug=False)
-                except Exception:
-                    pkg["angle"] = 0
+        if only_image:
+            # Sărim peste procesarea cutiilor
+            session_data = {}
+        else:
+            # Detectare cutii și procesare
+            detections_letters = detect_letters(global_picam)
+            detections_boxes = detect_objects(global_picam)
+            
+            matched_packages = assign_letters_to_packages(detections_letters, detections_boxes, threshold=5)
+            box_distances = calculate_box_distance(detections_boxes, ZONE_CENTER, pass_threshold=20, max_distance=30)
+            session_data = build_session_data(matched_packages, box_distances, detections_boxes)
+            session_data = merge_similar_packages(session_data, merge_distance_threshold=MERGE_DISTANCE_THRESHOLD)
+            # Asigură cheia "angle"
+            for pkg in session_data.values():
+                if "angle" not in pkg:
+                    try:
+                        pkg["angle"] = get_box_inclination_angle(processed_image, pkg, margin=5, debug=False)
+                    except Exception:
+                        pkg["angle"] = 0
         
         if callback:
             callback(processed_image, session_data)
         else:
             cv2.imshow("Processed Image", cv2.cvtColor(processed_image, cv2.COLOR_RGB2BGR))
         
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord('q'):
             break
+        if key == ord('t'):
+            only_image = not only_image
+            print("Modul only_image este acum setat la:", only_image)
             
-    picam.stop()
     cv2.destroyAllWindows()
 
 def capture_raw_image():
@@ -209,43 +252,33 @@ def capture_raw_image():
     Capturează o imagine de la cameră și aplică doar:
       - Redimensionare la 512x512.
       - (Opțional) Conversie de la BGR la RGB.
-    
-    Această funcție sare peste orice procesare suplimentară (ex.: detecția cutiilor sau a literelor)
-    și returnează direct imaginea preprocesată.
-    
+    Această funcție sare peste orice procesare suplimentară și returnează imaginea preprocesată.
     Returnează:
       - raw_image: imaginea capturată și preprocesată.
     """
-    picam = Picamera2()
-    picam.configure(picam.create_still_configuration())
-    picam.start()
-    image = picam.capture_array()
+    global global_picam
+    if global_picam is None:
+        raise Exception("Camera nu a fost inițializată. Apelează init_camera() înainte.")
+    
+    image = global_picam.capture_array()
     image = cv2.resize(image, (512, 512))
-    #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    picam.stop()
     return image
-
-#############################################
-# Funcții suplimentare pentru debug testing
-#############################################
 
 def camera_loop_raw(callback=None):
     """
     Rulează un loop continuu care capturează o imagine "raw" (preprocesată, redimensionată la 512x512) de la cameră,
     fără a trece prin procesările din BOX_DETECT.
-    
-    Dacă callback este definit, acesta va fi apelat pentru fiecare cadru cu parametrii:
+    Dacă callback este definit, acesta va fi apelat pentru fiecare cadru cu parametrul:
       - raw_image: copia imaginii brute preprocesate.
-    Dacă callback este None, se afișează pur și simplu imaginea într-o fereastră OpenCV.
-    
-    Apăsați 'q' pentru a ieși din loop.
+    Dacă callback este None, se afișează imaginea într-o fereastră OpenCV.
+    Apăsați 'q' pentru a ieși.
     """
-    picam = Picamera2()
-    picam.configure(picam.create_still_configuration())
-    picam.start()
+    global global_picam
+    if global_picam is None:
+        raise Exception("Camera nu a fost inițializată. Apelează init_camera() înainte.")
     
     while True:
-        image = picam.capture_array()
+        image = global_picam.capture_array()
         image = cv2.resize(image, (512, 512))
         raw_image = image.copy()
         
@@ -257,12 +290,15 @@ def camera_loop_raw(callback=None):
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
             
-    picam.stop()
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
-    # Exemplu de rulare continuă: se afișează fereastra cu imaginea procesată
-    # camera_loop()
-
-    # Exemplu de rulare pentru debug: loop raw fără procesare BOX_DETECT
+    # Exemplu de utilizare:
+    # 1. Inițializarea camerei
+    init_camera()
+    
+    # 2. Rulare loop raw pentru debug
     camera_loop_raw()
+    
+    # 3. Oprirea camerei
+    stop_camera()

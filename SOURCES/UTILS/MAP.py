@@ -61,7 +61,7 @@ def get_effective_margin(box):
         return math.sqrt((w/2)**2 + (h/2)**2)
     else:
         return min(w, h) / 2
-	`````````````````````````````````````````
+        
 
 
 def getRealCoordinates(detected_x, detected_y):

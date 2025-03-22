@@ -2,22 +2,29 @@
 """
 Modul: position_tracker.py
 
-Descriere: Acest modul oferă o clasă PositionTracker și o funcție
-          track_position(image, ...) care permite urmărirea deplasării
-          între cadre. La primul apel, se reține imaginea inițială, iar la
-          apelurile ulterioare se calculează deplasarea (shift), viteza, direcția
-          și poziția estimată (center) a obiectului urmărit.
-          Se returnează și ROI-ul (regiunea de interes) în care s-au detectat punctele,
-          astfel încât să știi aproximativ unde se află obiectul în ultima imagine.
-
+Descriere: Acest modul oferă o clasă PositionTracker și două funcții de tracking:
+          - track_position(image, ...) urmărește mișcarea între cadre,
+            calculând deplasarea (shift), viteza, direcția și poziția estimată (center)
+            a obiectului urmărit, precum și ROI-ul în care s-au detectat punctele.
+          - analyze_detailed_position(image, bbox, hsv_lower, hsv_upper) primește o imagine
+            și un bounding box (ROI inițial) și, pe baza segmentării în spațiul HSV (folosind
+            intervalul [hsv_lower, hsv_upper]), calculează centrul mediu al regiunii de interes
+            (de exemplu, unde se evidențiază o anumită culoare/contrast) și returnează poziția
+            rafinată.
+            
 Utilizare exemplu:
-    from position_tracker import track_position
+    from position_tracker import track_position, analyze_detailed_position
 
-    # Presupunând că obții imagini din camera ta:
+    # Tracking simplu:
     result = track_position(image)
-    # result este un dicționar de forma:
+    # result este un dicționar cu informații precum:
     # {"shift": (dx, dy), "speed": s, "direction": "Dreapta Jos", 
     #  "center": (x, y), "roi_box": (x1, y1, x2, y2)}
+    
+    # Analiză detaliată într-un ROI:
+    refined = analyze_detailed_position(image, bbox=(x1, y1, x2, y2), 
+                                          hsv_lower=(30, 50, 50), hsv_upper=(90, 255, 255))
+    # refined este un dicționar cu "refined_center" și "refined_bbox".
 """
 
 import cv2
@@ -141,6 +148,70 @@ def track_position(image, scale_down_factor=0.25, roi_size=100, initial_center=N
                                             initial_center=initial_center)
     return _tracker_instance.track_position(image)
 
+def analyze_detailed_position(image, bbox, hsv_lower, hsv_upper):
+    """
+    Analizează un ROI definit de 'bbox' (format: (x1, y1, x2, y2)) din imaginea 'image'
+    pentru a detecta detalii pe baza culorii. Convertim ROI-ul în HSV, aplicăm un threshold
+    folosind valorile 'hsv_lower' și 'hsv_upper', apoi calculăm centroidul regiunii detectate.
+    Dacă nu se detectează regiuni semnificative, se returnează centrul ROI-ului.
+    
+    Parametri:
+      - image: imaginea curentă (BGR).
+      - bbox: tuple (x1, y1, x2, y2) care definește ROI-ul.
+      - hsv_lower: tuple cu valorile inferioare pentru threshold (H, S, V).
+      - hsv_upper: tuple cu valorile superioare pentru threshold (H, S, V).
+      
+    Returnează un dicționar cu:
+      - "refined_center": centrul calculat (x, y) în ROI,
+      - "refined_bbox": bounding box-ul (x1, y1, x2, y2) extins pe baza regiunii detectate.
+    """
+    x1, y1, x2, y2 = bbox
+    roi = image[y1:y2, x1:x2]
+    # Convertim ROI-ul în HSV
+    hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
+    # Aplicăm threshold pentru a izola pixeli cu culoare în intervalul dat
+    mask = cv2.inRange(hsv_roi, np.array(hsv_lower), np.array(hsv_upper))
+    
+    # Găsim contururile regiunii detectate
+    contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    
+    if contours:
+        # Selectăm conturul cu arie maximă (presupunem că obiectul de interes este cel mai mare)
+        c = max(contours, key=cv2.contourArea)
+        M = cv2.moments(c)
+        if M["m00"] != 0:
+            cx = int(M["m10"] / M["m00"]) + x1
+            cy = int(M["m01"] / M["m00"]) + y1
+            # Calculăm bounding box-ul conturului, translatat în coordonatele imaginii
+            x, y, w, h = cv2.boundingRect(c)
+            refined_bbox = (x1 + x, y1 + y, x1 + x + w, y1 + y + h)
+            return {"refined_center": (cx, cy),
+                    "refined_bbox": refined_bbox}
+    # Dacă nu s-a detectat nimic, returnăm centrul ROI-ului calculat ca medie
+    center_roi = ((x1 + x2) // 2, (y1 + y2) // 2)
+    return {"refined_center": center_roi,
+            "refined_bbox": bbox}
+
+# Exemplu de funcție convenabilă pentru a integra ambele metode (opțional)
+def track_with_detailed_analysis(image, hsv_lower, hsv_upper, 
+                                 scale_down_factor=0.25, roi_size=100, initial_center=None):
+    """
+    Combină tracking-ul standard cu o analiză detaliată a regiunii de interes.
+    Se aplică tracking-ul pentru a obține un ROI aproximativ, apoi se folosește
+    analyze_detailed_position pentru a rafina poziția obiectului pe baza analizei culorii.
+    
+    Returnează un dicționar ce conține:
+      - "tracking_result": rezultatul tracking-ului standard (shift, speed, direction, center, roi_box),
+      - "detailed_result": rezultatul analizei detaliate (refined_center, refined_bbox).
+    """
+    tracking_result = track_position(image, scale_down_factor, roi_size, initial_center)
+    detailed_result = analyze_detailed_position(image, tracking_result["roi_box"],
+                                                hsv_lower, hsv_upper)
+    return {"tracking_result": tracking_result, "detailed_result": detailed_result}
+
+
+
+
 if __name__ == "__main__":
     # Exemplu de test folosind o cameră (sau altă sursă de imagini)
     cap = cv2.VideoCapture(0)
@@ -149,11 +220,22 @@ if __name__ == "__main__":
         if not ret:
             break
         result = track_position(frame)
-        print(result)
-        # Desenăm ROI-ul pe imagine pentru vizualizare:
+        print("Tracking:", result)
+        
+        # Pentru testul detaliat, definim un interval HSV (exemplu: pentru verde)
+        detailed = analyze_detailed_position(frame, result["roi_box"], (30, 50, 50), (90, 255, 255))
+        print("Detaliat:", detailed)
+        
+        # Desenăm ROI-ul și centrul pe imagine pentru vizualizare:
         x1, y1, x2, y2 = result["roi_box"]
         cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
         cv2.circle(frame, result["center"], 10, (0, 0, 255), 2)
+        
+        # Desenăm bounding box-ul detaliat
+        dx1, dy1, dx2, dy2 = detailed["refined_bbox"]
+        cv2.rectangle(frame, (dx1, dy1), (dx2, dy2), (0, 255, 255), 2)
+        cv2.circle(frame, detailed["refined_center"], 5, (0, 255, 255), -1)
+        
         cv2.imshow("Tracking Test", frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break

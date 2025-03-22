@@ -171,7 +171,7 @@ def capture_and_process_session():
     # Capturează și preprocesează imaginea
     image = global_picam.capture_array()
     image = cv2.resize(image, (512, 512))
-    image = cv2.rotate(image, cv2.ROTATE_180)
+    #image = cv2.rotate(image, cv2.ROTATE_180)
     processed_image = image.copy()  # Copie fără desene
     
     # Detectare cutii

@@ -47,27 +47,42 @@ def get_scale_x(detected_y):
 def getRealCoordinates(detected_x, detected_y):
     """
     Primește coordonatele detectate din imagine (detected_x, detected_y) și
-    returnează o tuplă (real_x, real_y) în centimetri, rotunjite la cel mai apropiat 0.5 cm.
+    le convertește la coordonate echivalente pentru o imagine rotită 180°.
+    Apoi, returnează o tuplă (real_x, real_y) în centimetri, rotunjite la cel mai 
+    apropiat 0.5 cm.
     
     Nota:
       - real_x este calculat astfel încât valorile negative indică poziții la dreapta (ex: -10 cm)
         și valorile pozitive la stânga (ex: +10 cm), conform convenției tale.
       - real_y se interpretează ca distanță față de centrul mașinii.
+      
+    Presupunem că imaginea originală este de 512x512 pixeli.
     """
-    center_x = get_center_x(detected_y)
-    scale_x = get_scale_x(detected_y)
+    # Dimensiunile imaginii
+    width, height = 512, 512
+    
+    # Conversia coordonatelor pentru rotația de 180°:
+    # Noua coordonată x este (width - 1) - detected_x
+    # Noua coordonată y este (height - 1) - detected_y
+    rotated_x = (width - 1) - detected_x
+    rotated_y = (height - 1) - detected_y
+
+    # Folosim coordonatele rotite pentru a calcula coordonatele reale
+    center_x = get_center_x(rotated_y)
+    scale_x = get_scale_x(rotated_y)
     
     # Calculul real_x: diferența de la centru, scalată
-    real_x = (detected_x - center_x) * scale_x  
+    real_x = (rotated_x - center_x) * scale_x  
     
-    # Calculul real_y
-    real_y = get_real_y(detected_y)
+    # Calculul real_y, se presupune că get_real_y primește valoarea rotită a lui y
+    real_y = get_real_y(rotated_y)
     
     # Rotunjire la cel mai apropiat 0.5
     real_x = round_to_half(real_x)
     real_y = round_to_half(real_y)
     
     return real_x, real_y
+
 
 def getMovementInstructions(detected_x, detected_y):
     """

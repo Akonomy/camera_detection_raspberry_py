@@ -65,11 +65,34 @@ def get_effective_margin(box):
 
 
 def getRealCoordinates(detected_x, detected_y):
-    center_x = get_center_x(detected_y)
-    scale_x = get_scale_x(detected_y)
-    real_x = (detected_x - center_x) * scale_x 
-    real_y = get_real_y(detected_y)
-    return round_to_half(real_x), round_to_half(real_y)
+
+
+    # Dimensiunile imaginii
+    width, height = 512, 512
+    
+    # Conversia coordonatelor pentru rotația de 180°:
+    # Noua coordonată x este (width - 1) - detected_x
+    # Noua coordonată y este (height - 1) - detected_y
+    rotated_x = (width - 1) - detected_x
+    rotated_y = (height - 1) - detected_y
+
+    # Folosim coordonatele rotite pentru a calcula coordonatele reale
+    center_x = get_center_x(rotated_y)
+    scale_x = get_scale_x(rotated_y)
+    
+    # Calculul real_x: diferența de la centru, scalată
+    real_x = (rotated_x - center_x) * scale_x  
+    
+    # Calculul real_y, se presupune că get_real_y primește valoarea rotită a lui y
+    real_y = get_real_y(rotated_y)
+    
+    # Rotunjire la cel mai apropiat 0.5
+    real_x = round_to_half(real_x)
+    real_y = round_to_half(real_y)
+    
+    return real_x, real_y
+
+
 
 # Factor pentru mărime: 10 pixeli = 1 cm
 PIXELS_PER_CM = 10

@@ -29,10 +29,7 @@ if __name__ == "__main__":
             print("Rezultatul verificării pozițiilor:", flags)
             print("Hull-ul zonei:", hull)
             
-            # Verificăm dacă fereastra a fost închisă manual
-            if cv2.getWindowProperty(window_name, cv2.WND_PROP_VISIBLE) < 1:
-                print("Fereastra de debug a fost închisă manual.")
-                break
+
             
             # Pauză de 3 secunde între apeluri
             time.sleep(3)

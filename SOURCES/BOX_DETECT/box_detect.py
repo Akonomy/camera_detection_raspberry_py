@@ -34,7 +34,7 @@ def detect_objects(picam2):
 
     image = picam2.capture_array()
     image = cv2.resize(image, (512, 512))
-    image = cv2.rotate(image, cv2.ROTATE_180)
+    #image = cv2.rotate(image, cv2.ROTATE_180)
 
     input_image = image / 255.0
     input_image = np.expand_dims(input_image, axis=0).astype(np.float32)

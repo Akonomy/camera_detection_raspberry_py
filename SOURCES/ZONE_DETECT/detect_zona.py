@@ -31,7 +31,18 @@ def convert_px_to_cm(detected_x, detected_y):
         iar pentru detected_y mare (josul imaginii) y devine mic.
     """
     
-    detected_y =  detected_y
+   # Dimensiunile imaginii
+    width, height = 512, 512
+    
+    # Conversia coordonatelor pentru rotația de 180°:
+    # Noua coordonată x este (width - 1) - detected_x
+    # Noua coordonată y este (height - 1) - detected_y
+    detected_x = (width - 1) - detected_x
+    detected_y = (height - 1) - detected_y
+
+
+
+    
     real_y = 0.05587 * detected_y + -4.47
 
     center_x = 0.0203 * detected_y + 230.38
@@ -42,6 +53,12 @@ def convert_px_to_cm(detected_x, detected_y):
     real_y = round(real_y * 2) / 2
 
     return real_x, real_y
+
+
+
+
+
+
 
 ### Funcții pentru procesarea imaginii ###
 def create_64x64_mosaic(raw_img):

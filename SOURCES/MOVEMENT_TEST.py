@@ -2,7 +2,7 @@
 import cv2
 import time
 from CAMERA.camera_session import init_camera, stop_camera, capture_raw_image
-from CAMERA.tracked_position import track_position, mosaic_effect, track_with_detailed_analysis, track_position_by_phase
+from CAMERA.tracked_position import track_position, mosaic_effect, track_with_detailed_analysis
 
 def test_fps_and_display(method="standard", duration=15):
     frame_count = 0
@@ -17,9 +17,7 @@ def test_fps_and_display(method="standard", duration=15):
             # Exemplu: folosim intervalul HSV pentru verde
             detailed = track_with_detailed_analysis(frame, hsv_lower=(30, 50, 50), hsv_upper=(90, 255, 255))
             result = detailed["tracking_result"]
-        elif method == "phase":
-            # Folosim metoda de tracking cu phase correlation; se poate ajusta crop_percent după nevoie
-            result = track_position_by_phase(frame, crop_percent=(0.3, 0.7))
+       
         else:
             result = None
         

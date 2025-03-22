@@ -306,7 +306,7 @@ def camera_loop():
     while True:
         image = picam2.capture_array()
         image = cv2.resize(image, (512,512))
-        image = cv2.rotate(image, cv2.ROTATE_180)
+        #image = cv2.rotate(image, cv2.ROTATE_180)
         original_image = image.copy()
 
         detections_letters = detect_letters(picam2)

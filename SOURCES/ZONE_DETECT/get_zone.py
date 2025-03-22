@@ -98,19 +98,42 @@ def point_in_poly(x, y, poly):
 ##############################################################################
 
 def getDetectedCoordinates(real_x, real_y):
+
     """
-    Primește coordonate reale (x și y, în cm) și returnează coordonatele detectate (în pixeli),
-    folosind relațiile inverse:
-      - detected_y = (real_y + 4.47) / 0.05587
-      - center_x = 0.0203 * detected_y + 230.38
-      - scale_x  = 0.0000608 * detected_y + 0.046936
-      - detected_x = (real_x / scale_x) + center_x
+    Primește coordonatele reale (real_x, real_y) în centimetri și
+    returnează coordonatele detectate (detected_x, detected_y) în pixeli,
+    pentru o imagine de 512x512, presupunând că imaginea a fost rotită 180° înainte de procesare.
+    
+    Operațiunea inversă:
+      1. Se inversează calculul lui real_y pentru a obține rotated_y:
+            rotated_y = inv_get_real_y(real_y)
+         (inv_get_real_y este funcția inversă a lui get_real_y)
+      2. Se calculează center_x și scale_x pe baza lui rotated_y:
+            center_x = get_center_x(rotated_y)
+            scale_x  = get_scale_x(rotated_y)
+      3. Se inversează calculul pentru real_x:
+            rotated_x = (real_x / scale_x) + center_x
+      4. Se inversează rotația de 180°:
+            detected_x = (width - 1) - rotated_x
+            detected_y = (height - 1) - rotated_y
     """
-    detected_y = (real_y + 4.47) / 0.05587
-    center_x = 0.0203 * detected_y + 230.38
-    scale_x = 0.0000608 * detected_y + 0.046936
-    detected_x = (real_x / scale_x) + center_x
-    return int(round(detected_x)), int(round(detected_y))
+    width, height = 512, 512
+
+    # Pasul 1: Inversul get_real_y pentru a obține rotated_y
+    rotated_y = (real_y + 4.47) / 0.05587
+
+    # Pasul 2: Calculăm center_x și scale_x pentru rotated_y
+    center_x = 0.0203 * rotated_y + 230.38
+    scale_x = 0.0000608 * rotated_y + 0.046936
+    # Inversul calculului pentru real_x:
+    rotated_x = (real_x / scale_x) + center_x
+
+    # Pasul 3: Inversăm rotația de 180°
+    detected_x = (width - 1) - rotated_x
+    detected_y = (height - 1) - rotated_y
+
+    return detected_x, detected_y
+
 
 ##############################################################################
 # Funcția principală de procesare a zonei
@@ -189,11 +212,12 @@ def detect_zone(image_copy, positions=None, debug=False):
         for label, real_pt in extra_points.items():
             detected_pt = getDetectedCoordinates(real_pt[0], real_pt[1])
             # Desenează un cerc mic la poziția detectată
-            cv2.circle(debug_img, detected_pt, radius=5, color=(0, 255, 0), thickness=-1)
+            cv2.circle(debug_img, (int(detected_pt[0]), int(detected_pt[1])), radius=5, color=(0, 255, 0), thickness=-1)
+
             # Adaugă eticheta lângă punct (offset de 10 pixeli)
-            cv2.putText(debug_img, label, (detected_pt[0] + 10, detected_pt[1] + 10),
+            cv2.putText(debug_img, label, (int(detected_pt[0]) + 10, int(detected_pt[1]) + 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-        cv2.imshow("Detected Zone", debug_img)
+        cv2.imshow("get_zone Zone", debug_img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 

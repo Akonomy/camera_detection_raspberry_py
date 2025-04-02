@@ -17,7 +17,7 @@ except Exception as e:
     raise
 
 
-def send(cmd_type, val2, val1, vector):
+def send(cmd_type, val1, val2, vector):
     # Deschide portul serial (verifică ce port este activ pe sistemul tău)
 
 
@@ -25,8 +25,8 @@ def send(cmd_type, val2, val1, vector):
     packet = bytearray()
     packet.append(0xAA)  # Marker de început
     packet.append(cmd_type & 0xFF)
-    packet.append(val1 & 0xFF)
     packet.append(val2 & 0xFF)
+    packet.append(val1 & 0xFF)
     packet.append(len(vector) & 0xFF)  # Lungimea vectorului
     
     for item in vector:
@@ -105,8 +105,13 @@ def process_command(cmd_type, val1, val2, vector):
         vector = [int(v) for v in vector]
     except ValueError:
         raise ValueError("Toți parametrii trebuie să fie numere întregi!")
-    
-    send(cmd_type, val1, val2, vector)
+    if cmd_type==1:
+        send(cmd_type, val1, val2, vector)
+    else:
+        send(cmd_type, val2, val1, vector)
+
+
+
     
     if cmd_type == 3:
         return receive()

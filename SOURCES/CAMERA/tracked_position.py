@@ -9,8 +9,7 @@ Descriere: Acest modul oferă o clasă PositionTracker și două funcții de tra
           - analyze_detailed_position(image, bbox, hsv_lower, hsv_upper) primește o imagine
             și un bounding box (ROI inițial) și, pe baza segmentării în spațiul HSV (folosind
             intervalul [hsv_lower, hsv_upper]), calculează centrul mediu al regiunii de interes
-            (de exemplu, unde se evidențiază o anumită culoare/contrast) și returnează poziția
-            rafinată.
+            și returnează poziția rafinată.
             
 Utilizare exemplu:
     from position_tracker import track_position, analyze_detailed_position
@@ -37,7 +36,7 @@ def mosaic_effect(image, scale_down_factor=0.25):
     mosaic = cv2.resize(small, (w, h), interpolation=cv2.INTER_NEAREST)
     return mosaic
 
-def initialize_roi(gray_image, center, roi_size=100, exclusion_zone=((166,335),(375,512))):
+def initialize_roi(gray_image, center, roi_size=100, exclusion_zones=[((166,335),(375,512))]):
     x, y = center
     half = roi_size // 2
     h, w = gray_image.shape
@@ -49,12 +48,17 @@ def initialize_roi(gray_image, center, roi_size=100, exclusion_zone=((166,335),(
         # Adăugăm offset-ul ROI-ului pentru a obține coordonatele în imaginea originală
         points += np.array([[x1, y1]], dtype=np.float32)
         
-        # Filtrare: excludem punctele din zona specificată
-        (ex_x1, ex_y1), (ex_x2, ex_y2) = exclusion_zone
+        # Filtrare: excludem punctele din zonele interzise
         filtered_points = []
         for pt in points:
             px, py = pt.ravel()
-            if not (ex_x1 <= px <= ex_x2 and ex_y1 <= py <= ex_y2):
+            inside = False
+            for zone in exclusion_zones:
+                (ex_x1, ex_y1), (ex_x2, ex_y2) = zone
+                if ex_x1 <= px <= ex_x2 and ex_y1 <= py <= ex_y2:
+                    inside = True
+                    break
+            if not inside:
                 filtered_points.append(pt)
         if filtered_points:
             points = np.array(filtered_points, dtype=np.float32)
@@ -63,7 +67,8 @@ def initialize_roi(gray_image, center, roi_size=100, exclusion_zone=((166,335),(
     return points, (x1, y1, x2, y2)
 
 class PositionTracker:
-    def __init__(self, scale_down_factor=0.25, roi_size=100, initial_center=None):
+    def __init__(self, scale_down_factor=0.25, roi_size=100, initial_center=None,
+                 exclusion_zones=[((166,335),(375,512))]):
         self.scale_down_factor = scale_down_factor
         self.roi_size = roi_size
         self.prev_gray = None
@@ -71,7 +76,7 @@ class PositionTracker:
         self.roi_box = None
         self.cum_offset = np.array([0.0, 0.0])
         self.center = initial_center  # Dacă rămâne None, se calculează din prima imagine
-
+        self.exclusion_zones = exclusion_zones
 
     def reset(self, initial_center=None):
         self.prev_gray = None
@@ -91,7 +96,7 @@ class PositionTracker:
             h, w = curr_gray.shape[:2]
             if self.center is None:
                 self.center = (w // 2, h // 2)
-            self.points, self.roi_box = initialize_roi(curr_gray, self.center, self.roi_size)
+            self.points, self.roi_box = initialize_roi(curr_gray, self.center, self.roi_size, self.exclusion_zones)
             return {"shift": (0.0, 0.0),
                     "speed": 0.0,
                     "direction": "",
@@ -103,7 +108,23 @@ class PositionTracker:
             new_points, status, error = cv2.calcOpticalFlowPyrLK(self.prev_gray, curr_gray, self.points, None)
             good_new = new_points[status.flatten() == 1]
             good_old = self.points[status.flatten() == 1]
-            if len(good_new) > 0:
+            # Filtrare: elimină punctele care intră în oricare dintre zonele interzise
+            filtered_new = []
+            filtered_old = []
+            for p_new, p_old in zip(good_new, good_old):
+                x, y = p_new.ravel()
+                inside_exclusion = False
+                for zone in self.exclusion_zones:
+                    (ex_x1, ex_y1), (ex_x2, ex_y2) = zone
+                    if ex_x1 <= x <= ex_x2 and ex_y1 <= y <= ex_y2:
+                        inside_exclusion = True
+                        break
+                if not inside_exclusion:
+                    filtered_new.append(p_new)
+                    filtered_old.append(p_old)
+            if len(filtered_new) > 0:
+                good_new = np.array(filtered_new)
+                good_old = np.array(filtered_old)
                 shift = np.mean(good_new - good_old, axis=0)
                 shift = np.squeeze(shift)
             else:
@@ -131,7 +152,7 @@ class PositionTracker:
         # Actualizează starea pentru următorul apel
         self.prev_gray = curr_gray.copy()
         if self.points is None or (self.points is not None and len(good_new) < 5):
-            self.points, self.roi_box = initialize_roi(curr_gray, new_center, self.roi_size)
+            self.points, self.roi_box = initialize_roi(curr_gray, new_center, self.roi_size, self.exclusion_zones)
         else:
             self.points = good_new.reshape(-1, 1, 2)
         
@@ -144,7 +165,6 @@ class PositionTracker:
 # Instanță singleton pentru comoditate (opțional):
 _tracker_instance = None
 
-
 def track_reset():
     """
     Resetează tracker-ul global, astfel încât la următorul apel al funcției track_position 
@@ -152,9 +172,6 @@ def track_reset():
     """
     global _tracker_instance
     _tracker_instance = None
-
-
-
 
 def track_position(image, scale_down_factor=0.25, roi_size=100, initial_center=None):
     """
@@ -200,32 +217,25 @@ def analyze_detailed_position(image, bbox, hsv_lower, hsv_upper):
     """
     x1, y1, x2, y2 = bbox
     roi = image[y1:y2, x1:x2]
-    # Convertim ROI-ul în HSV
     hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
-    # Aplicăm threshold pentru a izola pixeli cu culoare în intervalul dat
     mask = cv2.inRange(hsv_roi, np.array(hsv_lower), np.array(hsv_upper))
     
-    # Găsim contururile regiunii detectate
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     
     if contours:
-        # Selectăm conturul cu arie maximă (presupunem că obiectul de interes este cel mai mare)
         c = max(contours, key=cv2.contourArea)
         M = cv2.moments(c)
         if M["m00"] != 0:
             cx = int(M["m10"] / M["m00"]) + x1
             cy = int(M["m01"] / M["m00"]) + y1
-            # Calculăm bounding box-ul conturului, translatat în coordonatele imaginii
             x, y, w, h = cv2.boundingRect(c)
             refined_bbox = (x1 + x, y1 + y, x1 + x + w, y1 + y + h)
             return {"refined_center": (cx, cy),
                     "refined_bbox": refined_bbox}
-    # Dacă nu s-a detectat nimic, returnăm centrul ROI-ului calculat ca medie
     center_roi = ((x1 + x2) // 2, (y1 + y2) // 2)
     return {"refined_center": center_roi,
             "refined_bbox": bbox}
 
-# Exemplu de funcție convenabilă pentru a integra ambele metode (opțional)
 def track_with_detailed_analysis(image, hsv_lower, hsv_upper, 
                                  scale_down_factor=0.25, roi_size=100, initial_center=None):
     """
@@ -241,7 +251,6 @@ def track_with_detailed_analysis(image, hsv_lower, hsv_upper,
     detailed_result = analyze_detailed_position(image, tracking_result["roi_box"],
                                                 hsv_lower, hsv_upper)
     return {"tracking_result": tracking_result, "detailed_result": detailed_result}
-
 
 def track_point(image, initial_center=[256,256], reset=False, scale_down_factor=0.25, roi_size=500, need_points=False):
     """
@@ -260,27 +269,19 @@ def track_point(image, initial_center=[256,256], reset=False, scale_down_factor=
       - Dacă need_points este True: un tuple (center, points) unde:
             center: un tuple (x, y) al noului centru estimat.
             points: un array NumPy cu punctele urmărite (sau None dacă nu există).
-    
-    Notă: Funcția nu afișează imaginea, ci folosește o copie internă pentru prelucrare.
     """
     if reset:
-        track_reset()  # Resetează instanța globală a trackerului
-    # Folosim o copie a imaginii pentru a nu afecta originalul
+        track_reset()
     track_img = image.copy()
     result = track_position(track_img, scale_down_factor=scale_down_factor, roi_size=roi_size, initial_center=initial_center)
     
     if need_points:
-        # Asumăm că instanța globală _tracker_instance a fost actualizată în track_position
         global _tracker_instance
         return (result["center"], _tracker_instance.points)
     else:
         return result["center"]
 
-
-
-
 if __name__ == "__main__":
-    # Exemplu de test folosind o cameră (sau altă sursă de imagini)
     cap = cv2.VideoCapture(0)
     while True:
         ret, frame = cap.read()
@@ -289,16 +290,13 @@ if __name__ == "__main__":
         result = track_position(frame)
         print("Tracking:", result)
         
-        # Pentru testul detaliat, definim un interval HSV (exemplu: pentru verde)
         detailed = analyze_detailed_position(frame, result["roi_box"], (30, 50, 50), (90, 255, 255))
         print("Detaliat:", detailed)
         
-        # Desenăm ROI-ul și centrul pe imagine pentru vizualizare:
         x1, y1, x2, y2 = result["roi_box"]
         cv2.rectangle(frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
         cv2.circle(frame, result["center"], 10, (0, 0, 255), 2)
         
-        # Desenăm bounding box-ul detaliat
         dx1, dy1, dx2, dy2 = detailed["refined_bbox"]
         cv2.rectangle(frame, (dx1, dy1), (dx2, dy2), (0, 255, 255), 2)
         cv2.circle(frame, detailed["refined_center"], 5, (0, 255, 255), -1)

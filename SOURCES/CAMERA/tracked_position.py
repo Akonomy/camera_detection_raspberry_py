@@ -72,6 +72,14 @@ class PositionTracker:
         self.cum_offset = np.array([0.0, 0.0])
         self.center = initial_center  # Dacă rămâne None, se calculează din prima imagine
 
+
+    def reset(self, initial_center=None):
+        self.prev_gray = None
+        self.points = None
+        self.roi_box = None
+        self.cum_offset = np.array([0.0, 0.0])
+        self.center = initial_center if initial_center is not None else self.center
+
     def track_position(self, image):
         # Aplică efectul mozaic pentru a reduce volumul de date
         mosaic = mosaic_effect(image, self.scale_down_factor)
@@ -135,6 +143,18 @@ class PositionTracker:
 
 # Instanță singleton pentru comoditate (opțional):
 _tracker_instance = None
+
+
+def track_reset():
+    """
+    Resetează tracker-ul global, astfel încât la următorul apel al funcției track_position 
+    să se creeze o nouă instanță a tracker-ului.
+    """
+    global _tracker_instance
+    _tracker_instance = None
+
+
+
 
 def track_position(image, scale_down_factor=0.25, roi_size=100, initial_center=None):
     """
@@ -221,6 +241,32 @@ def track_with_detailed_analysis(image, hsv_lower, hsv_upper,
     detailed_result = analyze_detailed_position(image, tracking_result["roi_box"],
                                                 hsv_lower, hsv_upper)
     return {"tracking_result": tracking_result, "detailed_result": detailed_result}
+
+
+def track_point(image, initial_center=[256,256], reset=False, scale_down_factor=0.25, roi_size=500):
+    """
+    Procesează imaginea primită pentru tracking și returnează noul centru estimat.
+    
+    Parametri:
+      - image: imaginea curentă (BGR) de la sursa externă.
+      - initial_center: centrul inițial pentru tracking, folosit dacă trackerul este resetat.
+      - reset: flag boolean; dacă True, se resetează trackerul folosind track_reset().
+      - scale_down_factor: factorul de reducere pentru aplicarea efectului mozaic.
+      - roi_size: dimensiunea ROI-ului pentru detectarea punctelor.
+    
+    Returnează:
+      - center: un tuple (x, y) reprezentând noul centru estimat al obiectului urmărit.
+      
+    Notă: Funcția nu afișează imaginea, ci folosește o copie internă pentru prelucrare.
+    """
+    if reset:
+        track_reset()  # Resetează instanța globală a trackerului
+    # Folosim o copie a imaginii pentru a nu afecta originalul
+    track_img = image.copy()
+    result = track_position(track_img, scale_down_factor=scale_down_factor, roi_size=roi_size, initial_center=initial_center)
+    return result["center"]
+
+
 
 
 

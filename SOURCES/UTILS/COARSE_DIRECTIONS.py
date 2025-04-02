@@ -226,6 +226,50 @@ def getAllCommands(x_cm: float, y_cm: float):
 
     return commands
 
+
+def getDinamicCommand(x_cm: float, y_cm: float):
+    """
+    Primește coordonatele țintă (x_cm, y_cm) în cm și returnează o listă de comenzi la nivel înalt:
+      - "RIGHT" sau "LEFT" pentru mișcarea laterală (prioritar, dacă se depășește toleranța pe x)
+      - "FORWARD" sau "BACK" pentru mișcarea pe axa y
+      - "STOP" dacă niciuna dintre condiții nu se îndeplinește.
+      
+    Se folosesc toleranțe implicite pentru a evita "oversensitivity":
+      - tol_x = 0.5 cm
+      - tol_y = 0.5 cm
+    """
+    # Toleranțele pe fiecare axă (în cm)
+    tol_x = 0.5
+    tol_y = 0.5
+    
+    commands = []
+    
+    # 1. Verificare mișcare laterală
+    if x_cm < -tol_x:
+        commands.append((1, 1, 9, [168, 158, 166, 161])
+)
+    elif x_cm > tol_x:
+        commands.append((1, 1, 10, [167, 169, 185, 194])
+)
+        
+    # 2. Verificare mișcare înainte/înapoi
+    if y_cm > tol_y:
+        commands.append((1, 1, 2, [130])
+)
+    elif y_cm < -tol_y:
+        commands.append((1, 1, 1, [130])
+)
+    
+    # 3. Dacă niciuna nu se aplică, returnăm STOP
+    if not commands:
+        commands.append((0, 0, 0, [])
+)
+        
+    return commands
+
+
+
+
 def getFirstCommand(x_cm: float, y_cm: float):
     """
     Returnează doar prima comandă din secvenţa generată de getAllCommands.

@@ -13,7 +13,7 @@ from UTILS.COARSE_DIRECTIONS import getFirstCommand
 import cv2
 import time
 from CAMERA.camera_session import init_camera, stop_camera, capture_raw_image, capture_and_process_session
-from CAMERA.tracked_position import track_position, mosaic_effect, track_with_detailed_analysis
+from CAMERA.tracked_position import track_point
 
 # Hartă de culori pentru desen
 color_map = {
@@ -97,6 +97,37 @@ def draw_calibrated_circle(image, box, radius=20, flip_x=False, flip_y=False,col
 
 
 
+def run_tracking(interval, initial_center,reset=False):
+    """
+    Rulează trackingul pentru un interval specificat (în secunde)
+    cu un punct inițial dat.
+    """
+   
+    start_time = time.time()
+    while time.time() - start_time < interval:
+        track_img = capture_raw_image()
+        result = track_point(track_img, initial_center, reset)
+        track_img = draw_calibrated_circle(track_img, result, radius=20, flip_x=False, flip_y=False, color="green")
+        cv2.imshow("Raw9 Image", track_img)
+        
+        # Așteaptă puțin pentru a permite actualizarea ferestrei (ex.: 30ms)
+        if cv2.waitKey(30) & 0xFF == ord('q'):
+            return False
+    return True
+
+
+
+def get_position():
+
+
+    image , session= capture_and_process_session()  #resource intensive
+
+    if session is not None:
+        box=session.get('GreenA')
+        if box is not None:
+            return  box["position"]
+
+    return False
 
 
 
@@ -108,45 +139,41 @@ if __name__ == "__main__":
         print("Camera a fost inițializată. Apasă 'q' în fereastra imaginii pentru a opri.")
        
 
+
+        while True:
+
+            pos=get_position()
+            if pos != False:
+                break
+
+
+        
+
+        count=-3
         # Exemplu de loop principal cu waitKey:
         while True:
 
-            # Capturează o imagine raw de la cameră
-           # image , session= capture_and_process_session()  #resource intensive
-
-            track_img=capture_raw_image()
-            result=track_position(track_img, scale_down_factor=0.25, roi_size=500, initial_center=[317,150])
-
-            for x in range(1):
-                track_img=capture_raw_image()
-                result=track_position(track_img, scale_down_factor=0.25, roi_size=500, initial_center=result)
-
-                track_img = draw_calibrated_circle(track_img, result["center"], radius=20, flip_x=False, flip_y=False,color="green")
-                # cv2.circle(track_img, (256,460), 5, (255,255,0), 2)
-                # cv2.circle(track_img, (256,335), 5, (255,255,0), 2)
-                # cv2.circle(track_img, (166,460), 5, (255,255,0), 2)
-                # cv2.circle(track_img, (375,460), 5, (255,255,0), 2)
-                cv2.imshow("Raw9 Image", track_img)
-                for delay in range (7):
-                    if delay ==6998 :
-
-                        print(f"DD{delay}")
-                    else:
-                        pass
-
-
-            track_img = draw_calibrated_circle(track_img, result["center"], radius=20, flip_x=False, flip_y=False,color="green")
-            
+            if count>1:
+                count-=5
+                print (count);
+            track_img = capture_raw_image()
+            result = track_point(track_img, pos, reset=False)
+            track_img = draw_calibrated_circle(track_img, result, radius=20, flip_x=False, flip_y=False, color="green")
             cv2.imshow("Raw9 Image", track_img)
 
+         
+            x,y=pos
+            cmds = getRealCoordinates(x, y)
+            x_real, y_real = cmds
+          
+            comanda = getFirstCommand(x_real, y_real)
+            
+            CMD = comanda
 
-
-            # if session is not None:
-            #     box=session.get('GreenA')
-            #     if box is not None:
-
-            #         #print(box)
-
+            if count<1:
+                print("cmd sent")
+                count=100
+                process_command(CMD[0],CMD[1],CMD[2],CMD[3])
 
 
             #         comenzi, CMD = process_tracked_package(box)

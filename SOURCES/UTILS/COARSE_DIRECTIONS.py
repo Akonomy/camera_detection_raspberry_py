@@ -239,25 +239,29 @@ def getDinamicCommand(x_cm: float, y_cm: float):
       - tol_y = 0.5 cm
     """
     # Toleranțele pe fiecare axă (în cm)
-    tol_x = 0.5
-    tol_y = 0.5
+    tol_x = 1.5
+    tol_y = 1.5
     
     commands = []
     
     # 1. Verificare mișcare laterală
     if x_cm < -tol_x:
-        commands.append((1, 1, 9, [168, 158, 166, 161])
+         commands.append((1, 1, 10, [167, 169, 185, 194])
+        
 )
     elif x_cm > tol_x:
-        commands.append((1, 1, 10, [167, 169, 185, 194])
+       
+        commands.append((1, 1, 9, [168, 158, 166, 161])
 )
         
     # 2. Verificare mișcare înainte/înapoi
     if y_cm > tol_y:
-        commands.append((1, 1, 2, [130])
+        commands.append((1, 1, 1, [100])
+        
 )
     elif y_cm < -tol_y:
-        commands.append((1, 1, 1, [130])
+        
+        commands.append((1, 1, 2, [100])
 )
     
     # 3. Dacă niciuna nu se aplică, returnăm STOP
@@ -265,7 +269,7 @@ def getDinamicCommand(x_cm: float, y_cm: float):
         commands.append((0, 0, 0, [])
 )
         
-    return commands
+    return commands[0]
 
 
 

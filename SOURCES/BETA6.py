@@ -8,10 +8,12 @@
 from USART_COM.serial_module import process_command
 from UTILS.get_directions import get_next_move_command_for_position, get_all_move_commands_for_position
 from UTILS.REAL import getRealCoordinates
-from UTILS.COARSE_DIRECTIONS import getFirstCommand
+from UTILS.COARSE_DIRECTIONS import getFirstCommand,getDinamicCommand
 
 import cv2
 import time
+import csv
+import os
 from CAMERA.camera_session import init_camera, stop_camera, capture_raw_image, capture_and_process_session
 from CAMERA.tracked_position import track_point
 
@@ -131,7 +133,6 @@ def get_position():
 
 
 
-
 if __name__ == "__main__":
     try:
         # Inițializarea camerei
@@ -153,7 +154,7 @@ if __name__ == "__main__":
         # Exemplu de loop principal cu waitKey:
         while True:
 
-            if count>1:
+            if count>=1:
                 count-=5
                 print (count);
             track_img = capture_raw_image()
@@ -162,42 +163,19 @@ if __name__ == "__main__":
             cv2.imshow("Raw9 Image", track_img)
 
          
-            x,y=pos
+            x,y=result
             cmds = getRealCoordinates(x, y)
             x_real, y_real = cmds
           
-            comanda = getFirstCommand(x_real, y_real)
+            comanda = getDinamicCommand(x_real, y_real)
             
             CMD = comanda
 
             if count<1:
                 print("cmd sent")
-                count=100
+                count=6
                 process_command(CMD[0],CMD[1],CMD[2],CMD[3])
 
-
-            #         comenzi, CMD = process_tracked_package(box)
-
-
-
-            #         image = draw_calibrated_circle(image, box, radius=20, flip_x=False, flip_y=False, color="red")
-
-                   
-
-            #         print( result["center"] )
-
-
-
-                    #print(CMD)
-                    
-
-                    #process_command(CMD[0],CMD[1],CMD[2],CMD[3])
-
-
-            # Se poate aplica un proces suplimentar pe imagine dacă este nevoie
-            #cv2.imshow("Raw Image", image)
-
-           # print(session)
 
 
 

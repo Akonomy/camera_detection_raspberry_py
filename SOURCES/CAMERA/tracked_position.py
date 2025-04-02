@@ -44,7 +44,7 @@ def initialize_roi(gray_image, center, roi_size=100, exclusion_zone=((166,335),(
     x1, y1 = max(x - half, 0), max(y - half, 0)
     x2, y2 = min(x + half, w), min(y + half, h)
     roi = gray_image[y1:y2, x1:x2]
-    points = cv2.goodFeaturesToTrack(roi, maxCorners=50, qualityLevel=0.01, minDistance=5)
+    points = cv2.goodFeaturesToTrack(roi, maxCorners=100, qualityLevel=0.01, minDistance=5)
     if points is not None:
         # Adăugăm offset-ul ROI-ului pentru a obține coordonatele în imaginea originală
         points += np.array([[x1, y1]], dtype=np.float32)
@@ -243,7 +243,7 @@ def track_with_detailed_analysis(image, hsv_lower, hsv_upper,
     return {"tracking_result": tracking_result, "detailed_result": detailed_result}
 
 
-def track_point(image, initial_center=[256,256], reset=False, scale_down_factor=0.25, roi_size=500):
+def track_point(image, initial_center=[256,256], reset=False, scale_down_factor=0.25, roi_size=500, need_points=False):
     """
     Procesează imaginea primită pentru tracking și returnează noul centru estimat.
     
@@ -253,10 +253,14 @@ def track_point(image, initial_center=[256,256], reset=False, scale_down_factor=
       - reset: flag boolean; dacă True, se resetează trackerul folosind track_reset().
       - scale_down_factor: factorul de reducere pentru aplicarea efectului mozaic.
       - roi_size: dimensiunea ROI-ului pentru detectarea punctelor.
+      - need_points: dacă True, funcția va returna și punctele folosite pentru tracking.
     
     Returnează:
-      - center: un tuple (x, y) reprezentând noul centru estimat al obiectului urmărit.
-      
+      - Dacă need_points este False (implicit): un tuple (x, y) reprezentând noul centru.
+      - Dacă need_points este True: un tuple (center, points) unde:
+            center: un tuple (x, y) al noului centru estimat.
+            points: un array NumPy cu punctele urmărite (sau None dacă nu există).
+    
     Notă: Funcția nu afișează imaginea, ci folosește o copie internă pentru prelucrare.
     """
     if reset:
@@ -264,9 +268,13 @@ def track_point(image, initial_center=[256,256], reset=False, scale_down_factor=
     # Folosim o copie a imaginii pentru a nu afecta originalul
     track_img = image.copy()
     result = track_position(track_img, scale_down_factor=scale_down_factor, roi_size=roi_size, initial_center=initial_center)
-    return result["center"]
-
-
+    
+    if need_points:
+        # Asumăm că instanța globală _tracker_instance a fost actualizată în track_position
+        global _tracker_instance
+        return (result["center"], _tracker_instance.points)
+    else:
+        return result["center"]
 
 
 

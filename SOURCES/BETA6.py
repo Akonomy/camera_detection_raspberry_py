@@ -152,34 +152,41 @@ if __name__ == "__main__":
 
         count=-3
         # Exemplu de loop principal cu waitKey:
+        # In your main loop
         while True:
-
-            if count>=1:
-                count-=5
-                print (count);
+            if count >= 1:
+                count -= 5
+                print(count)
+            
             track_img = capture_raw_image()
-            result = track_point(track_img, pos, reset=False)
+            # Request both center and points by setting need_points=True
+            result, points = track_point(track_img, pos, reset=False, need_points=True)
+            
+            # Draw the tracking center (using your calibrated circle function)
             track_img = draw_calibrated_circle(track_img, result, radius=20, flip_x=False, flip_y=False, color="green")
+            
+            # If points exist, iterate and draw them on the image.
+            if points is not None:
+                for pt in points:
+                    # Each pt is in shape (1, 2) if coming from calcOpticalFlowPyrLK;
+                    # you may need to squeeze it to get the (x, y) coordinates.
+                    x_pt, y_pt = pt.ravel()
+                    cv2.circle(track_img, (int(x_pt), int(y_pt)), 3, (0, 0, 255), -1)  # Draw small blue dot
+                    
             cv2.imshow("Raw9 Image", track_img)
-
-         
-            x,y=result
+            
+            x, y = result
             cmds = getRealCoordinates(x, y)
             x_real, y_real = cmds
           
             comanda = getDinamicCommand(x_real, y_real)
-            
             CMD = comanda
 
-            if count<1:
+            if count < 1:
                 print("cmd sent")
-                count=6
-                process_command(CMD[0],CMD[1],CMD[2],CMD[3])
-
-
-
-
-            # Verifică dacă s-a apăsat tasta 'q' pentru a opri loop-ul
+                count = 6
+                process_command(CMD[0], CMD[1], CMD[2], CMD[3])
+            
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 

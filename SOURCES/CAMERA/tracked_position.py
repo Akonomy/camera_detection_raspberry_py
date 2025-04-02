@@ -37,7 +37,7 @@ def mosaic_effect(image, scale_down_factor=0.25):
     mosaic = cv2.resize(small, (w, h), interpolation=cv2.INTER_NEAREST)
     return mosaic
 
-def initialize_roi(gray_image, center, roi_size=100):
+def initialize_roi(gray_image, center, roi_size=100, exclusion_zone=((166,335),(375,512))):
     x, y = center
     half = roi_size // 2
     h, w = gray_image.shape
@@ -46,7 +46,20 @@ def initialize_roi(gray_image, center, roi_size=100):
     roi = gray_image[y1:y2, x1:x2]
     points = cv2.goodFeaturesToTrack(roi, maxCorners=50, qualityLevel=0.01, minDistance=5)
     if points is not None:
+        # Adăugăm offset-ul ROI-ului pentru a obține coordonatele în imaginea originală
         points += np.array([[x1, y1]], dtype=np.float32)
+        
+        # Filtrare: excludem punctele din zona specificată
+        (ex_x1, ex_y1), (ex_x2, ex_y2) = exclusion_zone
+        filtered_points = []
+        for pt in points:
+            px, py = pt.ravel()
+            if not (ex_x1 <= px <= ex_x2 and ex_y1 <= py <= ex_y2):
+                filtered_points.append(pt)
+        if filtered_points:
+            points = np.array(filtered_points, dtype=np.float32)
+        else:
+            points = None
     return points, (x1, y1, x2, y2)
 
 class PositionTracker:

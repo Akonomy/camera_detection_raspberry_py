@@ -24,15 +24,10 @@ def test_fps_and_display(method="standard", duration=15):
         # Aplicăm efectul mozaic pentru afișare
         mosaic_frame = mosaic_effect(frame)
         if result is not None:
-            if method == "phase":
-                # Pentru metoda phase, ROI-ul este returnat sub cheia "roi"
-                x1, y1, x2, y2 = result["roi"]
-            else:
-                x1, y1, x2, y2 = result["roi_box"]
-            cv2.rectangle(mosaic_frame, (x1, y1), (x2, y2), (255, 0, 0), 2)
-            cv2.circle(mosaic_frame, result["center"], 10, (0, 0, 255), 2)
+          
+            cv2.circle(frame, result["center"], 10, (0, 0, 255), 2)
         
-        cv2.imshow(f"{method.capitalize()} Tracking", mosaic_frame)
+        cv2.imshow(f"{method.capitalize()} Tracking", frame)
         frame_count += 1
         
         if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -54,8 +49,7 @@ def main():
     print("Test FPS și afișare pentru metoda detaliată (track_with_detailed_analysis) pentru 15 secunde:")
     test_fps_and_display(method="detailed", duration=15)
     
-    print("Test FPS și afișare pentru metoda phase (track_position_by_phase) pentru 15 secunde:")
-    test_fps_and_display(method="phase", duration=15)
+   
     
     stop_camera()
 

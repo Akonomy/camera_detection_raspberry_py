@@ -132,7 +132,7 @@ def getDetectedCoordinates(real_x, real_y):
     detected_x = (width - 1) - rotated_x
     detected_y = (height - 1) - rotated_y
 
-    return detected_x, detected_y
+    return int(detected_x), int(detected_y)
 
 
 ##############################################################################

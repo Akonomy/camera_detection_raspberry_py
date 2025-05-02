@@ -38,12 +38,19 @@ def encode_message(input_vector):
         vec[i] = (packed >> (8 * i)) & 0xFF
         i += 1
 
+
+    # 🔥 AICI: Aplicăm XOR
+    i = 0
+    while i < 4:
+        vec[i] ^= key
+        i += 1
+
     # data1 este lungimea vectorului, data2 este cheia
     data1 = n & 0xFF
     data2 = key & 0xFF
 
     # Returnăm tuple-ul final cu cmd type 5 la început
-    return (5, data1, data2, vec)
+    return (6, data1, data2, vec)
 
 
 

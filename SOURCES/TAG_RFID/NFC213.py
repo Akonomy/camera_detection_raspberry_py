@@ -91,3 +91,62 @@ if __name__ == '__main__':
         print("Tag written successfully!")
     else:
         print("Failed to write tag.")
+
+def write_text_tag213(tag_str):
+    """
+    Scrie un string text (ex: "C[5][2]") pe un tag NFC NTAG213, în format NDEF Text Record.
+    Acum scrie corect prefixul limbii, ca să nu se supere telefonul tău.
+    """
+
+    lang_code = b'en'
+    lang_len = len(lang_code)
+    text_payload = lang_code + tag_str.encode('utf-8')
+    payload_length = len(text_payload)
+
+    # NDEF Text Record
+    ndef_record = bytearray()
+    ndef_record.append(0xD1)                # MB/ME/SR/TNF
+    ndef_record.append(0x01)                # Type Length (1 byte: 'T')
+    ndef_record.append(payload_length + 1)  # Payload Length (+1 for lang code length byte)
+    ndef_record.append(0x54)                # Type: 'T'
+    ndef_record.append(lang_len)            # Language code length
+    ndef_record.extend(text_payload)        # 'en' + tag_str
+
+    # TLV: [0x03, length, ndef_record..., 0xFE]
+    full_data = bytearray()
+    full_data.append(0x03)
+    full_data.append(len(ndef_record))
+    full_data.extend(ndef_record)
+    full_data.append(0xFE)
+
+    # Prefix for block 5
+    full_data = bytearray([0x34]) + full_data
+
+    while len(full_data) % 4 != 0:
+        full_data.append(0x00)
+
+    import board
+    import busio
+    from digitalio import DigitalInOut
+    from adafruit_pn532.spi import PN532_SPI
+
+    spi = busio.SPI(board.SCK, board.MOSI, board.MISO)
+    cs_pin = DigitalInOut(board.D8)
+    pn532 = PN532_SPI(spi, cs_pin, debug=False)
+    pn532.SAM_configuration()
+
+    uid = pn532.read_passive_target(timeout=1.0)
+    if uid is None:
+        print("No tag detected.")
+        return False
+
+    for i in range(0, len(full_data) // 4):
+        block = full_data[i * 4:(i + 1) * 4]
+        success = pn532.ntag2xx_write_block(5 + i, list(block))
+        if not success:
+            print(f"Failed to write block {5 + i}")
+            return False
+
+    print("Text tag written successfully!")
+    return True
+

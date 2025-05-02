@@ -60,3 +60,6 @@ def read_pn532_data():
             return (uid_str, None)
     except Exception:
         return (uid_str, None)
+
+
+print(read_pn532_data())

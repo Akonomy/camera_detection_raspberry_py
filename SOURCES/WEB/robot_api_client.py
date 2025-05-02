@@ -302,6 +302,8 @@ def change_container_zone_module(container_code, new_zone_code, headers):
         return None
 
 # Exemplu de utilizare a modulului (acest bloc va fi executat doar dacă rulăm direct acest fișier)
+
+"""
 if __name__ == '__main__':
     client = RobotAPIClient()
     # Testăm câteva endpoint-uri folosind instanța clasei
@@ -310,3 +312,22 @@ if __name__ == '__main__':
     print("Container check:", client.check_container('SGsYp36'))
     print("Container reset:", client.reset_container('SGsYp36'))
     print("Container zone change:", client.change_container_zone('SGsYp36', 'syn8c3B'))
+
+"""
+if __name__ == '__main__':
+    client = RobotAPIClient()
+    tasks = client.fetch_tasks()
+
+    if not tasks:
+        print("N-ai niciun task, bravo. Curat din start.")
+    else:
+        for task in tasks:
+            task_id = task.get("id")
+            print(f"Completăm taskul #{task_id}...")
+            result = client.update_task_status(task_id, "completed", reason="Reset general înainte de curățenie")
+            if result and result.get("message"):
+                print(f"  ✅ Task {task_id} completat.")
+            else:
+                print(f"  ❌ Nu s-a putut completa taskul {task_id}.")
+
+        print("Toate taskurile au fost procesate. Poți merge să ștergi praful.")

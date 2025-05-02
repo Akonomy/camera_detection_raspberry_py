@@ -52,6 +52,34 @@ def extract_id_from_raw(raw_data):
         return match.group(1)
     return None
 
+
+def extract_text_from_raw(raw_bytes):
+    """
+    Brutally simple extractor that finds the pattern b'T\\x02en' and returns the text that follows.
+    Stops at first null byte or end of buffer.
+    Works with phone-written tags that are readable by NFC tools.
+    """
+    try:
+        marker = b'T\x02en'
+        start = raw_bytes.find(marker)
+        if start == -1:
+            return None
+        start += len(marker)
+
+        # Slice until a null byte or non-printable tailing junk
+        end = start
+        while end < len(raw_bytes) and raw_bytes[end] not in (0x00,):
+            end += 1
+
+        text = raw_bytes[start:end].decode('utf-8', errors='ignore')
+        return text.strip()
+    except Exception as e:
+        print("Failed to extract text:", e)
+        return None
+
+
+
+
 def _write_blocks(pn532, start_block, data_bytes):
     """
     Helper function to write data_bytes to the tag starting at start_block.
@@ -206,10 +234,12 @@ def get_tag_type(raw_data):
                 
 # Exemplu de utilizare:
 if __name__ == '__main__':
-    uid, raw_data = read_pn532_table()
+    uid, raw_data = read_pn532_data()
+   
     if uid is None:
         print("No tag detected.")
     else:
         print(f"UID: {uid}")
         print("Raw data table:")
-        process_raw_data_table(raw_data, start_block=0)
+        print(raw_data);
+       # process_raw_data_table(raw_data, start_block=0)

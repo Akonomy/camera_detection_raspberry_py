@@ -211,6 +211,49 @@ def lookup_tag(tag_id, data):
         print(f"Tag '{tag_id}' nu a fost găsit.")
 #--------------------< Sfârșit Funcții Listare și Lookup >------------------------
 
+
+
+
+def getOrderedTagsForPath(path):
+    """
+    Returnează lista de taguri ordonate logic pentru traseul dat.
+    Se filtrează doar tagurile utile (care conduc către pasul următor în traseu).
+    
+    :param path: listă de noduri (zone și intersecții)
+    :return: listă ordonată de taguri relevante
+    """
+    if _export_data is None:
+        raise Exception("Datele nu sunt încărcate.")
+    
+    tags_by_inter = dict(getTags())
+    valid_tags = []
+
+    for i in range(1, len(path) - 1):  # Ignoră ZONELE de la capete
+        current_node = path[i]
+        if not current_node.startswith("I"):
+            continue
+
+        next_node = path[i + 1]
+        tags = tags_by_inter.get(current_node, [])
+
+        for tag in tags:
+            directions = getDirections(tag)
+            if not directions:
+                continue
+            # Dacă următorul pas în traseu este sugerat de acest tag
+            if next_node in directions.values():
+                valid_tags.append(tag)
+                break  # Ia doar primul tag valid pe intersecție
+
+    return valid_tags
+
+
+def get_data():
+    return _export_data
+
+
+
+
 #--------------------< Funcție de Testare a Noilor Funcții >------------------------
 def test_functions():
     """

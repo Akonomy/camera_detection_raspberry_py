@@ -123,6 +123,7 @@ def bfs_shortest_path(graph, start, goal):
 
 
 #--------------------< Stare globală a modulului >------------------------
+_raw_data = {}
 _graph = {}
 _coords = {}
 _node_info = {}
@@ -135,10 +136,11 @@ def load_data(filename=None):
     Încarcă datele din fișierul JSON.
     Dacă nu se specifică filename, se folosește 'schema_depozit.json' din directorul modulului.
     """
-    global _graph, _coords, _node_info, _zone_names, _zone_aliases, _data_loaded
+    global _raw_data, _graph, _coords, _node_info, _zone_names, _zone_aliases, _data_loaded
     if filename is None:
         filename = os.path.join(os.path.dirname(__file__), "schema_depozit.json")
     data = load_graph_data(filename)
+    _raw_data = data  # <-- asta e cheia
     _graph, _coords, _node_info = build_graph(data)
     # Construiește mappingul zonelor (cheie: 'Z{zone_id}', valoare: numele zonei)
     _zone_names = {f"Z{z['zone_id']}": z["name"] for z in data.get("zones", [])}
@@ -150,6 +152,12 @@ def ensure_data_loaded():
     """Asigură că datele au fost încărcate (apelul funcțiilor publice)."""
     if not _data_loaded:
         load_data()
+
+
+def get_data():
+    ensure_data_loaded()
+    return _raw_data
+
 
 #--------------------< Funcții Publice >------------------------
 
@@ -163,18 +171,39 @@ def getAll():
     return _zone_aliases.copy()
 
 def resolve_zone(name):
-    """
-    Rezolvă un nume dat (alias sau identificator) într-un identificator de zonă.
-    Dacă name se găsește ca identificator direct, acesta este returnat;
-    altfel, se caută printre alias-uri.
-    """
-    ensure_data_loaded()
-    if name in _graph:
-        return name
-    for key, alias in _zone_aliases.items():
-        if alias == name:
-            return key
+    from find_tag import get_data as get_tag_data
+    data = get_data()
+    tag_data = get_tag_data()
+
+    # Caută după nume de zonă sau Z{id}
+    for zona in data['zones']:
+        if zona['name'] == name:
+            return f"Z{zona['zone_id']}"
+        if f"Z{zona['zone_id']}" == name:
+            return f"Z{zona['zone_id']}"
+
+    # Caută după intersecție sau I{id}
+    for inter in data['intersectii']:
+        if f"Intersectia {inter['id']}" == name:
+            return f"I{inter['id']}"
+        if f"I{inter['id']}" == name:
+            return f"I{inter['id']}"
+
+    # Caută în taguri
+    for tag in tag_data.get('tags', []):
+        if tag['custom_id'] == name:
+            assigned = tag['assigned_to']
+            if assigned.lower().startswith("intersectia"):
+                inter_id = int(assigned.split()[1])
+                return f"I{inter_id}"
+            for zona in data['zones']:
+                if zona['name'] == assigned:
+                    return f"Z{zona['zone_id']}"
+
     raise ValueError(f"Zona cu denumirea '{name}' nu a fost găsită.")
+
+
+
 
 def getfastPath(punctA, punctB):
     """

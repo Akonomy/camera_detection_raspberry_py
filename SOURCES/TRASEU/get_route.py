@@ -44,7 +44,7 @@ def get_possible_tags_for_path(path):
     tags_by_inter = dict(getTags())
     useful_tags = {}
 
-    print("\n[DEBUG] Path analizat:")
+   # print("\n[DEBUG] Path analizat:")
     for p in path:
         print(" -", p)
 
@@ -65,16 +65,16 @@ def get_possible_tags_for_path(path):
         prev_node = normalize_node_name(prev_node) if prev_node else None
         next_node = normalize_node_name(next_node) if next_node else None
 
-        print(f"\n[DEBUG] Intersecție curentă: I{inter_id}")
-        print(f"[DEBUG]  - Nod anterior: {prev_node}")
-        print(f"[DEBUG]  - Nod următor: {next_node}")
+       # print(f"\n[DEBUG] Intersecție curentă: I{inter_id}")
+       # print(f"[DEBUG]  - Nod anterior: {prev_node}")
+       # print(f"[DEBUG]  - Nod următor: {next_node}")
 
         tags = tags_by_inter.get(f"I{inter_id}", [])
-        print(f"[DEBUG]  - Taguri disponibile: {[t['custom_id'] for t in tags]}")
+       # print(f"[DEBUG]  - Taguri disponibile: {[t['custom_id'] for t in tags]}")
 
         for tag in tags:
             directions = getDirections(tag)
-            print(f"    [DEBUG]  > Tag {tag['custom_id']} directions: {directions}")
+            #print(f"    [DEBUG]  > Tag {tag['custom_id']} directions: {directions}")
 
             # Normalizează toți vecinii direcți
             normalized_directions = {k: normalize_node_name(v) if v else None for k, v in directions.items()}
@@ -82,14 +82,15 @@ def get_possible_tags_for_path(path):
             entry_match = normalized_directions.get("BACK") == prev_node
             exit_match = next_node in normalized_directions.values()
 
-            print(f"      [DEBUG]     - Entry match: {entry_match}")
-            print(f"      [DEBUG]     - Exit match:  {exit_match}")
+            #print(f"      [DEBUG]     - Entry match: {entry_match}")
+            #print(f"      [DEBUG]     - Exit match:  {exit_match}")
 
             if entry_match and exit_match:
-                print(f"      [DEBUG]     -> Tag {tag['custom_id']} ADĂUGAT")
+            #    print(f"      [DEBUG]     -> Tag {tag['custom_id']} ADĂUGAT")
                 useful_tags.setdefault(f"I{inter_id}", []).append(tag['custom_id'])
             else:
-                print(f"      [DEBUG]     -> Tag {tag['custom_id']} IGNORAT")
+                pass
+               # print(f"      [DEBUG]     -> Tag {tag['custom_id']} IGNORAT")
 
     return useful_tags
 

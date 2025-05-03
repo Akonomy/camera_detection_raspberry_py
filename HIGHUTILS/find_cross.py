@@ -20,9 +20,14 @@ def request_cross():
         print(f"MFRC522 - UID: {uid_mf}, Data: {data_mf}")
     else:
         return cross, directions
+        
 
     if data_mf is not None:
-        
+
+        if "Z" in data_mf:
+            data = data_mf.replace('[', '').replace(']', '')
+            return data, "ZONA"
+
         tag_dictionar = next((t for t in find_tag._export_data.get("tags", []) if t.get("custom_id") == data_mf), None)
         if tag_dictionar is not None:
             cross = find_tag.getCross(tag_dictionar)

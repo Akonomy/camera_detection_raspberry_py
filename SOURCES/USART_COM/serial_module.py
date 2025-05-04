@@ -113,7 +113,7 @@ def process_command(cmd_type, val1, val2, vector):
 
 
     
-    if cmd_type == 3:
+    if cmd_type == 3 and val1==0 :
         return receive()
     else:
         return None

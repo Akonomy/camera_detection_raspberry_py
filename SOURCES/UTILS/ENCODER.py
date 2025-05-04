@@ -2,120 +2,92 @@
 # Stil C-like: se folosesc doar structuri de bază, bucle for explicite și operații bitwise.
 
 def encode_message(input_vector):
-    # Calculăm lungimea vectorului (stil C-like, folosind buclă explicită)
+
+    # Calculăm lungimea vectorului (stil C-like)
     n = 0
     while n < len(input_vector):
         n += 1
-    # Verificăm dacă lungimea nu depășește 16 elemente
-    if n > 16:
-        raise ValueError("Lungimea maximă admisă este 16 elemente.")
-    
-    # Inițializăm variabila de 32 de biți pentru bit-packing
+    if n > 10:
+        raise ValueError("Lungimea maximă admisă este 10 elemente.")
+
     packed = 0
     i = 0
     while i < n:
         val = input_vector[i]
-        # Verificăm dacă valoarea este validă (între 1 și 4)
-        if val < 1 or val > 4:
-            raise ValueError("Valorile trebuie să fie între 1 și 4.")
-        # Mapăm valorile: 1->0, 2->1, 3->2, 4->3 (pentru a folosi 2 biți)
-        val = val - 1
-        # Inserăm valoarea în packed la poziția 2*i (stil bitwise, little-endian)
-        packed |= (val & 0x03) << (2 * i)
+        # Verificăm dacă valoarea este între 0 și 7
+        if val < 0 or val > 7:
+            raise ValueError("Valorile trebuie să fie între 0 și 7.")
+        packed |= (val & 0x07) << (3 * i)
         i += 1
 
-    # Calculăm cheia: suma elementelor originale modulo 256
+    # Cheia = suma elementelor mod 256
     key = 0
     i = 0
     while i < n:
         key = (key + input_vector[i]) & 0xFF
         i += 1
 
-    # Extragem cei 4 octeți din valoarea de 32 de biți (presupunem little-endian)
-    vec = [0, 0, 0, 0]
+    # Extragem cei 4 octeți + XOR
+    vec = [0] * 4
     i = 0
     while i < 4:
-        vec[i] = (packed >> (8 * i)) & 0xFF
+        vec[i] = ((packed >> (8 * i)) & 0xFF) ^ key
         i += 1
 
-
-    # 🔥 AICI: Aplicăm XOR
-    i = 0
-    while i < 4:
-        vec[i] ^= key
-        i += 1
-
-    # data1 este lungimea vectorului, data2 este cheia
     data1 = n & 0xFF
     data2 = key & 0xFF
-
-    # Returnăm tuple-ul final cu cmd type 5 la început
     return (6, data1, data2, vec)
 
 
 
+def decode_message(encoded_tuple):
+    cmd_type, data1, key, vec = encoded_tuple
 
+    if cmd_type != 6:
+        raise ValueError("Comanda trebuie să fie de tip 6.")
+    if data1 > 10:
+        raise ValueError("Lungimea nu poate depăși 10.")
+    if len(vec) != 4:
+        raise ValueError("Vectorul trebuie să aibă exact 4 octeți.")
 
-    
-
-def decode_vector(encoded):
-    # Se așteaptă ca encoded să fie o listă de 6 octeți.
-    if not (len(encoded) == 6):
-        raise ValueError("Vectorul codificat trebuie să aibă 6 octeți.")
-    
-    # Se extrag lungimea și cheia
-    n = encoded[0]
-    key = encoded[1]
-
-    # Se recuperează cei 4 octeți și se anulează XOR-ul
-    data = [0, 0, 0, 0]
+    # Eliminăm XOR
+    data = [0] * 4
     i = 0
     while i < 4:
-        data[i] = encoded[2 + i] ^ key
+        data[i] = vec[i] ^ key
         i += 1
 
-    # Reasamblăm valoarea de 32 de biți
+    # Reasamblăm în 32 de biți (little-endian)
     packed = 0
     i = 0
     while i < 4:
         packed |= data[i] << (8 * i)
         i += 1
 
-    # Extragem elementele: fiecare ocupă 2 biți
-    output_vector = [0] * n  # alocăm un vector de lungime n
+    # Extragem valorile (3 biți fiecare)
+    output_vector = [0] * data1
     i = 0
-    while i < n:
-        # Extragem 2 biți pentru elementul i
-        val = (packed >> (2 * i)) & 0x03
-        # Convertim înapoi la intervalul 1-4
-        output_vector[i] = val + 1
+    while i < data1:
+        output_vector[i] = (packed >> (3 * i)) & 0x07
         i += 1
 
     return output_vector
 
-# Modul de test:
 def main():
-    # Exemple de vectori de test (valorile sunt între 1 și 4)
-    test_vectors = [
-        [1, 2, 3, 4, 2, 1, 1, 1, 2],
-        [1, 1, 1, 2, 3, 3, 4, 4, 4],
-        [1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]  # 16 elemente
+    vectors = [
+        [0, 1, 2, 3, 4, 5, 6, 7, 0, 1],
+        [3, 2, 1],
+        [7, 6, 0, 1, 4],
     ]
 
-    i = 0
-    while i < len(test_vectors):
-        vec = test_vectors[i]
-        print("Vector original:", vec)
-        encoded = encode_vector(vec)
-        print("Vector codificat (6 octeți):", encoded)
-        decoded = decode_vector(encoded)
-        print("Vector decodificat:", decoded)
-        if vec == decoded:
-            print("Test OK.")
-        else:
-            print("Eroare la test.")
-        print("-------------------------------------------------")
-        i += 1
+    for vec in vectors:
+        encoded = encode_message(vec)
+        print("Original:", vec)
+        print("Encoded:", encoded)
+        decoded = decode_message(encoded)
+        print("Decoded:", decoded)
+        print("Match:", decoded == vec)
+        print("---")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

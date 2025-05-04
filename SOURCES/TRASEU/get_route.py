@@ -42,57 +42,61 @@ def get_direction_sequence(path):
 
 def get_possible_tags_for_path(path):
     tags_by_inter = dict(getTags())
-    useful_tags = {}
+    useful_tags_entry = {}
+    useful_tags_exit = {}
 
-   # print("\n[DEBUG] Path analizat:")
-    for p in path:
-        print(" -", p)
+    def extract_tag_matches(path):
+        matches = {}
+        for i, node in enumerate(path):
+            if not node.startswith("Intersectia"):
+                continue
 
-    for i, node in enumerate(path):
+            inter_id = node.split()[1].split('[')[0].lstrip("I")
+
+            next_node = None
+            prev_node = None
+
+            if i > 0:
+                prev_node = path[i - 1].split()[1].split('[')[0] if "Intersectia" in path[i - 1] else path[i - 1]
+            if i < len(path) - 1:
+                next_node = path[i + 1].split()[1].split('[')[0] if "Intersectia" in path[i + 1] else path[i + 1]
+
+            prev_node = normalize_node_name(prev_node) if prev_node else None
+            next_node = normalize_node_name(next_node) if next_node else None
+
+            tags = tags_by_inter.get(f"I{inter_id}", [])
+
+            for tag in tags:
+                directions = getDirections(tag)
+                normalized_directions = {k: normalize_node_name(v) if v else None for k, v in directions.items()}
+
+                entry_match = normalized_directions.get("BACK") == prev_node
+                exit_match = next_node in normalized_directions.values()
+
+                if entry_match and exit_match:
+                    matches.setdefault(f"I{inter_id}", []).append(tag['custom_id'])
+        return matches
+
+    # Forward path
+    forward_tags = extract_tag_matches(path)
+    # Reverse path
+    reversed_path = list(reversed(path))
+    backward_tags = extract_tag_matches(reversed_path)
+
+    # Sort tags based on appearance in the original path
+    combined_tags = {}
+    for node in path:
         if not node.startswith("Intersectia"):
             continue
-
         inter_id = node.split()[1].split('[')[0].lstrip("I")
+        tags_forward = forward_tags.get(f"I{inter_id}", [])
+        tags_backward = backward_tags.get(f"I{inter_id}", [])
+        all_tags = list(dict.fromkeys(tags_forward + tags_backward))
+        if all_tags:
+            combined_tags[f"I{inter_id}"] = all_tags
 
-        next_node = None
-        prev_node = None
+    return combined_tags
 
-        if i > 0:
-            prev_node = path[i - 1].split()[1].split('[')[0] if "Intersectia" in path[i - 1] else path[i - 1]
-        if i < len(path) - 1:
-            next_node = path[i + 1].split()[1].split('[')[0] if "Intersectia" in path[i + 1] else path[i + 1]
-
-        prev_node = normalize_node_name(prev_node) if prev_node else None
-        next_node = normalize_node_name(next_node) if next_node else None
-
-       # print(f"\n[DEBUG] Intersecție curentă: I{inter_id}")
-       # print(f"[DEBUG]  - Nod anterior: {prev_node}")
-       # print(f"[DEBUG]  - Nod următor: {next_node}")
-
-        tags = tags_by_inter.get(f"I{inter_id}", [])
-       # print(f"[DEBUG]  - Taguri disponibile: {[t['custom_id'] for t in tags]}")
-
-        for tag in tags:
-            directions = getDirections(tag)
-            #print(f"    [DEBUG]  > Tag {tag['custom_id']} directions: {directions}")
-
-            # Normalizează toți vecinii direcți
-            normalized_directions = {k: normalize_node_name(v) if v else None for k, v in directions.items()}
-
-            entry_match = normalized_directions.get("BACK") == prev_node
-            exit_match = next_node in normalized_directions.values()
-
-            #print(f"      [DEBUG]     - Entry match: {entry_match}")
-            #print(f"      [DEBUG]     - Exit match:  {exit_match}")
-
-            if entry_match and exit_match:
-            #    print(f"      [DEBUG]     -> Tag {tag['custom_id']} ADĂUGAT")
-                useful_tags.setdefault(f"I{inter_id}", []).append(tag['custom_id'])
-            else:
-                pass
-               # print(f"      [DEBUG]     -> Tag {tag['custom_id']} IGNORAT")
-
-    return useful_tags
 
 
 

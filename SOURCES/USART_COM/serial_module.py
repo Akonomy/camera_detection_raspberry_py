@@ -108,7 +108,14 @@ def process_command(cmd_type, val1, val2, vector):
     if cmd_type==1:
         send(cmd_type, val1, val2, vector)
     else:
-        send(cmd_type, val2, val1, vector)
+
+        if cmd_type==3 and val1==0:
+            pass;
+        else:
+
+
+
+            send(cmd_type, val2, val1, vector)
 
 
 

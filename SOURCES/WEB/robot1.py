@@ -7,8 +7,27 @@ import time
 logging.basicConfig(level=logging.INFO, format='%(levelname)s: %(message)s')
 
 # Configuration
+
+#online server IP
+'''
 SERVER_IP = 'depozitautomat.shop'
 BASE_URL = f'https://{SERVER_IP}/robot/api'
+
+'''
+
+
+
+
+#local server IP
+
+SERVER_IP ='192.168.144.13:8000'
+BASE_URL = f'http://{SERVER_IP}/robot/api'
+
+
+
+
+
+
 
 # Sample codes for testing (înlocuiește cu coduri valide dacă este cazul)
 SAMPLE_BOX_CODE = 'SGsYp36'

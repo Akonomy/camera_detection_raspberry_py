@@ -1,7 +1,7 @@
 import time
 from UTILS.send_code_to_stm32 import send_encoded_directions
 from USART_COM.serial_module import process_command
-
+from TAG_RFID.mfrc_reader import read_mifare_data
 
 
 
@@ -29,8 +29,16 @@ directions= [1,1,4,2,4,1,4,3,1,5]
 # Optional mode (default is -1 to skip mode command)
 result = send_encoded_directions(directions, mode=1)
 
+counter = 0
+previous = None
 
+while counter < 8:
+    date = read_mifare_data()
 
+    if date and date[1] and date != previous:
+        print(date)
+        previous = date
+        counter += 1
 
 
 data =  read_response(300);

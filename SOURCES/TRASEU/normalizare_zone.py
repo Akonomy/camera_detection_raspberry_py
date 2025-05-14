@@ -3,8 +3,11 @@ import os
 import sys
 
 # Adaugă directorul părintelui în sys.path ca să putem importa din SOURCES
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+some_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+if some_path not in sys.path:
+    sys.path.append(some_path)
 
+    
 from TRASEU import find_route
 
 

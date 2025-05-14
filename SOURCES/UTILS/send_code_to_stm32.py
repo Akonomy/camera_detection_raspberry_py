@@ -1,13 +1,18 @@
-from .ENCODER import encode_message
-from USART_COM.serial_module import process_command
+
 import os
 import sys
 import time
+
 
 # Add parent directory to sys.path (you're welcome, future self)
 parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if parent_dir not in sys.path:
     sys.path.append(parent_dir)
+
+
+from .ENCODER import encode_message
+from SOURCES.USART_COM.serial_module import process_command
+
 
 
 def send_encoded_directions(directions, mode=-1):

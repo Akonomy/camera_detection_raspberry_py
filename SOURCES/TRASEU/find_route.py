@@ -10,6 +10,19 @@ DIR_S = "S"
 DIR_E = "E"
 DIR_W = "W"
 
+
+entry_opposites = {
+    "N": "S",
+    "S": "N",
+    "E": "W",
+    "W": "E"
+}
+
+
+opposites = {"N": "S", "S": "N", "E": "W", "W": "E"}
+
+
+
 def compute_exits(entry_dir):
     """Returnează un dicționar cu ieșiri bazate pe direcția de intrare."""
     mapping = {}
@@ -318,6 +331,65 @@ def getPathFromCross(cross, zone):
                 route_list.append(f"Intersectia {node}")
     return route_list
 
+
+
+
+def getPathFromTag(tag_id, destination):
+    """
+    Calculează traseul complet (cu direcții) pornind de la un tag de tip C[x][y],
+    adică de la o intersecție + direcție de intrare (care trebuie inversată pentru a determina sensul relativ corect).
+    """
+    ensure_data_loaded()
+
+    from find_tag import load_data as load_tag_data, get_data as get_tag_data
+    load_tag_data()  # încarcă datele dacă nu-s deja
+    tag_data = get_tag_data()
+
+    # Găsește tag-ul
+    tag = next((t for t in tag_data.get("tags", []) if t["custom_id"] == tag_id), None)
+    if not tag:
+        print(f"⚠️ [getPathFromTag] Tag-ul '{tag_id}' nu a fost găsit. Returnez traseu gol.")
+        return []
+
+
+    assigned = tag.get("assigned_to", "")
+    entry_dir = tag.get("entry_direction", "")
+
+    if not assigned.lower().startswith("intersectia"):
+        raise ValueError(f"Tag-ul '{tag_id}' nu este legat de o intersecție.")
+
+    inter_id = int(assigned.split()[1])
+    start = f"I{inter_id}"
+    goal = resolve_zone(destination)
+
+    path = bfs_shortest_path(_graph, start, goal)
+    if not path:
+        return None
+
+    route_list = []
+    for i, node in enumerate(path):
+        if node.startswith("Z"):
+            # Zonă — returnează aliasul dacă există
+            route_list.append(_zone_aliases.get(node, node))
+        elif i == 0:
+            # Prima intersecție — folosim direcția inversată față de entry_dir
+            next_node = path[i + 1]
+            desired = get_direction(_coords[node], _coords[next_node])
+            corrected_entry = opposites.get(entry_dir, entry_dir)
+            rel_label = relative_exit_label(corrected_entry, desired)
+            route_list.append(f"Intersectia {node}[{rel_label}]")
+        elif i < len(path) - 1:
+            # Intersecții intermediare
+            incoming = get_direction(_coords[path[i - 1]], _coords[node])
+            desired = get_direction(_coords[node], _coords[path[i + 1]])
+            rel_label = relative_exit_label(incoming, desired)
+            route_list.append(f"Intersectia {node}[{rel_label}]")
+        else:
+            # Ultima intersecție (înainte de zonă)
+            route_list.append(f"Intersectia {node}")
+
+    return route_list
+
 #--------------------< Sfârșit Funcții Publice >------------------------
 
 
@@ -369,8 +441,8 @@ if __name__ == "__main__":
     
     # Exemplu de redenumire
     try:
-        rename("Z1", "Livrare1")
-        rename("Z2", "Depozit5")
+        rename("Z1", "Z1")
+        rename("Z2", "Z2")
     except ValueError as e:
         print("Eroare la redenumire:", e)
     
@@ -379,15 +451,21 @@ if __name__ == "__main__":
         print(f"{key}: {name}")
     
     # Exemplu de calculare traseu între două zone
-    fast_path = getfastPath("Livrare1", "Depozit5")
-    complete_path = getPath("Livrare1", "Depozit5")
+    fast_path = getfastPath("Z1", "Z3")
+    complete_path = getPath("Z1", "Z3")
     
     print("Traseu rapid:", " -> ".join(fast_path))
     print("Traseu complet:", " -> ".join(complete_path))
     
     # Exemplu de calculare traseu pornind de la o intersecție către o zonă
-    fast_path_cross = getfastPathFromCross("I5", "Depozit5")
-    complete_path_cross = getPathFromCross("I5", "Depozit5")
+    fast_path_cross = getfastPathFromCross("I1", "Z3")
+    complete_path_cross = getPathFromCross("I1", "Z3")
     
     print("Traseu rapid de la intersecție:", " -> ".join(fast_path_cross))
     print("Traseu complet de la intersecție:", " -> ".join(complete_path_cross))
+
+
+
+        # Exemplu de calculare traseu pornind de la un tag
+    complete_path_tag = getPathFromTag("C[1][4]", "Z1")  
+    print("Traseu complet de la tag:", " -> ".join(complete_path_tag))

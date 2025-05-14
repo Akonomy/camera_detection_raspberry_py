@@ -18,21 +18,16 @@ def read_response(timeout_sec=10):
 
 
 
-# Sample directions (MAX 14)
-directions = [3,4,3,3,4,1,4,2,5]
 
-directions= [2,4,1,4,2,1,5]
 
-directions= [3,4,3,1,4,1,1,5]
-
-directions= [1,1,4,2,4,1,4,3,1,5]
+directions= [4,5]
 # Optional mode (default is -1 to skip mode command)
 result = send_encoded_directions(directions, mode=1)
 
 counter = 0
 previous = None
 
-while counter < 8:
+while counter < 1:
     date = read_mifare_data()
 
     if date and date[1] and date != previous:

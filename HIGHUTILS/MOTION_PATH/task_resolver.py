@@ -40,6 +40,9 @@ def process_and_resolve_move_task():
     zone_target = normalized["zone_target"]
 
     route_data = analyze_route(zone_start, zone_target)
+    route_path = analyze_route('C[5][1]', zone_start)
+
+   
 
     # Salvăm în globală dacă vrem acces ulterior
     global current_task_data
@@ -48,6 +51,7 @@ def process_and_resolve_move_task():
         "box_code": box_code,
         "zone_start": zone_start,
         "zone_target": zone_target
+
     }
 
     return {
@@ -55,7 +59,8 @@ def process_and_resolve_move_task():
         "box_code": box_code,
         "zone_start": zone_start,
         "zone_target": zone_target,
-        "route_data": route_data
+        "route_data": route_data,
+        "route_path":route_path
     }
 
 if __name__ == "__main__":

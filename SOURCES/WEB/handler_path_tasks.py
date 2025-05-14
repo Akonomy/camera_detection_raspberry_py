@@ -3,7 +3,9 @@ import sys
 import json
 
 # Adaugă directorul curent (unde se află robot_api_client.py) în sys.path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
 
 from robot_api_client import RobotAPIClient
 

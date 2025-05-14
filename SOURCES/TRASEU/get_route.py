@@ -3,9 +3,13 @@ import sys
 import re
 
 # Adaugă directorul curent în sys.path pentru importuri locale
-sys.path.append(os.path.dirname(__file__))
 
-from find_route import load_data as load_route_data, getfastPath, getPath, resolve_zone
+current_dir = os.path.dirname(os.path.abspath(__file__))
+if current_dir not in sys.path:
+    sys.path.append(current_dir)
+
+
+from find_route import load_data as load_route_data, getfastPath, getPath, resolve_zone, getPathFromTag
 from find_tag import load_data as load_tag_data, getDirections, getCross, getTags
 
 # Constante direcții numerice
@@ -101,21 +105,68 @@ def get_possible_tags_for_path(path):
 
 
 def analyze_route(source, target):
+    from find_tag import getDirections
+    from find_route import getPathFromTag  # presupui tu importul
     load_route_data()
     load_tag_data()
 
     try:
-        src = resolve_zone(source)
-    except:
-        src = source  # Maybe it's already a node or intersection
+        tgt = resolve_zone(target)
+    except Exception as e:
+        raise ValueError(f"Destinația '{target}' nu a putut fi rezolvată: {e}")
 
-    tgt = resolve_zone(target)
+    if source.startswith("C["):
+        # pornim de la un tag -> folosim funcția specială
+        full_path = getPathFromTag(source, target)
+        if not full_path or len(full_path) < 1:
+            print(f"⚠️ [getPathFromTag] Traseul de la {source} la {target} este prea scurt sau inexistent.")
+            return {
+                "from": source,
+                "to": target,
+                "fast_path": [],
+                "full_path": [],
+                "directions_numeric": [],
+                "possible_tags": {}
+            }
 
-    fast_path = getfastPath(src, tgt)
-    full_path = getPath(src, tgt)
-    direction_seq = get_direction_sequence(full_path)
-    tags = get_possible_tags_for_path(full_path)
+        
+        # simulăm fast_path: eliminăm [DIRECTION] din numele intersecțiilor
+        fast_path = [node.split('[')[0] if "Intersectia" in node else node for node in full_path]
 
+        direction_seq = get_direction_sequence(full_path)
+        tags = get_possible_tags_for_path(full_path)
+
+        try:
+
+
+           # directions = getDirections(source)
+            next_node = normalize_node_name(fast_path[1])
+            normalized_directions = {
+                label.upper(): normalize_node_name(dest)
+                for label, dest in directions.items()
+            }
+            for label, destination in normalized_directions.items():
+                if destination == next_node:
+                    direction_num = direction_map.get(label)
+                    if direction_num:
+                        direction_seq.insert(0, direction_num)
+                        break
+        except Exception as e:
+            print(f"⚠️ [analyze_route.py] Eroare la determinarea direcției inițiale din tagul {source}: {e}")
+
+    else:
+        # sursă normală: alias, Zx, sau Intersectia X
+        try:
+            src = resolve_zone(source)
+        except Exception:
+            src = source  # poate e deja nod valid
+
+        fast_path = getfastPath(src, tgt)
+        full_path = getPath(src, tgt)
+        direction_seq = get_direction_sequence(full_path)
+        tags = get_possible_tags_for_path(full_path)
+
+   # print(f'DEBUG line158 get_route.py : VARIABLE direction_seq{direction_seq} --[END DEBUG MSG]')
     return {
         "from": source,
         "to": target,
@@ -124,6 +175,7 @@ def analyze_route(source, target):
         "directions_numeric": direction_seq,
         "possible_tags": tags
     }
+
 
 
 if __name__ == "__main__":

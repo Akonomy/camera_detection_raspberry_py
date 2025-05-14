@@ -9,6 +9,8 @@ if project_root not in sys.path:
 
 
 from SOURCES.WEB.handler_path_tasks import retrieve_task
+from SOURCES.WEB.handler_container import request_box
+
 from SOURCES.TRASEU.normalizare_zone import normalize_move_task
 from SOURCES.TRASEU.get_route import analyze_route
 from DATABASE import db
@@ -16,6 +18,45 @@ from DATABASE import db
 # Variabilă globală pentru taskul curent
 current_task_data = {}
 
+
+
+
+
+
+
+
+
+
+
+def save_box_from_container_info(container_data):
+    """
+    Primește un container dictionary și salvează informațiile relevante ca obiect de tip 'box'.
+    """
+    container = container_data.get("container")
+    if not container:
+        print("❌ Structura dată nu conține cheia 'container'.")
+        return
+
+    box_id = container.get("code")
+    color = container.get("color")
+    letters = container.get("symbol")
+    zone_id = container.get("zone")
+
+    if not all([box_id, color, letters, zone_id]):
+        print("❌ Unele câmpuri lipsesc. Verifică datele containerului.")
+        print(f"➡️ code: {box_id}, color: {color}, symbol: {letters}, zone: {zone_id}")
+        return
+
+    try:
+        db.ADD_OBJECT("box", box_id,
+                      id=box_id,
+                      color=color,
+                      letters=letters,
+                      zone_id=zone_id,
+                      force=True)
+        print(f"✅ Obiectul box '{box_id}' a fost salvat cu succes.")
+    except Exception as e:
+        print(f"💥 Eroare la salvarea obiectului box: {e}")
 
 
 
@@ -79,6 +120,18 @@ def process_and_resolve_move_task():
         # Setează flaguri de disponibilitate cu ultimele ID-uri
     db.SET_FLAG("isTaskAvailable", f"task_{task_id}")
     db.SET_FLAG("isPathAvailable", f"path_{task_id}")
+
+
+
+    #ACUM ADAUGA SI CUTIA
+
+
+    container_data=request_box(box_code)
+    
+    
+    
+    save_box_from_container_info(container_data)
+
 
 '''
     return {

@@ -28,7 +28,7 @@ def log_code_as_hex(code):
 
 # Send directions
 print("Sending directions...")
-directions = [1,1,1,4, 1,1,1,5]
+directions = [4,5]
 result = send_encoded_directions(directions, mode=1)
 
 # Read tag once
@@ -51,12 +51,15 @@ if data and isinstance(data, list) and len(data) > 0:
     code = data[0]
     log_code_as_hex(code)
     if code == 0xFA:
-        db.SET("tag", date[1])
-        db.SET("calibrated", time.time())
-        db.SET("tag_ready", True)
+        db.SET_VAR("tag", date[1])
+        db.SET_VAR("lastTimeUpdated", time.time())
+        # Afișează formatat direct
+   
+
+        db.SET_FLAG("isTagAvailable", True)
         print("✅ Calibration success: tag + flags set.")
     else:
-        db.SET("danger", hex(code))
+        db.SET_FLAG("isDanger", hex(code))
         print("⚠️ Calibration failed: danger set to", hex(code))
 else:
     print("❌ No valid response received.")

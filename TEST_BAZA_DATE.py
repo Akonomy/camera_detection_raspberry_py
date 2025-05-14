@@ -1,11 +1,24 @@
 from DATABASE import db
 
-tag = db.GET("tag")
-calib = db.GET("calibrated")
-ready = db.GET("tag_ready")
-danger = db.GET("danger")  # just in case
+# De apelat la start
 
-print("Tag citit:", tag)
-print("Calibrated:", calib)
-print("Tag ready:", ready)
-print("Danger:", danger)
+import time
+from datetime import datetime
+
+now_epoch = time.time()
+now_human = datetime.now()
+now_from_epoch = datetime.fromtimestamp(now_epoch)
+
+print("Timp din time.time():", now_epoch)
+print("Timp sistem (datetime.now()):", now_human)
+print("Timp convertit din time.time():", now_from_epoch)
+
+
+
+
+print("Tag:", db.GET_VAR("tag"))
+print("Ultima actualizare:", db.GET_VAR("lastTimeUpdated"))
+print("Tag disponibil?", db.GET_FLAG("isTagAvailable"))
+print("Danger level:", db.GET_FLAG("isDanger"))
+
+

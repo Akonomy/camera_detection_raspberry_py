@@ -4,7 +4,7 @@ import sys
 # Adaugă root-ul proiectului pentru acces la tot
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from HIGHUTILS.MOTION_PATH.task_resolver import process_and_resolve_move_task
+from HIGHUTILS.WEB_REQUEST.task_resolver import process_and_resolve_move_task
 from pprint import pprint
 
 def test_task_processing():

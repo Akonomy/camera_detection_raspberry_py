@@ -1,3 +1,4 @@
+
 # box_alignment.py
 
 DEFAULT_ZONE_TOP_LEFT = (223, 346)

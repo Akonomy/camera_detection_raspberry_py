@@ -248,10 +248,10 @@ def main():
     wheel_speed_vars["Front Right"] = fr_var
     wheel_mode_vars["Front Left"] = fl_toggle
     wheel_mode_vars["Front Right"] = fr_toggle
-    fl_frame.grid(row=0, column=0, padx=10, pady=10)
+    fl_frame.grid(row=0, column=2, padx=10, pady=10)
     btn_forward = tk.Button(main_frame, text="Forward", width=12, height=3, command=lambda: send_command(1))
     btn_forward.grid(row=0, column=1, padx=10, pady=10)
-    fr_frame.grid(row=0, column=2, padx=10, pady=10)
+    fr_frame.grid(row=0, column=0, padx=10, pady=10)
 
     # Rândul 2: [Buton Side Left]  [Input Viteza Generală]  [Buton Side Right]
     btn_side_left = tk.Button(main_frame, text="Side Left", width=12, height=3, command=lambda: send_command(9))

@@ -9,6 +9,9 @@ from UTILS.REAL import getRealCoordinates
 from UTILS.COARSE_DIRECTIONS import getFirstCommand
 from UTILS.BOX_ALIGNMENT_FINE import BoxTracker, evaluate_target_box
 from UTILS.FINE_DIRECTIONS import getFINEcmd
+from UTILS.CONTROL_SERVO import executa_comanda
+
+
 
 import cv2
 import time
@@ -41,6 +44,9 @@ color_map = {
 tracker = BoxTracker()
 
 
+
+
+
 def process_tracked_package(tracked_pkg):
     """Procesează pachetul urmărit: determină coordonatele reale și comanda de mișcare, apoi
        afișează informațiile și loghează rezultatele.
@@ -66,6 +72,8 @@ def process_tracked_package(tracked_pkg):
             latest_comanda=set_cmds[0]
         else:
             latest_comanda=None
+            executa_comanda(9,1)
+
 
 
 
@@ -84,6 +92,9 @@ if __name__ == "__main__":
         # Inițializarea camerei
         init_camera()
         print("Camera a fost inițializată. Apasă 'q' în fereastra imaginii pentru a opri.")
+        boxdone=0
+        confirm9=0
+        confirm10=0
 
         # Exemplu de loop principal cu waitKey:
         while True:
@@ -99,8 +110,28 @@ if __name__ == "__main__":
 
                     print(CMD)
                     
-                    if (CMD):
+                    if (CMD and not boxdone):
                         process_command(CMD[0],CMD[1],CMD[2],CMD[3])
+
+                    else:
+                        counter=0
+                        while(counter<2 and not boxdone):
+                            counter+=1
+                            confirm9=executa_comanda(9,1)
+                            time.sleep(1)
+                            print(f"{confirm9} CONFIRMARE9" )
+
+                            if confirm9:
+                                executa_comanda(5)
+                                time.sleep(3)
+                                confirm10=executa_comanda(10,1)
+                            if confirm10:
+                                executa_comanda(9,0)
+                                counter=20
+                                boxdone=1
+
+
+
             # Se poate aplica un proces suplimentar pe imagine dacă este nevoie
             cv2.imshow("Raw Image", image)
 

@@ -11,7 +11,7 @@ if parent_dir not in sys.path:
 
 
 from .ENCODER import encode_message
-from SOURCES.USART_COM.serial_module import process_command
+from USART_COM.serial_module import process_command #modificat aici scos SOURCES
 
 
 

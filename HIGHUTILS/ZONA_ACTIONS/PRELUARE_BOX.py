@@ -96,8 +96,15 @@ def run_box_tracking(session_id, color, label):
                                     executa_comanda(9, 0)
                                     counter = 20
                                     boxdone = 1
+                                else:
+                                    confirm10 = executa_comanda(10, 1)
+                                    if confirm10:
+                                        executa_comanda(9, 0)
+                                        counter = 20
+                                        boxdone = 1
+
             if boxdone:
-                return 1, initial_coords, move_commands_history
+                return [1, initial_coords, move_commands_history]
 
     except Exception as e:
         print("A apărut o eroare:", e)

@@ -168,7 +168,7 @@ def find_free_position(boxes, zone_limits, max_boxes_allowed,
     return None, free_candidates, error_details
 
 
-def analyze_zone_and_find_spot(image_copy, session, max_boxes, debug=False):
+def analyze_zone_and_find_spot(image_copy, session, max_boxes, ignore_box_id, debug=False):
 
 
     print(session)
@@ -188,7 +188,7 @@ def analyze_zone_and_find_spot(image_copy, session, max_boxes, debug=False):
             debug_interface(processed_boxes, zone_limits, hull, candidate_spot=None, free_candidates=[])
         return "FULL"
     
-    free_spot, free_candidates, errors = find_free_position(processed_boxes, zone_limits, max_boxes)
+    free_spot, free_candidates, errors = find_free_position(processed_boxes, zone_limits, max_boxes, ignore_box_id=ignore_box_id)
     if debug:
         if free_spot:
             print("Poziție liberă găsită:", free_spot)

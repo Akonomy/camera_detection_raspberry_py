@@ -292,13 +292,16 @@ def camera_loop_raw(callback=None):
             
     cv2.destroyAllWindows()
 
+
+
+
+
+
 if __name__ == "__main__":
-    # Exemplu de utilizare:
-    # 1. Inițializarea camerei
     init_camera()
-    
-    # 2. Rulare loop raw pentru debug
+
+
+
     camera_loop_raw()
-    
-    # 3. Oprirea camerei
+
     stop_camera()

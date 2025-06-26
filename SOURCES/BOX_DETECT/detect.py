@@ -1,5 +1,16 @@
 import cv2
 from picamera2 import Picamera2
+
+import os
+import sys
+
+# Adaugă directorul părinte la sys.path pentru a putea importa modulele din BOX_DETECT și UTILS
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if parent_dir not in sys.path:
+    sys.path.append(parent_dir)
+
+
+
 from BOX_DETECT.letter_detect import detect_letters
 from BOX_DETECT.box_detect import detect_objects
 from BOX_DETECT.utils import assign_letters_to_packages, calculate_box_distance

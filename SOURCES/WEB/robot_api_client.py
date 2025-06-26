@@ -16,7 +16,7 @@ BASE_URL = f'https://{SERVER_IP}/robot/api'
 
 #local server IP
 
-SERVER_IP ='192.168.144.13:8000'
+SERVER_IP ='akonomy.local:8000'
 BASE_URL = f'http://{SERVER_IP}/robot/api'
 
 

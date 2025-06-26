@@ -37,7 +37,7 @@ def process_tracked_package(tracked_pkg):
     x, y = tracked_pkg["position"]  # eliminat caracterul '/'
     cmds = getRealCoordinates(x, y)
     x_real, y_real = cmds
-    print(x_real,y_real)
+    print(f"COORDONATE EXTRASE:{x_real},{y_real}")
     comanda = getFirstCommand(x_real, y_real)
     latest_cmds = cmds
     latest_comanda = comanda

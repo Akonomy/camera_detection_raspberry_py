@@ -136,7 +136,7 @@ def show_opencv_windows(raw_img, mosaic_64_marked, contours):
     mosaic_up = cv2.resize(mosaic_64_marked, (512, 512), interpolation=cv2.INTER_NEAREST)
     cv2.imshow("Original 512x512 (with rotated lines)", out_bgr)
     cv2.imshow("Mosaic 64x64 scaled", cv2.cvtColor(mosaic_up, cv2.COLOR_RGB2BGR))
-    cv2.waitKey(1000)
+    cv2.waitKey(10000)
     cv2.destroyAllWindows()
 
 def show_tkinter_grid(mosaic, timeout=70000):

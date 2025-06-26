@@ -149,3 +149,71 @@ def evaluate_target_box(session, target_color, target_letter,
     )
 
     return label, status, overlaps
+
+
+
+
+class BoxTracker:
+    def __init__(self):
+        self.memory = {}  # {(color, letter): (session_id, last_position)}
+
+    def find_closest_box(self, session, target_color=None, reference_point=(0, 0)):
+        from math import dist
+
+        closest = None
+        min_dist = float('inf')
+        for pkg in session.values():
+            if target_color is None or pkg.get("box_color") == target_color:
+                pos = pkg.get("position")
+                if pos:
+                    d = dist(pos, reference_point)
+                    if d < min_dist:
+                        min_dist = d
+                        closest = pos
+        return closest
+
+    def track_box(self, session, target_color, target_letter, session_id,
+                  reference_point=(261, 433)):
+
+        key = (target_color, target_letter)
+        last_session_id, last_position = self.memory.get(key, (None, None))
+
+        target_pkg = None
+
+        # 1. Exact match
+        for pkg in session.values():
+            if pkg.get("box_color") == target_color and target_letter in pkg.get("letters", []):
+                target_pkg = pkg
+                break
+
+        # 2. Closest by color only (considering memory if session_id matches)
+        if not target_pkg:
+            if session_id == last_session_id and last_position:
+                closest_pos = self.find_closest_box(session, target_color=target_color, reference_point=last_position)
+            else:
+                closest_pos = self.find_closest_box(session, target_color=target_color, reference_point=reference_point)
+            for pkg in session.values():
+                if pkg.get("position") == closest_pos and pkg.get("box_color") == target_color:
+                    target_pkg = pkg
+                    break
+
+        # 3. Closest overall
+        if not target_pkg:
+            closest_pos = self.find_closest_box(session, reference_point=reference_point)
+            for pkg in session.values():
+                if pkg.get("position") == closest_pos:
+                    target_pkg = pkg
+                    break
+
+        if not target_pkg:
+            return None
+
+        self.memory[key] = (session_id, target_pkg.get("position"))
+
+        return target_pkg
+
+
+import random
+
+def get_session_id():
+    return random.randint(100000, 999999)

@@ -65,3 +65,16 @@ def executa_comanda(idA, state=0):
         return None
 
 
+def revenire_traseu(last_cmd=10):
+
+    if last_cmd in (10,9):      #intoarcere la traseu
+
+        process_command(5, last_cmd, 1, [0])
+
+
+    else:
+        process_command(5, 10, 1, [0])
+
+
+    return read_response()
+

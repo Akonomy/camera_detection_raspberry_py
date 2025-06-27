@@ -31,9 +31,18 @@ def move_to_initial(coords,reverse=0):
 
 
     x,y=coords
+
+
     if reverse:
         x=-x
         y=-y
+
+        if x != 0:
+            x += 2 * (1 if x > 0 else -1)
+
+        if y != 0:
+            y += 2 * (1 if y > 0 else -1)
+
 
 
     commands=getAllCommands(x,y)
@@ -44,7 +53,7 @@ def move_to_initial(coords,reverse=0):
                 process_command(CMD[0], CMD[1], CMD[2], CMD[3])
                 time.sleep(3)
 
-        return 1
+        return CMD[2]
 
     return 0
 
@@ -86,7 +95,18 @@ def predare_cutie(box_id):
 
         time.sleep(1)
 
-        move_to_initial(coords,1)
+        last_cmd=move_to_initial(coords,1)
+
+        time.sleep(0.5)
+
+        if last_cmd in (10,9):
+
+
+            process_command(5, last_cmd, 1, [0])
+
+        else:
+            process_command(5, 10, 1, [0])
+
 
 
 
@@ -99,12 +119,9 @@ def predare_cutie(box_id):
 
 
 
+if __name__ == "__main__":
+    predare_cutie("GreenA");
 
 
 
 
-
-
-
-
-predare_cutie("GreenA")

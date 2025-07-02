@@ -19,6 +19,15 @@ from SOURCES.UTILS.FINE_DIRECTIONS import getFINEcmd
 from SOURCES.UTILS.CONTROL_SERVO import executa_comanda
 from SOURCES.CAMERA.camera_session import init_camera, stop_camera, capture_and_process_session
 
+
+import time
+from SOURCES.UTILS.CONTROL_SERVO import executa_comanda
+from SOURCES.USART_COM.serial_module import process_command
+
+
+
+
+
 # Color map for reference
 color_map = {
     "A": (0, 255, 0),
@@ -30,12 +39,15 @@ color_map = {
     "Blue": (0, 0, 255)
 }
 
-# Initialize tracker
-tracker = BoxTracker()
-mergi_la_risc=0
 
-def process_tracked_package(tracked_pkg, session):
-    x, y = tracked_pkg["position"]
+def process_tracked_package( session,tracked_pkg,mergi_la_risc):
+    x, y  = tracked_pkg["position"]
+    color = tracked_pkg["box_color"]
+    letter= tracked_pkg["letters"]
+    letter = letter[0] if letter and isinstance(letter, list) and len(letter) > 0 else 0
+
+
+
     cmds = getRealCoordinates(x, y)
     x_real, y_real = cmds
 
@@ -50,7 +62,7 @@ def process_tracked_package(tracked_pkg, session):
         latest_comanda = comanda
         print(f"SET_COARSE_CMDS: {latest_comanda} for X {x_real} and Y {y_real}")
     else:
-        label, status, overlaps = evaluate_target_box(session, "Green", "A")
+        label, status, overlaps = evaluate_target_box(session, color, letter)
         set_cmds = getFINEcmd(overlaps)
 
         if set_cmds:
@@ -66,135 +78,111 @@ def process_tracked_package(tracked_pkg, session):
         latest_comanda=None
 
     print(f"COORDONATE EXTRASE: {x_real}, {y_real}")
-    return cmds, latest_comanda
-
-
-
-import time
-from SOURCES.UTILS.CONTROL_SERVO import executa_comanda
-from SOURCES.USART_COM.serial_module import process_command
-
-import time
-from SOURCES.UTILS.CONTROL_SERVO import executa_comanda
-from SOURCES.USART_COM.serial_module import process_command
-
-class BoxLifter:
-    def __init__(self):
-        self.call_count = 0
-        self.max_retries = 2
-
-    def lift_box(self):
-        # ------------------------------
-        # PAS 0: Limita generala de apeluri
-        # ------------------------------
-        self.call_count += 1
-        if self.call_count > 5:
-            print("[BoxLifter] Too many overall attempts. Aborting.")
-            return False
-
-        # ------------------------------
-        # PAS 1: COBORÂRE SERVO 9 (confirm9)
-        # ------------------------------
-        if not self.attempt_step("confirm9", lambda: executa_comanda(9, 1), recovery=self.recover_servo9):
-            return False
-
-        # ------------------------------
-        # PAS 2: AJUSTARE CUTIE (fără feedback)
-        # ------------------------------
-        executa_comanda(5)
-        time.sleep(2.5)
-
-        # ------------------------------
-        # PAS 3: STRÂNGERE SERVO 10 (confirm10)
-        # ------------------------------
-        if not self.attempt_step("confirm10", lambda: executa_comanda(10, 1), recovery=self.recover_servo10):
-            return False
-
-        # ------------------------------
-        # PAS 4: RIDICARE SERVO 9 (finalizare)
-        # ------------------------------
-        executa_comanda(9, 0)
-        print("[BoxLifter] Box lifted successfully.")
-        return True
-
-    def attempt_step(self, step_name, func, recovery):
-        for attempt in range(1, self.max_retries + 1):
-            result = func()
-            time.sleep(1)
-            if result:
-                print(f"[{step_name}] succeeded on attempt {attempt}")
-                return True
-            else:
-                print(f"[{step_name}] failed on attempt {attempt}")
-
-        print(f"[{step_name}] retry limit reached. Running recovery...")
-        recovery_result = recovery()
-
-        # interpretare rezultate recovery
-        if recovery_result == 1:
-            print(f"[{step_name}] entire sequence completed during recovery")
-            return True
-        elif recovery_result == 2:
-            print(f"[{step_name}] step recovered successfully, retrying step...")
-            result = func()
-            return result
-        elif recovery_result == 3:
-            print(f"[{step_name}] recovery requested to step down and retry from earlier")
-            return False
-
-        print(f"[{step_name}] failed after recovery.")
-        return False
-
-    def recover_servo9(self):
-        # ------------------------------
-        # RECOVERY pentru SERVO 9
-        # ------------------------------
-        print("[Recovery] Trying to recover servo 9...")
-        process_command(1, 2, 2, [120])  # mută în spate
-        return 3  # step down to retry from earlier
-
-    def recover_servo10(self):
-        # ------------------------------
-        # RECOVERY pentru SERVO 10
-        # ------------------------------
-        print("[Recovery] Trying to recover servo 10...")
-        process_command(2, 10, 2, [0])  # calibrare
-
-        conf = executa_comanda(9, 1)
-        if conf:
-            confirm10 = executa_comanda(10, 1)
-            if confirm10:
-                executa_comanda(9, 0)
-                return 1  # complet rezolvat
-
-
-        return 3  # nu a mers, încearcă de la început
+    return cmds, latest_comanda,mergi_la_risc
 
 
 
 
-# def ridica_cutia(count_call):
 
 
 
 
-#     confirm9 = executa_comanda(9, 1)
-#     time.sleep(1)
-#     print(f"{confirm9} CONFIRMARE9")
-#     if confirm9:
-#         executa_comanda(5)
-#         time.sleep(3)
-#         confirm10 = executa_comanda(10, 1)
-#         if confirm10:
-#             executa_comanda(9, 0)
-#             counter = 20
-#             boxdone = 1
-#         else:
-#             confirm10 = executa_comanda(10, 1)
-#             if confirm10:
-#                 executa_comanda(9, 0)
-#                 counter = 20
-#                 boxdone = 1
+# State tracker
+current_state = 0
+
+# === Step Functions ===
+def coborare_servo9():
+    global current_state
+    print("Executing coborare_servo9")
+    success = executa_comanda(9, 1)
+    if success:
+        current_state = 1
+    else:
+        current_state = recover_servo9()
+
+
+def coborare_servo9_fail():
+    global current_state
+    print("Executing coborare_servo9")
+    success = executa_comanda(9, 1)
+    if success:
+        current_state = 2
+    else:
+        current_state = recover_servo9()
+
+
+
+def adjust_box():
+    global current_state
+    print("Executing adjust_box")
+    executa_comanda(5)
+    time.sleep(2.5)
+    current_state = 2
+
+def strangere_servo10():
+    global current_state
+    print("Executing strangere_servo10")
+    success = executa_comanda(10, 1)
+    if success:
+        current_state = 3
+    else:
+        current_state = recover_servo10()
+
+def ridicare_servo9():
+    global current_state
+    print("Executing ridicare_servo9")
+    executa_comanda(9, 0)
+    current_state = 999  # Finished
+
+
+
+
+# === Recovery Functions ===
+def recover_servo9():
+    print("[Recovery] Trying to recover servo 9...")
+    process_command(1, 2, 2, [120]) #muta in spate
+    return 0  # retry from the beginning
+
+def recover_servo10():
+    print("[Recovery] Trying to recover servo 10...")
+    process_command(2, 10, 2, [0])  #recalibreaza senzoru ala prost
+    time.sleep(3)
+    conf = executa_comanda(9, 1)
+    print(f"CONFIRMARE {conf} ca s-a coborat servo 9 ")
+    if conf:
+        confirm10 = executa_comanda(10, 1)
+        if confirm10:
+            executa_comanda(9, 0)
+            return 999  # Skip to end, fully resolved
+    return 4  # retry from strangere_servo10
+
+
+
+
+# === Step Dispatcher ===
+def run_box_lift():
+    while current_state < 999:
+        match current_state:
+            case 0:
+                coborare_servo9()
+            case 1:
+                adjust_box()
+            case 2:
+                strangere_servo10()
+            case 3:
+                ridicare_servo9()
+            case 4:
+                coborare_servo9_fail()
+            case _:
+                print(f"Unknown state: {current_state}")
+                break
+
+    print("Lifting sequence completed or exited.")
+    return 1
+
+
+
+
 
 
 
@@ -208,49 +196,26 @@ class BoxLifter:
 
 
 
-def run_box_tracking(session_id, color, label):
-    try:
-        init_camera()
-        print("Camera inițializată pentru sesiune.")
-        boxdone = 0
-        mergi_la_risc=0;
+def run_box_tracking(session,session_id,color="Green", label="A",mergi_la_risc=1,initial_coords):
 
 
+    boxdone=0;
 
-        move_commands_history = []
-        initial_coords = None
-        box_lifter = BoxLifter()
+    if session is not None:
+        box = tracker.track_box(session, color, label, session_id=session_id)
+        if box is not None:
+            comenzi, CMD ,risc= process_tracked_package(session,color,label,mergi_la_risc)
 
-
-        while True:
-            image, session = capture_and_process_session()
-            if session is not None:
-                box = tracker.track_box(session, color, label, session_id=session_id)
-                if box is not None:
-                    comenzi, CMD = process_tracked_package(box, session)
-
-                    if initial_coords is None:
-                        initial_coords = comenzi
-
-                    x_real, y_real = comenzi
-                    if abs(x_real) > 3 or abs(y_real) > 3:
-                        move_commands_history.append(CMD)
-
-                    print(CMD)
-                    if CMD and not boxdone:
-                        process_command(CMD[0], CMD[1], CMD[2], CMD[3])
-                    else:
-                        boxdone = box_lifter.lift_box()
+            if initial_coords is None and not got_initial:
+                initial_coords = comenzi
 
 
-            if boxdone:
-                return [1, initial_coords, move_commands_history]
-
-    except Exception as e:
-        print("A apărut o eroare:", e)
-    finally:
-        stop_camera()
+            if CMD and not boxdone:
+                process_command(CMD[0], CMD[1], CMD[2], CMD[3])
+            else:
+                boxdone = run_box_lift()
 
 
-if __name__ == "__main__":
-    run_box_tracking()
+    return [boxdone, initial_coords,risc]
+
+

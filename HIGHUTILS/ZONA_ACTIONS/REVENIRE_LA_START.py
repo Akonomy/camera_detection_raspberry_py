@@ -61,3 +61,8 @@ def revenire_la_traseu(cmd):
 
 
 
+def initializare():
+
+    process_command(5, 0, 1, [0])  #se trimite modul 0 ca si start
+    time.sleep(0.5)
+    process_command(5, 0, 1, [0])  #se retrimite modul 0 ca si start deoarece prima cmd trimisa e trash pt initializare COM

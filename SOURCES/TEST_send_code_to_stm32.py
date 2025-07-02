@@ -23,14 +23,14 @@ def read_response(timeout_sec=10):
 
 
 
-directions= [1,3]
+directions= [2,4,2,2,4,4,4,2,5]
 # Optional mode (default is -1 to skip mode command)
 result = send_encoded_directions(directions, mode=1)
 
 
 
 
-
+time.sleep(1)
 data =  read_response(300);
 
 print(data);

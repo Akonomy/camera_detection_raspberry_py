@@ -69,17 +69,83 @@ def receive():
         
         if time.time() - start_time > 3:
             break
-        
+
         bytes_to_read = 16 - len(data_buffer)
         new_data = ser.read(bytes_to_read)
         if new_data:
             data_buffer.extend(new_data)
         else:
             time.sleep(0.1)
+
+    return list(data_buffer)
+
+def receive_octet():
+    """
+    Așteaptă primirea datelor de la portul serial.
+
+
+
+    Returnează o listă de numere întregi.
+    """
+    start_time = time.time()
+    data_buffer = bytearray()
+
+    while True:
+        if len(data_buffer) >= 1:
+            return list(data_buffer[:1])
+
+        if time.time() - start_time > 1:
+            break
+
+        bytes_to_read = 16 - len(data_buffer)
+        new_data = ser.read_all()
+        if new_data:
+            data_buffer.extend(new_data)
+        else:
+            time.sleep(3)
     
     return list(data_buffer)
 
+
+
+def receive_octet_confirm(expected=None, timeout=1.0):
+    """
+    Așteaptă primirea datelor de la portul serial.
+
+    - Dacă `expected` este None, returnează lista de octeți primiți (sau -1 dacă nu s-au primit).
+    - Dacă `expected` este un int sau o listă de int, returnează 1 dacă oricare dintre valori a fost găsită.
+    - Returnează -1 dacă timpul a expirat fără să primească nimic util.
+    """
+    start_time = time.time()
+    data_buffer = bytearray()
+
+    while True:
+        if time.time() - start_time > timeout:
+            return -1
+
+        new_data = ser.read_all()
+        print(f"DEBUG serial_module {new_data} data available")
+        if new_data:
+            data_buffer.extend(new_data)
+
+            if expected is not None:
+                expected_values = [expected] if isinstance(expected, int) else expected
+                for val in expected_values:
+                    if val in data_buffer:
+                        return 1
+            else:
+                if len(data_buffer) >= 1:
+                    return list(data_buffer)
+        else:
+            time.sleep(0.1)
+
+
+
+
 def process_command(cmd_type, val1, val2, vector):
+
+
+
     """
     Procesează o comandă pe baza parametrilor primiți.
     
@@ -98,6 +164,11 @@ def process_command(cmd_type, val1, val2, vector):
       
     Dacă cmd_type este 3, se așteaptă un răspuns de la portul serial.
     """
+
+    if cmd_type == 30 and val1==0 :
+        return receive_octet()
+
+
     try:
         cmd_type = int(cmd_type)
         val1 = int(val1)
@@ -122,8 +193,15 @@ def process_command(cmd_type, val1, val2, vector):
     
     if cmd_type == 3 and val1==0 :
         return receive()
+
+
+
     else:
         return None
+    """
+    Așteaptă primirea datelor de la portul serial.
+"""
+
 
 # Exemplu de testare interactivă
 if __name__ == '__main__':

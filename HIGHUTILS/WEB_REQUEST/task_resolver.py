@@ -133,16 +133,13 @@ def process_and_resolve_move_task():
     save_box_from_container_info(container_data)
 
 
-'''
+
     return {
-        "task_id": task_id,
-        "box_code": box_code,
-        "zone_start": zone_start,
-        "zone_target": zone_target,
-        "route_zone": route_data,
-        "route_tag": route_path
+        "task_id": f"task_{task_id}",
+        "box_id": box_code,
+        "path_id" : f"path_{task_id}"
     }
-'''
+
 
 
 

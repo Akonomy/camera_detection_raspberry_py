@@ -3,7 +3,8 @@ import tkinter as tk
 import cv2
 import numpy as np
 from CAMERA.camera_session import init_camera, stop_camera, capture_raw_image
-from LINE_PROCESS.get_line import detect_colored_boxes_multi, analyze_binary_mosaic_with_guidance, pretty_print_slices
+from LINE_PROCESS.get_line import detect_colored_boxes_multi, analyze_binary_mosaic_with_guidance, pretty_print_slices,confirm_analyzed_points,extract_dual_data,get_direction_from_confirmed_results
+from LINE_PROCESS.get_line import  new_classify_direction
 
 class CameraThread(threading.Thread):
     def __init__(self):
@@ -49,31 +50,38 @@ class App:
     def update_loop(self):
         frame = self.cam.frame
         if frame is not None:
-            frames = [frame.copy() for _ in range(3)]
-            boxes = detect_colored_boxes_multi(frames)
-            debug_img, slices = analyze_binary_mosaic_with_guidance(frame.copy(), boxes)
-            self.last_slices = slices
+            data = extract_dual_data(frame.copy(), num_slices=self.num_slices)
+            confirmed = confirm_analyzed_points(data)
+            new_direction=new_classify_direction(confirmed)
+            direction=get_direction_from_confirmed_results(confirmed)
+            print(f"{direction} and new direction  {new_direction} ")
+            self.last_slices = confirmed
 
-            self.draw_on_canvas(debug_img, boxes, slices)
-            pretty_print_slices(slices)
+            # Draw directly on a clone of the image
+            display = frame.copy()
+            self.draw_on_canvas(display, confirmed)
+            #pretty_print_slices([(s, d, p) for s, d, p, _ in confirmed])
 
         self.win.after(30, self.update_loop)
 
-    def draw_on_canvas(self, debug_img, boxes, slices):
-        # Convert BGR to PhotoImage
-        img = cv2.cvtColor(debug_img, cv2.COLOR_BGR2RGB)
+    def draw_on_canvas(self, img, slices):
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         img = cv2.resize(img, (self.canvas_size, self.canvas_size))
         self.photo = tk.PhotoImage(width=self.canvas_size, height=self.canvas_size, data=cv2.imencode('.ppm', img)[1].tobytes())
-        self.box_canvas.create_image(0,0, anchor='nw', image=self.photo)
+        self.box_canvas.create_image(0, 0, anchor='nw', image=self.photo)
 
-        # Overlay the grid of magenta squares for slices
         cell_h = self.canvas_size // self.num_slices
         cx0 = self.canvas_size // 2
-        for slice_idx, dist, valid in slices:
-            if dist is not None and valid:
-                x_canvas = cx0 + int(dist * self.canvas_size / debug_img.shape[1])
-                y_canvas = slice_idx * cell_h + cell_h//2
-                self.box_canvas.create_rectangle(x_canvas-3, y_canvas-3, x_canvas+3, y_canvas+3, fill='magenta', outline='')
+
+        for slice_idx, dist, pos, confirmed in slices:
+            if pos is None:
+                continue
+            x, y = pos
+            x_canvas = int(x * self.canvas_size / img.shape[1])
+            y_canvas = int(y * self.canvas_size / img.shape[0])
+            color = 'green' if confirmed else 'magenta'
+            self.box_canvas.create_rectangle(x_canvas-3, y_canvas-3, x_canvas+3, y_canvas+3, fill=color, outline='')
+
 
     def on_close(self):
         stop_camera()

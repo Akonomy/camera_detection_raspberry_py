@@ -62,15 +62,13 @@ def move_to_initial(coords,reverse=0):
 
 
 
-def get_free_spot(box_id):
-    init_camera()
+def get_free_spot(image_copy,session_data,box_id):
 
-
-    # Capturează imaginea și sesiunea
-    image_copy, session_data = capture_and_process_session()
     
     # Apelează funcția de analiză pentru a căuta un loc liber, cu max_boxes=3 și debug=True
     result = analyze_zone_and_find_spot(image_copy, session_data, max_boxes=3, ignore_box_id=box_id, debug=False)
+
+
     
     return result
 
@@ -78,10 +76,10 @@ def get_free_spot(box_id):
 
 
 
-def predare_cutie(box_id):
+def predare_cutie(image,session,box_id):
 
 
-    coords=get_free_spot(box_id)
+    coords=get_free_spot(image,session,box_id)
 
     move_to_initial(coords)
 

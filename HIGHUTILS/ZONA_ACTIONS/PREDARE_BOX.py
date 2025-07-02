@@ -80,8 +80,43 @@ def predare_cutie(image,session,box_id):
 
 
     coords=get_free_spot(image,session,box_id)
+    print(coords)
 
-    move_to_initial(coords)
+    if isinstance(coords, tuple) and len(coords) == 2:
+          move_to_initial(coords)
+
+
+
+
+        predare9=executa_comanda(9,1)
+        time.sleep(0.5)
+        if predare9:
+            executa_comanda(10,0)
+
+            executa_comanda(9,0)
+
+            time.sleep(1)
+
+            last_cmd=move_to_initial(coords,1)
+
+            time.sleep(0.5)
+
+            if last_cmd in (10,9):
+
+
+                process_command(5, last_cmd, 1, [0])
+
+            else:
+                process_command(5, 10, 1, [0])
+
+
+
+
+
+    else:
+        print(f"ZONA ESTE FULL: STATUS:{coords}")
+        # handle the case where it's 'FULL' or any invalid value
+
 
 
     predare9=executa_comanda(9,1)

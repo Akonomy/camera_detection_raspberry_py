@@ -25,7 +25,7 @@ from SOURCES.UTILS.CONTROL_SERVO import executa_comanda
 from SOURCES.USART_COM.serial_module import process_command
 
 
-
+tracker = BoxTracker()
 
 
 # Color map for reference
@@ -196,7 +196,7 @@ def run_box_lift():
 
 
 
-def run_box_tracking(session,session_id,color="Green", label="A",mergi_la_risc=1,initial_coords):
+def run_box_tracking(session,session_id,color="Green", label="A",mergi_la_risc=1,initial_coords=None):
 
 
     boxdone=0;
@@ -204,9 +204,9 @@ def run_box_tracking(session,session_id,color="Green", label="A",mergi_la_risc=1
     if session is not None:
         box = tracker.track_box(session, color, label, session_id=session_id)
         if box is not None:
-            comenzi, CMD ,risc= process_tracked_package(session,color,label,mergi_la_risc)
+            comenzi, CMD ,risc= process_tracked_package(session,box,mergi_la_risc)
 
-            if initial_coords is None and not got_initial:
+            if initial_coords is None :
                 initial_coords = comenzi
 
 

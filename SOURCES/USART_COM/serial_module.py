@@ -108,7 +108,7 @@ def receive_octet():
 
 
 
-def receive_octet_confirm(expected=None, timeout=1.0):
+def receive_octet_confirm(expected=None, timeout=3.0):
     """
     Așteaptă primirea datelor de la portul serial.
 
@@ -122,9 +122,9 @@ def receive_octet_confirm(expected=None, timeout=1.0):
     while True:
         if time.time() - start_time > timeout:
             return -1
-
+        time.sleep(2)
         new_data = ser.read_all()
-        print(f"DEBUG serial_module {new_data} data available")
+        print(f"DEBUG serial_module {new_data} data available at time {start_time}")
         if new_data:
             data_buffer.extend(new_data)
 

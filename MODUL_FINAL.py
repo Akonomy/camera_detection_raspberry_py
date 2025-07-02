@@ -23,8 +23,8 @@ from SOURCES.CAMERA.camera_session import init_camera, stop_camera, capture_and_
 #------<pornire robot initializare>
 
 initializare()
-
 init_camera()
+
 
 
 
@@ -67,7 +67,7 @@ print(f"DATA PRIMIT DE LA STM{ data}")  #pas FAULTY eroare
 
 
 
-#-------------<PRELUAREA CUTIEI
+-------------<PRELUAREA CUTIEI
 
 print(f" SE PREIA CUTIA {box_color} cu ID {box_letter} ")
 boxdone=0
@@ -117,7 +117,7 @@ predare_cutie(image,session,box)
 #revenire la task sau la dock
 
 
-
+stop_camera()
 
 
 print(f"REZULTAT{test}, moved {moved}")

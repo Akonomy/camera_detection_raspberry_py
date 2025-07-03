@@ -59,6 +59,8 @@ def move_to_initial(coords,reverse=0):
 
 
 
+def round_to_half(x):
+    return round(x * 2) / 2
 
 
 
@@ -67,6 +69,13 @@ def get_free_spot(image_copy,session_data,box_id):
     
     # Apelează funcția de analiză pentru a căuta un loc liber, cu max_boxes=3 și debug=True
     result = analyze_zone_and_find_spot(image_copy, session_data, max_boxes=3, ignore_box_id=box_id, debug=False)
+
+
+    if isinstance(result, tuple) and len(result) == 2:
+        x,y=result
+        x_norm = round_to_half(x)
+        y_norm = round_to_half(y)
+        return x_norm,y_norm
 
 
     
@@ -82,9 +91,13 @@ def predare_cutie(image,session,box_id):
     coords=get_free_spot(image,session,box_id)
     print(coords)
 
-    if isinstance(coords, tuple) and len(coords) == 2:
-          move_to_initial(coords)
 
+
+
+
+
+    if isinstance(coords, tuple) and len(coords) == 2:
+        move_to_initial(coords)
 
 
 
@@ -109,43 +122,59 @@ def predare_cutie(image,session,box_id):
             else:
                 process_command(5, 10, 1, [0])
 
+            return 1
+
 
 
 
 
     else:
         print(f"ZONA ESTE FULL: STATUS:{coords}")
-        # handle the case where it's 'FULL' or any invalid value
+        time.sleep(10)
+
+        coords=get_free_spot(image,session,box_id)
+        print(coords)
 
 
-
-    predare9=executa_comanda(9,1)
-    time.sleep(0.5)
-    if predare9:
-        executa_comanda(10,0)
-
-        executa_comanda(9,0)
-
-        time.sleep(1)
-
-        last_cmd=move_to_initial(coords,1)
-
-        time.sleep(0.5)
-
-        if last_cmd in (10,9):
-
-
-            process_command(5, last_cmd, 1, [0])
-
-        else:
-            process_command(5, 10, 1, [0])
+        if isinstance(coords, tuple) and len(coords) == 2:
+            move_to_initial(coords)
 
 
 
 
-    else:
+            predare9=executa_comanda(9,1)
+            time.sleep(0.5)
+            if predare9:
+                executa_comanda(10,0)
 
-        return 0
+                executa_comanda(9,0)
+
+                time.sleep(1)
+
+                last_cmd=move_to_initial(coords,1)
+
+                time.sleep(0.5)
+
+                if last_cmd in (10,9):
+
+
+                    process_command(5, last_cmd, 1, [0])
+
+                else:
+                    process_command(5, 10, 1, [0])
+
+                return 1
+
+
+
+
+
+
+
+
+
+
+    return 0
 
 
 

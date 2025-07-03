@@ -20,11 +20,22 @@ from HIGHUTILS.ZONA_ACTIONS.COM_STM32 import send_path
 from SOURCES.CAMERA.camera_session import init_camera, stop_camera, capture_and_process_session
 
 
+from SOURCES.WEB.robot_api_client.py import RobotAPIClient
+
+
+client = RobotAPIClient()
+
+
+
+
+
+
+
 #------<pornire robot initializare>
 
 initializare()
 init_camera()
-
+client.update_robot_status('idle', message='Robotul a pornit')
 
 
 
@@ -38,6 +49,7 @@ print(result)
 
 
 #----------<get first task from WMS and process it
+client.update_robot_status('busy', message='Robotul cere si executa un task')
 
 data=process_and_resolve_move_task()
 # returneaza {task_id, box_id and path_id}
@@ -51,10 +63,11 @@ box_letter=get_param_task(task_id,"letters")
 box=box_color+box_letter
 
 
+
 print(f"SE EXECUTA TASKUL  {task_id}")
 traseu=get_param_task(task_id,"path_stm32")
 
-
+client.update_task_status(task_id, 'accepted', reason='Transferat catre robot')
 
 #-----------<trimitere traseu catre executie la stm32
 
@@ -62,12 +75,14 @@ print(f"SE EFECTUEAZA TRASEUL {traseu[0]} ")
 data=send_path(traseu[0])
 print(f"DATA PRIMIT DE LA STM{ data}")  #pas FAULTY eroare
 
-
+client.update_task_status(task_id, 'in_progress', reason='Transferat catre robot')
 
 
 
 
 -------------<PRELUAREA CUTIEI
+
+client.update_robot_status('busy', message='Robotul ia cutia')
 
 print(f" SE PREIA CUTIA {box_color} cu ID {box_letter} ")
 boxdone=0
@@ -91,7 +106,6 @@ revenire_la_traseu(moved) #revenire la traseu adica la linie
 
 
 
-
 #verificare daca a revenit la traseu  daca nu ruleaza modelul de urmarire linie pe baza camerei
 # I HOPE EVERYTHING IS GOOD AND DONT NEED THAT MODULE
 
@@ -105,6 +119,9 @@ revenire_la_traseu(moved) #revenire la traseu adica la linie
 #-----------<execute second path to next zone
 send_path(traseu[1])
 
+client.update_task_status(task_id, 'in_progress', reason='Cutie preluata')
+
+
 
 
 #-----------<predare cutie
@@ -114,15 +131,22 @@ predare_cutie(image,session,box)
 
 
 
+
+
+
 #revenire la task sau la dock
+
+client.update_task_status(task_id, 'completed', reason='Cutie livrata ')
+client.update_robot_status('idle', message='Asteapta comenzi')
+
+
+# actualizare task ca fiind completat
+
 
 
 stop_camera()
 
 
 print(f"REZULTAT{test}, moved {moved}")
-
-
-
 
 

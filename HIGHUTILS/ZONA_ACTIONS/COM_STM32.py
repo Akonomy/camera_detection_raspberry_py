@@ -30,9 +30,9 @@ def read_response(timeout_sec=60):
     """
     start = time.time()
     while time.time() - start < timeout_sec:
-        data = receive_octet_confirm(expected=200)
+        data = receive_octet_confirm(expected=48)
         if data == 1:
-            print("✅ Confirmare 200 primită de la STM32.")
+            print("✅ Confirmare 48  primită de la STM32.")
             return 1
 
     print("⛔ Nicio confirmare primită în timp util.")
@@ -48,11 +48,45 @@ def send_path(directions):
 
     result = send_encoded_directions(directions, mode=1)
 
-    time.sleep(1)
-    data =  read_response(30);
+    return result
 
-    if (data==1): #200 de succes code pt parcare
-        process_command(5, 0, 1, [0])  #se trimite modul 0
-        return 1
-    return(data);
 
+
+
+
+
+
+
+
+# Read response from STM32 with timeout
+def read_response2(timeout_sec=10):
+    start = time.time()
+    while time.time() - start < timeout_sec:
+        data = process_command(3, 0, 0, [0])
+        if data:
+            print("STM32 response:", data)
+            return data
+        time.sleep(0.5)
+    print("No response in time.")
+    return None
+
+# Log in HEX format
+def log_code_as_hex(code):
+    print(f"STM32 HEX code: {code:#04x}")
+
+
+
+
+
+
+def read2(timeout_sec=20):
+
+    data = read_response2(timeout_sec)
+    print(data)
+
+    # Check STM32 response and update DB accordingly
+    if data and isinstance(data, list) and len(data) > 0:
+        code = data[0]
+        log_code_as_hex(code)
+        if code == 0x30:
+            return 1
